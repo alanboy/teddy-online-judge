@@ -1,0 +1,4 @@
+cd ..
+cd work_zone
+cd $2
+python $1 USER_CODE $3
