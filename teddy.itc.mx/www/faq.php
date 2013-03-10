@@ -3,7 +3,7 @@
 	include_once("config.php");
 	include_once("includes/db_con.php");	
 ?>
-<html>
+	<html>
 <head>
 		<link rel="stylesheet" type="text/css" href="css/teddy_style.css" />
 		<title>Teddy Online Judge - Preguntas Frecuentes</title>
