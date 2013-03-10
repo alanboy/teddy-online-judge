@@ -16,20 +16,12 @@
 					<td>
 					    <?php $root = file_exists ( "img/club.jpg" ); ?>
 					    
-						<a href="http://blog.clubdeprogra.com/"><img src="<?php echo $root ? '' : '../'; ?>img/club.jpg"></a>
 						<a href="http://www.itc.mx"><img src="<?php echo $root ? '' : '../'; ?>img/itc.jpg"></a>
-						<img src="<?php echo $root ? '' : '../'; ?>img/acm.jpg"> 
 					</td>
-					<td>
-						<script type="text/javascript"><!--
-						google_ad_client = "pub-1974587537148067";
-						
-						/* teddy horizontal negro */
-						google_ad_slot = "1962252847";
-						google_ad_width = 468;
-						google_ad_height = 60;
-						//-->
-						</script>
+				</tr>
+			</table>
+		</div>	
+</div>
 
 						<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>	<script>(function(d, s, id) {
 							  var js, fjs = d.getElementsByTagName(s)[0];
@@ -39,12 +31,6 @@
 							  fjs.parentNode.insertBefore(js, fjs);
 							}(document, 'script', 'facebook-jssdk'));</script>
 							<script src="//platform.twitter.com/widgets.js" type="text/javascript"></script>				
-					</td>
-				</tr>
-			</table>
-		</div>	
-</div>
-
 
 <?php
 

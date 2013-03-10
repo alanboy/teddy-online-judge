@@ -71,21 +71,8 @@
 		</script>
 
 		<div align="center">
-		<script type="text/javascript"><!--
-		google_ad_client = "pub-1974587537148067";
-		/* teddy horizontal */
-		google_ad_slot = "9105913021";
-		google_ad_width = 468;
-		google_ad_height = 60;
-		//-->
-		</script>
-		<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js">	</script>
 		</div>
 	</div>
-	
-
-
-
 
 	<div class="post_blanco">
 		
@@ -190,11 +177,6 @@
 		&amp;	chco=0000FF
 		&amp;	chl=<?php echo $data_for_chart_dates; ?>"
 		alt="Lenguajes enviados a Teddy" />
-
-
-	
-	
-	
 	
 		<?php	
 			date_default_timezone_set('America/Mexico_City');
@@ -225,10 +207,6 @@
 
 		?>
 
-	
-
-
-
 			<img src="http://chart.apis.google.com/chart?
 				chs=400x200
 			&amp;	chtt=Envios+de+los+ultimos+meses
@@ -242,10 +220,6 @@
 			&amp;	chl=<?php echo $data_for_chart_dates; ?>"
 
 			alt="Envios a Teddy" />
-
-
-	
-	
 	</div>
 
 
