@@ -224,14 +224,11 @@
 			
 		}
 	</script>
+<table>
+<tr>
+<td valign=top>
 	
-	<div id="new_contest_button" class="post_blanco" align=center onClick='show_new_contest()'>
-		<h2>Crear un concurso</h2>
-		<p>Crea tus propios concursos</p>
-	</div>
-	
-	
-	<div id="new_contest_form" class="post_blanco" align=center style='display:none;'>
+	<div id="new_contest_form" class="post_blanco" align=center >
 	<h2>Crear un concurso</h2>
 	<?php
 	
@@ -284,10 +281,9 @@
 			}//si puedo crear un concurso
 		}//si tengo sesion
 		?>
-
-
-</div>
-
+	</div>
+	</td>
+	<td>
 	
 	
 	<div class="post"  align=center>
@@ -393,7 +389,9 @@
 
 
 
-
+</td>
+</tr>
+</table>
 
 
 
