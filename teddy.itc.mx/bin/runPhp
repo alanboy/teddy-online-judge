@@ -1,0 +1,5 @@
+cd ..
+cd work_zone
+cd $1
+php $1.php USER_CODE $2
+
