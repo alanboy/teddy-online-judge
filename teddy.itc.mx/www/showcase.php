@@ -1,11 +1,14 @@
 <?php 
 
+//bootsrapear
 require_once("bootstrap.php");
+
 
 //validar el concurso que voy a renderear
 if(!isset($_REQUEST["cid"])){
 	die(header("Location: contest.php"));
 }
+
 
 //validar que el concurso exista
 $q = "SELECT * from Concurso where CID = ". mysql_real_escape_string( $_REQUEST['cid'] ) .";";
@@ -67,94 +70,13 @@ function start(){
 	}
 
 	?>
-	<div align=center>
-		
-	<div><h2><?php echo $CDATA["Titulo"]; ?></h2></div>
-	<div><?php echo $CDATA["Descripcion"]; ?></div>
-	
-	<table border='0' cellspacing="5" style="font-size: 14px;" > 
-	<thead>
-		<tr align=center>
-		<th >Organizador</th>
-		<?php
-		if($STATUS == "NOW" || $STATUS == "PAST"){
-			echo "<th >Problemas</th>";
-		}
-		?>
-		<th >Inicia</th>
-		<th >Termina</th>
-		</tr> 
-	</thead> 
-	<tbody >
-		<tr align=center style="background-color: #e7e7e7">
-			<td><?php echo $CDATA["Owner"]; ?></td>
-			
-			<?php
-			// Si ya comenzo o esta en el pasado
-			if($STATUS == "NOW" || $STATUS == "PAST"){
-				echo "<td>";
-				$probs = explode(' ', $CDATA["Problemas"]);
-				for ($i=0; $i< sizeof( $probs ); $i++) {
-					echo "<a target='_blank' href='verProblema.php?id=". $probs[$i]  ."&cid=". $_REQUEST['cid'] ."'>". $probs[$i] ."</a>&nbsp;";
-				}		
-				echo "</td>";			
-			}
-			?>
-
-			<td><?php echo $CDATA["Inicio"]; ?></td>
-			<td><?php echo $CDATA["Final"]; ?></td>
-		</tr>
-	</tbody>
-	</table>
-	<a href="showcase.php?cid=<?php echo $_REQUEST["cid"]; ?>">[showcase/tablero para proyectar resultados]</a>
+	<div align=center>	
+		<div><h2><?php echo $CDATA["Titulo"]; ?></h2></div>
+		<div><?php echo $CDATA["Descripcion"]; ?></div>
 	</div>
 	<?php
 
 	
-}
-
-
-
-/***** ****************************
-	IMPRIMIR FORMA DE ENVIO
- ***** ****************************/
-function imprimirForma(){
-	
-	global $row;
-	
-	
-	envios::imprimir_forma_de_envio( $_REQUEST['cid'] );
-	
-	?>
-	<!--
-	<div align="center" >
-	<form action="contest_rank.php?cid=<?php echo $_REQUEST['cid']; ?>" method="POST" enctype="multipart/form-data">
-		<br>
-		<table border=0>
-			 <tr><td  style="text-align: right">Codigo fuente&nbsp;&nbsp;</td><td><input name="userfile" type="file"></td></tr>
-			
-			 <tr><td style="text-align: right">Problema&nbsp;&nbsp;</td><td>
-			 	<select name="prob">	
-				<?php
-
-				$probs = explode(' ', $row["Problemas"]);
-				for ($i=0; $i< sizeof( $probs ); $i++) {
-					echo "<option value=". $probs[$i] .">". $probs[$i] ."</option>"; //"<a href='verProblema.php?id=". $probs[$i]  ."'>". $probs[$i] ."</a>&nbsp;";
-				}
-
-				?>
-				</select>
-			 </td></tr>
-			
-			 <tr><td></td><td><input type="submit" value="Enviar Solucion"></td></tr>
-		</table>
-	    <input type="hidden" name="ENVIADO" value="SI">
-	    <input type="hidden" name="cid" value="<?php echo $_REQUEST['cid']; ?>">
-	    
-	</form> 
-	</div>
-	-->
-	<?php
 }
 
 
@@ -185,7 +107,7 @@ function enviando(){
 		
 		if(!$found){
 			echo "<br><div align='center'><b>Ups, este problema no es parte de este concurso.</b><br><br></div>";
-			imprimirForma();
+			
 			return;
 		}
 		
@@ -265,8 +187,8 @@ function enviando(){
 
 <div class="wrapper">
 	<?php include_once("includes/header.php"); ?>
-	<?php include_once("includes/menu.php"); ?>
-	<?php include_once("includes/session_mananger.php"); ?>	
+	
+	
 	
 	
 	<!-- 
@@ -351,20 +273,65 @@ function enviando(){
 				break;	
 				
 				case "NOW": 
-					echo "Enviar Soluciones al concurso";
+					
 					$datetime1 = date_create( $CDATA['Final']);
 					$datetime2 = date_create(date("Y-m-d H:i:s"));
 					$interval = date_diff($datetime1, $datetime2);
-					echo "<br><span id='time_left'>" . $interval->format('%H:%I:%S') . "</span> restante.";					
+					echo "<span id='time_left'>" . $interval->format('%H:%I:%S') . "</span> restante.";					
 					
 					if( ! isset($_SESSION['userID'] ) ){
 						?> <div align="center">Debes iniciar sesion en la parte de arriba para poder enviar problemas a <b>Teddy</b>.</div> <?php
 					}else{
+						/*
 						if( isset($_REQUEST["ENVIADO"]) )
 							enviando();
 						else
 							imprimirForma();
+						*/
 					}
+
+					?>
+					<script>
+								function updateTime(){
+
+									data = $("#time_left").html().split(":");
+									hora = data[0];
+									min = data[1];
+									seg = data[2];
+									
+									if(--seg < 0){
+										seg = 59;
+										
+										if(--min < 0){
+											min = 59;
+
+											if(--hora < 0){
+												hora = 59;
+											}
+											
+											hora = hora < 10 ? "0" + hora : hora;
+										}
+										
+										min = min < 10 ? "0" + min : min;
+									}
+
+									seg = seg < 10 ? "0" + seg : seg;
+																		
+									if(hora == 0 && min == 0 && seg == 0)
+									{
+										window.location.reload( false );
+										
+									}
+									
+									//hora = hora < 10 ? "0" + hora : hora;
+
+																							
+									$("#time_left").html(hora+":"+min+":"+seg);
+									
+								}
+								setInterval("updateTime()", 1000);
+							</script>
+						<?php
 				break;
 			}
 			
