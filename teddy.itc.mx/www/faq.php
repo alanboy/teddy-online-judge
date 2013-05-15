@@ -40,7 +40,7 @@ Teddy es un juez. En la seccion de <a href="problemas.php">problemas</a> podras 
 
 <p>
 <b>&iquest; Que lenguajes puede revisar Teddy  ?</b><br>
-Teddy puede evaluar codigo escrito en <i>Perl</i>, <i>Python</i>, <i>Java</i>, <i>C</i> y <i>C++</i>.<br><br>
+Teddy puede evaluar codigo escrito en <i>Perl</i>, <i>Python</i>, <i>Java</i>, <i>C</i>, <i>C++</i> y <i>PHP</i>.<br><br>
 </p>
 
 <p>
@@ -55,7 +55,7 @@ Por la extension del codigo fuente, cuando subes un archivo que termina en .java
 .cpp - C++<br>
 .py - Python<br>
 .pl - Perl
-
+.php - PHP
 </p>
 
 <p>
@@ -78,7 +78,8 @@ Tu script debe llamarse <b><code>Main.py</code></b> de lo contrario obtendras un
 <b>&iquest; Que compiladores e interpretes usa Teddy ?</b><br>
 gcc version 4.3.2 (Debian 4.3.2-1.1)<br>
 javac 1.6.0_12<br>
-perl v5.10.0 built for i486-linux-gnu-thread-multi<br><br>
+perl v5.10.0 built for i486-linux-gnu-thread-multi<br>
+PHP 5.3.3-7+squeeze3 with Suhosin-Patch (cli) (built: Jun 28 2011 13:13:26)<br><br>
 </p>
 
 

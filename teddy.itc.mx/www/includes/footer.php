@@ -4,10 +4,11 @@
 			<table border=0>
 				<tr>
 					<td class="footer" style="color: white;" colspan=2>
-						Programacion <b><a href="http://twitter.com/_alanboy" style="color:white;">Alan Gonzalez</a></b>
+						 Hecho por <b><a href="http://twitter.com/_alanboy" style="color:white;">Alan Gonzalez @_alanboy</a></b>
 						<br>
-						Concepto <b><a href="http://twitter.com/lhchavez" style="color:white;">Luis Hector Chavez</a></b>
+						Concepto <b><a href="http://twitter.com/lhchavez" style="color:white;">Luis Hector Chavez @lhchavez</a></b>
 						<br><br>
+						<a href="https://github.com/alanboy/teddy-online-judge/" style="color:white;">github</a>
 						
 					</td>
 
@@ -15,7 +16,6 @@
 				<tr>
 					<td>
 					    <?php $root = file_exists ( "img/club.jpg" ); ?>
-					    
 						<a href="http://www.itc.mx"><img src="<?php echo $root ? '' : '../'; ?>img/itc.jpg"></a>
 					</td>
 				</tr>

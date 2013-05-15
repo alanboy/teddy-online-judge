@@ -17,7 +17,7 @@
 						data-show-faces="false">
 					</div>
 					<div style="margin-top:5px; margin-left: 5px; width: 170px; margin-right: 0px;">
-						<a href="https://twitter.com/clubdeprogra" class="twitter-follow-button" data-show-count="false" data-lang="es">Segui @clubdeprogra</a>
+						<a href="https://twitter.com/teddyOJ" class="twitter-follow-button" data-show-count="false" data-lang="es">Segui @clubdeprogra</a>
 						
 
 						
