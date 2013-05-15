@@ -56,6 +56,12 @@ public class Ejecutar implements Runnable{
 				killcomand = "perl Main.pl USER_CODE " + uid;
 			}
 
+			//genera el comando ke se ejecutara si es php
+			if(LANG.equals("Php")){
+				comando = "./runPhp " + execID + " " + uid ;
+				killcomand = "php "+ execID +".php USER_CODE " + uid;
+			}
+
 			//si es C
 			if(LANG.equals("C")){
 				comando = "./runC " + execID  + " " + uid; 
@@ -113,7 +119,7 @@ public class Ejecutar implements Runnable{
 
 				//error interno del juez
 				//status = "ERROR_JUEZ";
-				//System.out.println("Error, el juez no ha podido ejecutar el programa. \n" + e);
+				System.out.println("Error, el juez no ha podido ejecutar el programa. \n" + e);
 				//return;
 			}
 

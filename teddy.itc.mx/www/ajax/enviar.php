@@ -74,6 +74,7 @@ switch($lang){
 	case "py"	: $lang_desc = "Python"; break;
 	case "cs"	: $lang_desc = "C#"; 	break;
 	case "pl"	: $lang_desc = "Perl"; 	break;	
+	case "php"	: $lang_desc = "Php"; 	break;	
 	default:
 		utils::json_die("Este no es un lenguaje reconocido por Teddy.");
 }

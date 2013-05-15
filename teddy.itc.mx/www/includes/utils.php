@@ -159,7 +159,7 @@ class envios{
                     'sizeLimit' : 1024*1024,
                     'buttonText': 'Buscar Archivo',
 					'fileDesc' 	:'Codigo Fuente',
-					'fileExt'	: '*.c;*.cpp;*.java;*.cs;*.pl;*.py',
+					'fileExt'	: '*.c;*.cpp;*.java;*.cs;*.pl;*.py;*.php',
                     'onSelect'  : function (e, q, f)  { 
 							source_file.file_name = f.name;
 							var parts = f.name.split(".");
@@ -224,8 +224,8 @@ class envios{
 					<option value="c">C</option>
 					<option value="cpp">C++</option>
 					<option value="py">Python</option>
-					<!-- <option value="php">PHP</option> -->
-					<option value="pl">Perl</option>																				
+					<option value="php">PHP</option>
+					<option value="pl">Perl</option>
 				</select>
 			</div>
 		<?php

@@ -21,6 +21,11 @@ public class Compilador {
 		if(LANG.equals("Perl")) 
 			return true;
 
+		//no hay necesidad de compilar php
+		if(LANG.equals("Php")) 
+			return true;
+
+
 		//genera el comando ke se ejecutara
 		if(LANG.equals("JAVA")) 
 			comando = "javac " + fileName;

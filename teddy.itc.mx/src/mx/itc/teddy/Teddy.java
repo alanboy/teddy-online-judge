@@ -8,10 +8,7 @@ import java.io.*;
 * 
 **/
 public class Teddy {
-	
 
-	//fields
-	//conexion a la base de datos
 	static private Conexion con;
 	private static boolean DEBUG;
 	private static boolean FULL_DEBUG ;
@@ -28,12 +25,11 @@ public class Teddy {
 				System.out.println("Usage:");
 				System.out.println(" -d       Modo de debug basico");
 				System.out.println(" -df      Modo de debug completo");
-				System.out.println(" -h       Ayuda");												
+				System.out.println(" -h       Ayuda");
 				System.exit(1);
 			}
-		
-		
-		DEBUG 		= false;
+
+		DEBUG		= false;
 		FULL_DEBUG 	= false;
 
 
@@ -44,13 +40,11 @@ public class Teddy {
 			if( foobar.equals("-df") )
 				FULL_DEBUG = true;				
 		}
-			
-		
+
 		System.out.println("-- Teddy Online Judge --");
 
 		while(true){
 			try{
-				//sleep for ten seconds
 				run();
 				Thread.sleep(3000);
 
@@ -58,13 +52,7 @@ public class Teddy {
 
 				System.out.println(e);
 			}
-
 		}
-		
-		
-		
-		
-		
 	}
 
 
@@ -139,6 +127,10 @@ public class Teddy {
 			fileName = execID + ".py";
 		}
 
+		if(LANG.equals("Php")){
+			fileName = execID + ".php";
+		}
+
 		if(LANG.equals("C#")){
 			fileName = execID + ".cs";
 		}
@@ -168,7 +160,7 @@ public class Teddy {
 		File directorio = new File("../work_zone/" + execID);
 		directorio.setWritable(true);
 		directorio.mkdir();
-		directorio.deleteOnExit();
+		//directorio.deleteOnExit();
 
 		//crear un objeto File de el codigo fuente que se ha subido en la primer carpeta
 		File cf = new File( "../codigos/" + fileName);
@@ -218,7 +210,7 @@ public class Teddy {
 		// 
 		//ponerlo como que estoy jueseandooo
 		con.update("UPDATE Ejecucion SET status = 'JUDGING' WHERE execID = "+ execID +" LIMIT 1 ;");
-		
+
 		//agregar un nuevo intento a ese problema
 		con.update("UPDATE Problema SET intentos = (intentos + 1) WHERE probID = "+ probID +" LIMIT 1 ");
 
@@ -298,8 +290,7 @@ public class Teddy {
 		}
 
 		//eliminar el archivo de entrada al terminar el proceso
-		//archivoEntrada.deleteOnExit();
-
+		archivoEntrada.deleteOnExit();
 
 		//--------------ejecutar lo que salga de la compilacion -----------------------------------//
 		// 

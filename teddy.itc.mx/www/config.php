@@ -10,12 +10,17 @@
 	base de datos 
 *************************** */
 	//no cambiar el nombre de estas variables, ni el orden
-	$TEDDY_DB_USER 	= "root";
-	$TEDDY_DB_PASS 	= "";
-	$TEDDY_DB_NAME 	= "teddy";
-	$TEDDY_DB_SERVER = "localhost";
+	$TEDDY_DB_USER 		= "teddy";
+	$TEDDY_DB_PASS 		= "teddy.itc.mx";
+	$TEDDY_DB_NAME 		= "teddy";
+	$TEDDY_DB_SERVER 	= "localhost";
 
-
+/* ***************************
+	twitter 
+*************************** */
+	//cuenta para twittear
+	$TEDDY_TWITTER_USER = "clubdeprogra";
+	$TEDDY_TWITTER_MUTE = true;
 
 
 /* ***************************
