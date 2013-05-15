@@ -164,8 +164,19 @@ int main(void)
 }
 </textarea>
 
-
-
+<br>
+<b>PHP :</b>
+<textarea name="code" class="c" cols="60" rows="10">
+&lt;?php
+$handle = fopen ("data.in", "r");
+$wHandle = fopen ("data.out", "w");
+while( $c = fgets($handle) ) {
+        $parts = explode(" ", $c);
+        fputs($wHandle, ($parts[0] + $parts[1]) . "\n");
+}
+fclose($wHandle);
+fclose($handle);
+</textarea>
 <br>
 <b>Python :</b>
 <textarea name="code" class="py" cols="60" rows="10">
