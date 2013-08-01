@@ -369,7 +369,7 @@ class envios{
 					case 2 : 
 						$.ajax({ 
 								url: "ajax/enviar.php", 
-					
+								type : "POST",	
 								data: {
 									lang 		: $('#lang').val(),
 									id_problema	: $('#prob_id').val(),
