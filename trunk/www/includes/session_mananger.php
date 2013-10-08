@@ -169,27 +169,25 @@ function ok(){
 	<script>
 		//fade content
 		function submitdata(){
-
 			$('#login_area').slideUp('slow', function() {
-
 				$('#wrong').slideUp('slow');
-
 		    		$('#message').slideDown('slow', function() {
-					//actual ajax call
 					$.ajax({ 
 						url: "includes/login_app.php", 
 						dataType: 'json',
-						data: { 'user' : document.getElementById("user").value, 'pswd': encriptar( document.getElementById("pswd").value, "teddy" ) },
+						type : "POST",
+						data: { 
+							'user' : document.getElementById("user").value, 
+							'pswd': encriptar(document.getElementById("pswd").value, "teddy" )
+						},
 						context: document.body, 
 						complete: returned
 					});
 			  	});
 		  	});
-			
 			return false;
 		}
-		
-		
+
 		function returned( data ){
 			$('#message').fadeOut('slow', function() {
 				var x = null;

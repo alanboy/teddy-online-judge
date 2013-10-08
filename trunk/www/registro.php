@@ -1,7 +1,6 @@
-<?php
-	session_start();
-	include_once("config.php");
-	include_once("includes/db_con.php");
+<?php	
+
+	require_once("../serverside/bootstrap.php");
 
 	if(isset($_REQUEST["form"]) && ($_REQUEST["form"] == true)):
 
@@ -167,7 +166,7 @@
 		<form action="" method="post" onsubmit="return validate()">
 		<?php if(isset($_REQUEST["form"]) && ($_REQUEST["form"] == true)): ?>					
 			<?php if($validate): ?>
-				<h2>Yeah !!   &nbsp;&nbsp;&nbsp;  :-)</h2>
+				<h2>bSuccess=true;</h2>
 				<p>
 					Hola <b><?php echo $nick ?></b> ! Haz sido seleccionado de una lista de miles para poder enviar problemas a Teddy ! Saluda a Teddy de mi parte. <br><div align="right">Atte: <b>El script de inscripcion </b>
 				</p>

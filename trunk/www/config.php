@@ -10,10 +10,10 @@
 	base de datos 
 *************************** */
 	//no cambiar el nombre de estas variables, ni el orden
-	$TEDDY_DB_USER 		= "";
-	$TEDDY_DB_PASS 		= "";
-	$TEDDY_DB_NAME 		= "";
-	$TEDDY_DB_SERVER 	= "";
+	$TEDDY_DB_USER 		= "teddyu";
+	$TEDDY_DB_PASS 		= "f8uaodij";
+	$TEDDY_DB_NAME 		= "teddy";
+	$TEDDY_DB_SERVER 	= "localhost";
 
 /* ***************************
 	twitter 

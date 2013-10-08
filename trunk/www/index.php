@@ -1,6 +1,5 @@
 <?php 
-	require_once("bootstrap.php");
-
+	require_once("../serverside/bootstrap.php");
 ?>
 <html>
 	<head>
@@ -14,11 +13,9 @@
 <div class="wrapper">
 	<?php include_once("includes/header.php"); ?>
 	<?php include_once("includes/menu.php"); ?>
-
 	<?php include_once("includes/session_mananger.php"); ?>	
 
 	<div class="post_blanco">
-        
 		<div align="center" >
 			<h2>Bienvenido a Teddy</h2>
 			<b><?php echo mysql_num_rows( mysql_query("SELECT * FROM `Ejecucion`") ); ?></b> ejecuciones &nbsp; 
@@ -26,9 +23,6 @@
 			<b><?php echo mysql_num_rows( mysql_query("SELECT * FROM `Problema` WHERE publico = 'SI'") ); ?></b> problemas &nbsp; 
 			<b><?php echo mysql_num_rows( mysql_query("SELECT * FROM `Concurso`") ); ?></b> concursos 
 		</div>
-
-
-
 		<table>
 		<tr>
 		<td style="text-align:justify;">
@@ -76,7 +70,7 @@
 
 	<div class="post_blanco">
 		
-		<div align="center"><h2>Algunas Estadisticas</h2></div>
+		<div align="center"><h2>Estadisticas</h2></div>
 		<div align ="center">
 		<?php
 		$java = mysql_num_rows( mysql_query("SELECT LANG FROM `Ejecucion` WHERE LANG = 'JAVA'") );
@@ -97,8 +91,8 @@
 		$cpp = ($cpp * 100)/$total;
 		$perl = ($perl * 100)/$total;
 		$python = ($python * 100)/$total;
+		$php = ($php * 100)/$total;
 		?>
-
 		<img src="http://chart.apis.google.com/chart?
 			chs=400x200
 		&amp;	chtt=Lenguajes+usados

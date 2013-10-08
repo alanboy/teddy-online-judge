@@ -1,6 +1,6 @@
 <?php
 
-session_start();
+require_once("../../serverside/bootstrap.php");
 
 
 function decrypt($s){
@@ -41,28 +41,27 @@ if(isset($_REQUEST["log_out"])){
 	return;		
 }
 
+if (!isset($_POST["user"])) {
+    TEDDY_LOG("Faltan parametros para iniciar sesion");
+    echo json_encode(array(
+        "sucess" => false,
+        "success" => false
+    ));
+    return;
+}
 
+$usuario = addslashes( $_POST["user"] );
+$pass = decrypt($_POST["pswd"]);
 
-
-//recolectar datos
-$usuario = addslashes( $_GET["user"] );
-
-$pass = decrypt($_GET["pswd"]);
-
-if(($usuario != $_GET["user"])){
+if (($usuario != $_POST["user"])) {
 	echo "{\"sucess\": false, \"badguy\": true, \"msg\": \"Portate bien <b>". $_SERVER['REMOTE_ADDR'] ."</b>\"}";
 	return;
 }
 
-
-
-//conectarse a la bd
-include_once("../config.php");
-include_once("db_con.php");
-
 //consultasr contraseña de estre presunto usuario
 $consulta = "select pswd, cuenta, userID, mail from Usuario where BINARY ( userID = '{$usuario}' or mail = '{$usuario}')";
 $resultado = mysql_query($consulta) or die('Dont be evil with teddy :P ');
+TEDDY_LOG("hi there");
 
 //si regreso 0 resultados tons este usuario ni existe
 if(mysql_num_rows($resultado) != 1) {

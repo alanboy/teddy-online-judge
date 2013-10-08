@@ -1,6 +1,5 @@
 <?php
-
-	if(!$TEDDY_GA_MUTE){
+	if (!$TEDDY_GA_MUTE) {
 		?><!-- GOOGLE Analitics -->
 		<script type="text/javascript">
 		var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
@@ -12,6 +11,6 @@
 		pageTracker._trackPageview();
 		} catch(err) {}</script>
 		<!-- GOOGLE Analitics -->
-		<?php		
+		<?php
 	}
 ?>

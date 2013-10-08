@@ -1,6 +1,5 @@
 <?php
-
-	require_once("bootstrap.php");
+	require_once("../serverside/bootstrap.php");
 
 	if(isset($_SESSION['userID'])){
 		$q = "UPDATE  `teddy`.`Mensaje` SET  `unread` =  '0' WHERE para = '".$_SESSION['userID']."' ;";

@@ -1,8 +1,6 @@
 <?php
-	
+	require_once("../serverside/bootstrap.php");
 
-	require_once("bootstrap.php");
-		
 	if(isset($_REQUEST["form"]) && ($_REQUEST["form"] == true)):
 
 		$nombre = addslashes($_REQUEST["nombre"]);

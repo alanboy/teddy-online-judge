@@ -1,10 +1,10 @@
 <?php
 
-if( !(isset($_SESSION['userID']) && isset($_SESSION['userMode'])) || ( $_SESSION['userMode'] == "USER" )){
-		die (" <h1>You dont belong here :P</h1> Teddy guardara tu IP y monitoreara tus actividades de ahora en adelante. ");
+if (!(isset($_SESSION['userID']) && isset($_SESSION['userMode'])) 
+        || ( $_SESSION['userMode'] == "USER" )) {
+		die (" <h2>You dont belong here</h2> Teddy guardara tu IP y monitoreara tus actividades de ahora en adelante. ");
 	}
 ?>
-
 
 <div class="post">
 	<div class="navcenter">

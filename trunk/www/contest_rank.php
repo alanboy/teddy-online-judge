@@ -1,6 +1,6 @@
 <?php 
 
-require_once("bootstrap.php");
+require_once("../serverside/bootstrap.php");
 
 //validar el concurso que voy a renderear
 if(!isset($_REQUEST["cid"])){

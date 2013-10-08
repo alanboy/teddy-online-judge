@@ -1,14 +1,6 @@
 <?php
 
-
-	session_start();
-
-	include_once("../config.php");
-	include_once("../includes/db_con.php");		
-
-	
-	date_default_timezone_set('America/Mexico_City');
-
+    require_once("../../serverside/bootstrap.php");
 
 ?>
 <html>
