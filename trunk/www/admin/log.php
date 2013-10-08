@@ -1,10 +1,6 @@
 <?php 
 
-	session_start(); 
-	include_once("../config.php");
-	include_once("../includes/db_con.php");
-
-define("LOGFILENAME", "../../bin/log");
+    require_once("../../serverside/bootstrap.php");
 
 	function read($lines = 100)
   	{

@@ -1,4 +1,5 @@
 <?php
+
 date_default_timezone_set('America/Mexico_City');
 
 set_include_path(get_include_path() . PATH_SEPARATOR . __DIR__ );
@@ -7,6 +8,9 @@ set_include_path(get_include_path() . PATH_SEPARATOR . __DIR__ . "/../www/" );
 if (isset($_REQUEST['sid'])) {
 	session_id($_REQUEST['sid']);
 }
+$PATH_TO_BACKUPS = __DIR__ . "/../backups/";
+
+define("LOGFILENAME", "../../bin/log");
 
 session_start();
 
@@ -19,11 +23,12 @@ $enlace = mysql_connect(
 
 mysql_select_db($TEDDY_DB_NAME) or die('No pudo seleccionarse la base de datos.');
 
-require_once("includes/utils.php");
+require_once("c_backup.php");
 
-require_once("backup.php");
+require_once("includes/utils.php");
 
 function TEDDY_LOG($s)
 {
-    error_log("TEDDY: " . $s);}
+    error_log("TEDDY: " . $s);
+}
 

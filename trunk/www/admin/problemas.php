@@ -1,10 +1,5 @@
 <?php
-
-
-    session_start();
-
-	include_once("../config.php");
-	include_once("../includes/db_con.php");	
+    require_once("../../serverside/bootstrap.php");
 
 ?>
 

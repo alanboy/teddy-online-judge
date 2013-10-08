@@ -293,28 +293,22 @@ class envios{
 					$("#upload_" + forma_de_envio_method ).fadeIn();
 				});
 			}
-			
-			
-			
-			
+
 			function showResult( success, full_text )
 			{
 				$("#waiting_space").slideUp('fast', function(){
-					$("#result_space").html(full_text).slideDown('fast', function(){
+					$("#result_space").html("<div class='teddy_response'>" + full_text + "</div>").slideDown('fast', function(){
 						$("#form_space").fadeIn();
 					});
 				});
 			}
-			
-			
-			
-			
+
 			function doneUploading( response )
 			{
 				$("#result_space").html("");
 				
 				$("#form_space").fadeOut('fast', function(){
-					if( !response.success ){
+					if( !response.success ) {
 						showResult(false, response.reason);
 						
 					}else{

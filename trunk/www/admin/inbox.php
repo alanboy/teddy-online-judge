@@ -1,17 +1,12 @@
 <?php
+    require_once("../../serverside/bootstrap.php");
 
-
-	session_start();
-
-	include_once("../config.php");
-	include_once("../includes/db_con.php");		
 
 	if( !(isset($_SESSION['userID']) && isset($_SESSION['userMode'])) || ( $_SESSION['userMode'] == "USER" )){
 		die (" <h1>You dont belong here :P</h1> Teddy guardara tu IP y monitoreara tus actividades de ahora en adelante. ");
 	}
 	
 	date_default_timezone_set('America/Mexico_City');
-
 	$q = "UPDATE  `teddy`.`Mensaje` SET  `unread` =  '0' WHERE  para = '".$_SESSION['userID']."' ;";
 
 	$resultado = mysql_query($q) or die('Donte be evil with teddy :P ');
