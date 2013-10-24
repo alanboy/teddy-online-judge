@@ -80,6 +80,7 @@
 		$cpp = mysql_num_rows( mysql_query("SELECT LANG FROM `Ejecucion` WHERE LANG = 'C++'") );
 		$perl = mysql_num_rows( mysql_query("SELECT LANG FROM `Ejecucion` WHERE LANG = 'Perl'") );
 		$python = mysql_num_rows( mysql_query("SELECT LANG FROM `Ejecucion` WHERE LANG = 'Python'") );
+		$php = mysql_num_rows( mysql_query("SELECT LANG FROM `Ejecucion` WHERE LANG = 'Php'") );
 		/*
 		SELECT COUNT( * ) AS  `Filas` ,  `status` 
 		FROM  `Ejecucion` 

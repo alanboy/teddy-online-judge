@@ -582,7 +582,7 @@ function enviando(){
 							break;								
 						}
 						
-						html +=  "<TD align='center' ><a href='verCodigo.php?METHOD=555&execID=" +CurrentRuns[a].execID+ "'>" +CurrentRuns[a].execID+ "</a></TD>";
+						html +=  "<TD align='center' ><a href='verCodigo.php?execID=" +CurrentRuns[a].execID+ "'>" +CurrentRuns[a].execID+ "</a></TD>";
 						html +=  "<TD align='center' ><a href='verProblema.php?id=" +CurrentRuns[a].probID+"'>" +CurrentRuns[a].probID+"</a> </TD>";
 						html +=  "<TD align='center' ><a href='runs.php?user=" +CurrentRuns[a].userID+"'>" +CurrentRuns[a].userID+"</a> </TD>";
 						html +=  "<TD align='center' >" +CurrentRuns[a].LANG+"</TD>";

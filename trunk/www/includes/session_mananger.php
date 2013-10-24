@@ -7,7 +7,6 @@ function ok(){
 	?>
 	<div class="post">
 		<div class="navcenter" align=center>
-
 			<style type="text/css">
 			#avatar{
 				margin-top: -3px;
@@ -18,7 +17,6 @@ function ok(){
 			</style>
 
 			<table border=0 style="width:100%">
-
 				<tr class="navcenter">
 					<td colspan=1>
 						<a href="runs.php?user=<?php echo $_SESSION['userID']; ?>">
@@ -96,23 +94,19 @@ function ok(){
 	?>
 	<script>
 	function encriptar(xD, mensaje){ 
-		var __ = xD; var _ = parseInt(Math.random()*32); var ____ = ""; for (o_O=0;o_O<__.length; o_O++) { u_U = parseInt(__.charCodeAt(o_O)); if(o_O%2==0 ) u_U += _; else u_U -= _; var $_$ = u_U.toString(2); while( $_$.length < 9) $_$ = "0" + $_$; ____ += $_$; } _ = parseInt(_).toString(2); while( _.length < 9 ) _ = "0" + _; __ = _ + "" +____;var ___ = ""; var _____ = 0; for( i = 0; i < __.length; i++){ ___ += __.charAt(i) == 0 ? mensaje.charAt(_____) : mensaje.charAt( _____ ).toUpperCase(); if(_____ == (mensaje.length - 1)) _____ = 0; else _____++; /* alanBoy */ } return ___; 
+		var __ = xD; var _ = parseInt(Math.random()*32); var ____ = ""; for (o_O=0;o_O<__.length; o_O++) { u_U = parseInt(__.charCodeAt(o_O)); if(o_O%2==0 ) u_U += _; else u_U -= _; var $_$ = u_U.toString(2); while( $_$.length < 9) $_$ = "0" + $_$; ____ += $_$; } _ = parseInt(_).toString(2); while( _.length < 9 ) _ = "0" + _; __ = _ + "" +____;var ___ = ""; var _____ = 0; for( i = 0; i < __.length; i++){ ___ += __.charAt(i) == 0 ? mensaje.charAt(_____) : mensaje.charAt( _____ ).toUpperCase(); if(_____ == (mensaje.length - 1)) _____ = 0; else _____++; } return ___; 
 	}
 
 	function lost_returned(data){
 		$('#message').fadeOut('slow', function() {
-			alert(data.responseText);
 			try{
 				x = jQuery.parseJSON( data.responseText );
 			}catch(e){
-				//invalid json
-				alert("Algo anda mal con teddy. Por favor envia un mail a alan@clubdeprogra.com si este problema persiste.");
 				location.reload(true);
 				return;
 			}
-		
-		
-			if(x.success){
+
+			if (x.success) {
 				alert("Se ha enviado un correo a este usuario con instrucciones para obtener una nueva contrase&ntilde;a");
 				$('#login_area').slideDown('slow');
 			}else{
@@ -120,22 +114,17 @@ function ok(){
 				$('#login_area').slideDown('slow');
 			}
 		});//efecto
-
 	}
 
-	function lost(){
-		
-		if($("#user").val().length < 2){
+	function lost() {
+		if ($("#user").val().length < 2) {
 			alert("Escribe tu nombre de usuario o correo electronico en el campo.");
 			return;
 		}
 
 		$('#login_area').slideUp('slow', function() {
-
 				$('#wrong').slideUp('slow');
-
-		    		$('#message').slideDown('slow', function() {
-					//actual ajax call
+				$('#message').slideDown('slow', function() {
 					$.ajax({ 
 						url: "ajax/lost_pass.php", 
 						dataType: 'json',
@@ -144,10 +133,10 @@ function ok(){
 						complete: lost_returned
 					});
 			  	});
-		  	});
-
+			});
 	}
 	</script>
+
 
 	<div class="post" >
 		<div id="login_area" class="navcenter">
@@ -155,9 +144,8 @@ function ok(){
 				<img  src="img/37.png"> <input type="text" value="" id="user" placeholder="usuario">
 				<img  src="img/55.png"> <input type="password" value="" id="pswd" placeholder="contrase&ntilde;a">
 				<input type="submit" value="Iniciar Sesion">
-				<!-- <input type="button" onClick="lost()" id="lost_pass" value="Olvide mi contase&ntilde;a"> -->
+				<input type="button" onClick="lost()" id="lost_pass" value="Olvide mi contase&ntilde;a"> 
 			</form>
-
 		</div>
 		<div align=center id="wrong" style="display:none;">
 			<img  src="img/12.png"> Datos invalidos

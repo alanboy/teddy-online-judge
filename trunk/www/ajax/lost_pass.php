@@ -25,6 +25,10 @@ mysql_query (
 		VALUES 
 			('{$usuario}', '" . $_SERVER['REMOTE_ADDR']. "', '{$token}'); " ) or die('Algo anda mal: ' . mysql_error());
 
+
+//enviar correo electronico
+
+
 echo "{ \"success\" : true }";
 
 
