@@ -11,16 +11,10 @@ if(!isset($_SESSION["userID"])){
 if(!(isset($_REQUEST['id_problema']) && isset($_REQUEST['lang']))){
 	utils::json_die("Faltan parametros.");
 }
-	
 
-	
 if(empty($_FILES) && !isset($_REQUEST["plain_source"])) {
 	utils::json_die("No se envio el codigo fuente.");
 }
-
-
-
-
 
 /**
  * Hay dos maneras de enviar un codigo fuente.
@@ -36,7 +30,6 @@ if(empty($_FILES) && !isset($_REQUEST["plain_source"])) {
 $usuario 		= $_SESSION["userID"];
 $id_problema   	= stripslashes($_REQUEST["id_problema"]);
 $lang   		= stripslashes($_REQUEST["lang"]);
-
 
 if(isset($_REQUEST["id_concurso"])){
 	$id_concurso   	= stripslashes($_REQUEST["id_concurso"]);	
@@ -133,8 +126,6 @@ $row = mysql_fetch_array ( $resultado );
 $execID = $row["execID"];
 
 
-
-
 /**
  * GUARDAR EL ARCHIVO
  * Ok vamos a guardar el archivo
@@ -155,4 +146,3 @@ if(!empty($_FILES)){
 
 die(json_encode(array( "success" => true, "execID" => $execID )));
 
-	
