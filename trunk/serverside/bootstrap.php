@@ -23,6 +23,8 @@ $enlace = mysql_connect(
 
 mysql_select_db($TEDDY_DB_NAME) or die('No pudo seleccionarse la base de datos.');
 
+require_once("c_mail.php");
+
 require_once("c_backup.php");
 
 require_once("includes/utils.php");

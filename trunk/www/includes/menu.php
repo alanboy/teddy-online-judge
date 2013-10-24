@@ -16,7 +16,5 @@
 		<a href="rank.php">rank</a>&nbsp;&nbsp;&nbsp;
 		<a href="contest.php">concursos</a>&nbsp;&nbsp;&nbsp;
 		<a href="faq.php">preguntas frecuentes</a>&nbsp;&nbsp;&nbsp;
-	    <a href="https://github.com/alanboy/teddy-online-judge/" >github</a>
-
 	</div>
 </div>

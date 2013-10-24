@@ -11,6 +11,8 @@
 <body>
 
 <div class="wrapper">
+
+
 	<?php include_once("includes/header.php"); ?>
 	<?php include_once("includes/menu.php"); ?>
 	<?php include_once("includes/session_mananger.php"); ?>	
