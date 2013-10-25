@@ -38,7 +38,7 @@ public class Teddy {
 				DEBUG = true;
 
 			if( foobar.equals("-df") )
-				FULL_DEBUG = true;				
+				FULL_DEBUG = true;
 		}
 
 		System.out.println("-- Teddy Online Judge --");
@@ -69,7 +69,8 @@ public class Teddy {
 			con = new Conexion();
 
 		}catch(Exception e){
-			System.out.println("Error al crear la conexion con la base de datos.");
+			System.out.println("Error al iniciar:");
+			System.out.println(e);
 			return;
 		}
 
@@ -172,7 +173,8 @@ public class Teddy {
 		try{
 			cfNuevo.createNewFile();
 		}catch(IOException ioe){
-			System.out.println("Error al escribir en el disco duro.");
+			System.out.println("Error al escribir en el disco duro archivo " + cfNuevo);
+			System.out.println(ioe);
 			return;
 		}
 

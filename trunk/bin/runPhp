@@ -1,5 +1,5 @@
 cd ..
 cd work_zone
 cd $1
-php $1.php USER_CODE $2
+sandbox php $1.php USER_CODE $2
 

@@ -1,4 +1,4 @@
 cd ..
 cd work_zone
 cd $1
-./a.out USER_CODE $2
+sandbox ./a.out USER_CODE $2

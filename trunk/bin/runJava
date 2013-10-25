@@ -1,4 +1,4 @@
 cd ..
 cd work_zone
 cd $1
-java Main USER_CODE $2
+sandbox java Main USER_CODE $2

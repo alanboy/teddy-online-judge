@@ -18,7 +18,7 @@ public class Conexion {
 
 		//leer el archivo config.php para sacar los datos de la base de datos
 
-		BufferedReader br = new BufferedReader(new FileReader("../www/config.php"));
+		BufferedReader br = new BufferedReader(new FileReader("../serverside/config.php"));
 		String s, foo;
 		while((s = br.readLine()) != null){
 

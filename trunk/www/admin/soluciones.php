@@ -2,7 +2,6 @@
 
     require_once("../../serverside/bootstrap.php");
 
-
 ?>
 <html>
 <head>

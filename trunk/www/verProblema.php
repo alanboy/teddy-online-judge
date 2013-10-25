@@ -1,10 +1,6 @@
 <?php 
-	session_start();
 
-	include_once("config.php");
-	include_once("includes/db_con.php");	
-
-
+	require_once("../serverside/bootstrap.php");
 
 ?>
 <html>
@@ -23,8 +19,6 @@
 	
 	<div class="post">
        	<?php
-	
-	include_once("includes/db_con.php");
 
 	$consulta = "select titulo, problema, tiempoLimite, aceptados, intentos from Problema where probID = '" . addslashes($_GET["id"]) . "';";
 	$resultado = mysql_query($consulta) or die('Algo anda mal: ' . mysql_error());
