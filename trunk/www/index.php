@@ -1,21 +1,9 @@
 <?php 
 	require_once("../serverside/bootstrap.php");
+
+	define("PAGE_TITLE", "Problemas");
+	require_once("includes/head.php");
 ?>
-<html>
-	<head>
-		<title>Teddy Online Judge - Home</title>
-		<link rel="stylesheet" type="text/css" href="css/teddy_style.css" />
-		<script src="js/jquery.min.js"></script>
-		<script src="js/jquery-ui.custom.min.js"></script>
-	</head>
-<body>
-
-<div class="wrapper">
-
-
-	<?php include_once("includes/header.php"); ?>
-	<?php include_once("includes/menu.php"); ?>
-	<?php include_once("includes/session_mananger.php"); ?>	
 
 	<div class="post_blanco">
 		<div align="center" >
@@ -68,9 +56,6 @@
 		?>
 		</ul>
 		<br>
-		<script type="text/javascript">
-		window.google_analytics_uacct = "UA-11327997-2";
-		</script>
 
 		<div align="center">
 		</div>

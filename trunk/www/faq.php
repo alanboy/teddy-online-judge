@@ -1,36 +1,13 @@
 <?php 
 	require_once("../serverside/bootstrap.php");
+
+	define("PAGE_TITLE", "Problemas");
+	require_once("includes/head.php");
 ?>
-	<html>
-<head>
-		<link rel="stylesheet" type="text/css" href="css/teddy_style.css" />
-		<title>Teddy Online Judge - Preguntas Frecuentes</title>
-			<script src="js/jquery.min.js"></script>
-			<script src="js/jquery-ui.custom.min.js"></script>
-		<link type="text/css" rel="stylesheet" href="css/SyntaxHighlighter.css"></link>
-		<script language="javascript" src="js/shCore.js"></script>
-		<script language="javascript" src="js/shBrushCSharp.js"></script>
-		<script language="javascript" src="js/shBrushJava.js"></script>
-		<script language="javascript" src="js/shBrushCpp.js"></script>
-		<script language="javascript" src="js/shBrushPython.js"></script>
-		<script language="javascript" src="js/shBrushXml.js"></script>
-<script>
-window.onload = function () {
 
-    dp.SyntaxHighlighter.ClipboardSwf = 'flash/clipboard.swf';
-    dp.SyntaxHighlighter.HighlightAll('code');
-}
-</script>
-</head>
-<body>
 
-<div class="wrapper">
-	<?php include_once("includes/header.php"); ?>
-	<?php include_once("includes/menu.php"); ?>
-	<?php include_once("includes/session_mananger.php"); ?>	
-	
-	<div class="post">
-<p>	
+<div class="post">
+<p>
 <b>&iquest; Que es Teddy  ?</b><br>
 Teddy es un juez. En la seccion de <a href="problemas.php">problemas</a> podras encontrar enunciados con una entrada y una salida.
 </p>
@@ -210,13 +187,5 @@ close FILE;
 </textarea>
 	</div>
 
-
-
-
 	<?php include_once("includes/footer.php"); ?>
-
-</div>
-<?php include("includes/ga.php"); ?>
-</body>
-</html>
 

@@ -1,24 +1,12 @@
 <?php 
 	require_once("../serverside/bootstrap.php");
-?>
-<html>
-	<head>
-		<link rel="stylesheet" type="text/css" href="css/teddy_style.css" />
-		<title>Teddy Online Judge - Runs</title>
-			<script src="js/jquery.min.js"></script>
-			<script src="js/jquery-ui.custom.min.js"></script>
-	</head>
-<body>
 
-<div class="wrapper">
-	<?php include_once("includes/header.php"); ?>
-	<?php include_once("includes/menu.php"); ?>
-	<?php include_once("includes/session_mananger.php"); ?>	
+	define("PAGE_TITLE", "Runs");
+	require_once("includes/head.php");
+
+?>
 	<div class="post_blanco">
 	<?php
-
-	include_once("includes/db_con.php");
-
 	//encontrar todos los titulos y asignarselos a un array
 	$query = mysql_query("select probID, titulo from Problema");
 	$probset = array();

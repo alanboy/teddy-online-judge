@@ -2,7 +2,11 @@
 
 	require_once("../serverside/bootstrap.php");
 
-	function imprimirForma(){
+	define("PAGE_TITLE", "Problemas");
+	require_once("includes/head.php");
+
+	function imprimirForma()
+	{
 		?>
 		<form action="" class="form-big" method="post" onsubmit="return validate()">
 		<p>	Forma para crear un concurso </p>
@@ -33,16 +37,12 @@
 		<?php
 	}
 
-
-
-
-		function validar()
-		{
+	function validar()
+	{
 			global $msg;
-			include_once("includes/db_con.php");
-			date_default_timezone_set('America/Mexico_City');
 			
-			if(!(isset($_REQUEST["form"]) && ($_REQUEST["form"] == true))){
+			if (!(isset($_REQUEST["form"]) && ($_REQUEST["form"] == true)))
+			{
 				$msg = "Mal";
 				return false;
 			}
@@ -131,103 +131,16 @@
 			return true;
 
 		}//termina validar
-		
-		
-		
-		global $msg;
-		$validate = validar();
+	
+	global $msg;
+	$validate = validar();
 ?>
-<html>
-	<head>
-		<link rel="stylesheet" type="text/css" href="css/teddy_style.css" />
-		<title>Teddy Online Judge - Concursos Online</title>
-			<script src="js/jquery.min.js"></script>
-			<script src="js/jquery-ui.custom.min.js"></script>
-		<style>
-
-			.form-big {
-				width:400px;
-				margin:auto;
-				margin-top:30px;
-				padding:30px;
-				border:1px solid #bbb;
-				-moz-border-radius:11px;
-			}
-			form label{
-				display:block;
-				color:#777777;
-				font-size:13px;
-			}
-			form p{
-				color:#777777;
-				font-size:14px;
-				text-align:justify;
-				margin-bottom:20px;
-			}
-			form input.text{
-				background:#FBFBFB none repeat scroll 0 0;
-				border:1px solid #E5E5E5;
-				font-size:24px;
-				margin-bottom:16px;
-				margin-right:6px;
-				margin-top:2px;
-				padding:3px;
-				width:97%;
-			}
-			form select{
-				background:#FBFBFB none repeat scroll 0 0;
-				border:1px solid #E5E5E5;
-				font-size: 12px;
-				margin-bottom:16px;
-				margin-right:6px;
-				margin-top:2px;
-				padding:3px;
-				width:80%;
-			}
-			form input.button {
-				-moz-border-radius-bottomleft:6px;
-				-moz-border-radius-bottomright:6px;
-				-moz-border-radius-topleft:6px;
-				-moz-border-radius-topright:6px;
-				border:1px solid #AAAAAA;
-				font-size:16px;
-				padding:3px;
-			}
-			.right{
-				text-align:right;
-			}
-		</style>
-	</head>
-<body>
-
-<div class="wrapper">
-	
-	<?php include_once("includes/header.php"); ?>
-	<?php include_once("includes/menu.php"); ?>
-	<?php include_once("includes/session_mananger.php"); ?>	
-
-	
-	<script>
-		function show_new_contest(){
-			
-
-
-			
-			$("#new_contest_button").slideUp('fast', function (){
-				$("#new_contest_form").slideDown();				
-			});
-			
-		}
-	</script>
 <table>
 <tr>
 <td valign=top>
-	
 	<div id="new_contest_form" class="post_blanco" align=center >
 	<h2>Crear un concurso</h2>
 	<?php
-	
-	
 		if(!isset($_SESSION['userID'])){
 			//no hay sesion
 			echo "<div align=center><h3>Debes iniciar sesion para crear concursos.</h3></div>";
@@ -246,14 +159,6 @@
 			}else{
 				
 				//OK PUEDES CREAR UN CONCURSO
-				?>
-				<script>
-				function validate(){
-					return true;
-				}
-				</script>
-				<?php
-
 
 					if(isset($_REQUEST["form"]) && ($_REQUEST["form"] == true)){
 						if($validate == true){
@@ -279,19 +184,13 @@
 	</div>
 	</td>
 	<td>
-	
-	
-	<div class="post"  align=center>
 
+	<div class="post"  align=center>
 		<table style="font-size:12px; border-spacing: 30px 00px;" border=0 >
 		<tr valign=top >
 		<td>
 		<?php
-		//--inicia el pedo --//
-		include_once("includes/db_con.php");	
-
 		//obtener fecha
-		date_default_timezone_set('America/Mexico_City');
 		$timestamp = date( "Y-m-d H:i:s" );
 
 		//obtener concusros de ahorita
@@ -318,7 +217,6 @@
 				echo "<br><br>";
 			}
 		}
-		
 		?>
 		</td>
 		<td>
@@ -371,32 +269,14 @@
 				echo "<br><br>";
 			}			
 		}
-
-
 		?>
-
 		</td>
 		</tr>
 	</table>
-
-	
 </div>
-
-
-
 </td>
 </tr>
 </table>
 
+<?php include_once("includes/footer.php"); ?>
 
-
-
-	<?php include_once("includes/footer.php"); ?>
-
-</div>
-
-<?php include("includes/ga.php"); ?>
-
-
-</body>
-</html>

@@ -1,65 +1,50 @@
 <?php 
 	require_once("../serverside/bootstrap.php");
 
-?><html>
-	<head>
-		<link rel="stylesheet" type="text/css" href="css/teddy_style.css" />
-		<title>Teddy Online Judge - Problem Set</title>
-			<script src="js/jquery.min.js"></script>
-			<script src="js/jquery-ui.custom.min.js"></script>
-	</head>
-<body>
+	define("PAGE_TITLE", "Problemas");
+	require_once("includes/head.php");
 
-<div class="wrapper">
-	
-	<?php include_once("includes/header.php"); ?>
-	<?php include_once("includes/menu.php"); ?>
-	<?php include_once("includes/session_mananger.php"); ?>	
-	
-	<div class="post" style="background: white; border:1px solid #bbb;">
-        
-<div align="center">
-	<h2>Problem-Set</h2>
-
-	<?php
-
-	$consulta = "select probID, titulo, vistas, aceptados, intentos from Problema where publico = 'SI' ";
-
-	$solved = array();
-
-	if(isset($_GET["userID"])){
-		
-		$query = "select distinct probID from Ejecucion where userID = '" . mysql_real_escape_string($_GET['userID']) . "' AND status = 'OK'";
-		$resueltos = mysql_query($query) or die('Algo anda mal: ' . mysql_error());
-
-		while($row = mysql_fetch_array($resueltos)){
-			$solved[] = $row[0];
-		}
-	}
-	
-
-	
-	if(isset($_GET["orden"])){
-		$consulta .= (" ORDER BY " . mysql_real_escape_string($_GET["orden"])) ;
-	}else{
-		$consulta .= (" ORDER BY probID") ;
-	}
-
-	$resultado = mysql_query($consulta) or die('Algo anda mal: ' . mysql_error());
-
-	if(isset($_GET["userID"])){
-
-		echo "Hay un total de <b><span id='probs_left'></span></b> problemas no resueltos para <b>" . htmlentities( $_GET['userID'] ) . "</b>";
-	}else{
-		echo "Hay un total de <b>" . mysql_num_rows($resultado) . "</b> problemas<br>";
-	}
-
-	if(!isset($_GET["userID"]) && isset($_SESSION['userID'])){
-		?> 
+?>
+	<div class="post_blanco" >
 		<div align="center">
-		</div>
+		<h2>Problem-Set</h2>
+
 		<?php
-	}
+			$consulta = "select probID, titulo, vistas, aceptados, intentos from Problema where publico = 'SI' ";
+			$solved = array();
+			if(isset($_GET["userID"]))
+			{
+				$query = "select distinct probID from Ejecucion where userID = '" . mysql_real_escape_string($_GET['userID']) . "' AND status = 'OK'";
+				$resueltos = mysql_query($query) or die('Algo anda mal: ' . mysql_error());
+
+				while($row = mysql_fetch_array($resueltos))
+				{
+					$solved[] = $row[0];
+				}
+			}
+	
+			if(isset($_GET["orden"])){
+				$consulta .= (" ORDER BY " . mysql_real_escape_string($_GET["orden"])) ;
+			}else{
+				$consulta .= (" ORDER BY probID") ;
+			}
+
+			$resultado = mysql_query($consulta) or die('Algo anda mal: ' . mysql_error());
+
+			if(isset($_GET["userID"])){
+
+				echo "Hay un total de <b><span id='probs_left'></span></b> problemas no resueltos para <b>" . htmlentities( $_GET['userID'] ) . "</b>";
+			}else{
+				echo "Hay un total de <b>" . mysql_num_rows($resultado) . "</b> problemas<br>";
+			}
+
+			if(!isset($_GET["userID"]) && isset($_SESSION['userID']))
+			{
+				?> 
+				<div align="center">
+				</div>
+				<?php
+			}
 
 	?>
 	</div>
@@ -131,7 +116,3 @@
 
 	<?php include_once("includes/footer.php"); ?>
 
-</div>
-<?php include("includes/ga.php"); ?>
-</body>
-</html>

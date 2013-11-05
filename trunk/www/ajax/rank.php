@@ -8,8 +8,7 @@ if(isset($_REQUEST['cid'])){
 	$cid = "-1";
 }
 
-
-$resultado = mysql_query( "select Inicio from Concurso where ( CID = {$cid}  ) ;" );
+$resultado = mysql_query( "select Inicio from Concurso where ( CID = {$cid}  ) ;" ) or die(mysql_error());
 $row = mysql_fetch_array($resultado);
 $inicio = $row['Inicio'];
 

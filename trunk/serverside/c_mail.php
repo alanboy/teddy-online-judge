@@ -1,6 +1,6 @@
 <?php
 
-require_once "Mail.php";
+//require_once "Mail.php";
 
 function EnviarMail($cuerpo, $destinatario, $titulo) {
 

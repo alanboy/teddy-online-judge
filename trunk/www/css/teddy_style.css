@@ -1,18 +1,195 @@
 
+			#avatar{
+				margin-top: -3px;
+				margin-right: 3px;
+				vertical-align: middle;
+				border: 1px solid white;
+				}
+
+		.post>form{
+			width:400px;
+			margin:auto;
+			margin-top:30px;
+			padding:30px;
+			border:1px solid #bbb;
+			-moz-border-radius:11px;
+		}
+
+		.post>form label{
+			display:block;
+			color:#777777;
+			font-size:13px;
+		}
+		.post>form p{
+			color:#777777;
+			font-size:14px;
+			text-align:justify;
+			margin-bottom:20px;
+		}
+		.post>form input.text{
+			background:#FBFBFB none repeat scroll 0 0;
+			border:1px solid #E5E5E5;
+			font-size:24px;
+			margin-bottom:16px;
+			margin-right:6px;
+			margin-top:2px;
+			padding:3px;
+			width:97%;
+		}
+		.post>form select{
+			background:#FBFBFB none repeat scroll 0 0;
+			border:1px solid #E5E5E5;
+			font-size: 12px;
+			margin-bottom:16px;
+			margin-right:6px;
+			margin-top:2px;
+			padding:3px;
+			width:80%;
+		}
+		.post>form input.button {
+			-moz-border-radius-bottomleft:6px;
+			-moz-border-radius-bottomright:6px;
+			-moz-border-radius-topleft:6px;
+			-moz-border-radius-topright:6px;
+			border:1px solid #AAAAAA;
+			font-size:16px;
+			padding:3px;
+		}
+		.right{
+			text-align:right;
+		}
+	
+		.datos form {
+			width:400px;
+			margin:auto;
+			margin-top:30px;
+			padding:30px;
+			border:1px solid #bbb;
+			-moz-border-radius:11px;
+		}
+		.datos label{
+			display:block;
+			color:#777777;
+			font-size:13px;
+		}
+		.datos p{
+			color:#777777;
+			font-size:14px;
+			text-align:justify;
+			margin-bottom:20px;
+		}
+		.datos input.text{
+			background:#FBFBFB none repeat scroll 0 0;
+			border:1px solid #E5E5E5;
+			font-size:24px;
+			margin-bottom:16px;
+			margin-right:6px;
+			margin-top:2px;
+			padding:3px;
+			width:97%;
+		}
+		.datos select{
+			background:#FBFBFB none repeat scroll 0 0;
+			border:1px solid #E5E5E5;
+			font-size: 12px;
+			margin-bottom:16px;
+			margin-right:6px;
+			margin-top:2px;
+			padding:3px;
+			width:80%;
+		}
+		
+		.datos input.button {
+			-moz-border-radius-bottomleft:6px;
+			-moz-border-radius-bottomright:6px;
+			-moz-border-radius-topleft:6px;
+			-moz-border-radius-topright:6px;
+			border:1px solid #AAAAAA;
+			font-size:16px;
+			padding:3px;
+		}
+		
+		.right{
+			text-align:right;
+		}
+			.form-big {
+				width:400px;
+				margin:auto;
+				margin-top:30px;
+				padding:30px;
+				border:1px solid #bbb;
+				-moz-border-radius:11px;
+			}
+			form label{
+				display:block;
+				color:#777777;
+				font-size:13px;
+			}
+			form p{
+				color:#777777;
+				font-size:14px;
+				text-align:justify;
+				margin-bottom:20px;
+			}
+			form input.text{
+				background:#FBFBFB none repeat scroll 0 0;
+				border:1px solid #E5E5E5;
+				font-size:24px;
+				margin-bottom:16px;
+				margin-right:6px;
+				margin-top:2px;
+				padding:3px;
+				width:97%;
+			}
+			form select{
+				background:#FBFBFB none repeat scroll 0 0;
+				border:1px solid #E5E5E5;
+				font-size: 12px;
+				margin-bottom:16px;
+				margin-right:6px;
+				margin-top:2px;
+				padding:3px;
+				width:80%;
+			}
+			form input.button {
+				-moz-border-radius-bottomleft:6px;
+				-moz-border-radius-bottomright:6px;
+				-moz-border-radius-topleft:6px;
+				-moz-border-radius-topright:6px;
+				border:1px solid #AAAAAA;
+				font-size:16px;
+				padding:3px;
+			}
+			.right{
+				text-align:right;
+			}
 * { margin: 0; padding: 0; }
 body { font: normal 12px "Helvetica Neue", Helvetica, Arial, sans-serif; }
 pre { font-size: 10px; }
 a { color:#333; text-decoration: none; padding: 1px 2px; font-weight:bold; }
+
 a:hover { color: #666; background: none; }
+
+h1{
+	color: black;
+	display: block;
+	font-family: ff-din-web-1, ff-din-web-2, HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+	height: 48px;
+	left: auto;
+	margin-bottom: 5px;
+line-height:56px; font-size:56px; font-weight:500; letter-spacing:-2px; text-transform:uppercase; text-align:center;
+}
 h2 { color:#666; font-weight: normal; margin-bottom:2px; font-size:30px; line-height:32px; }
 h3 { color:#666; font-weight: normal; margin-top:10px; }
 h4 { color:#666; font-weight: normal;  }
 img_border { background: #fff !important; border: 1px solid #999;  margin: 10px; }
 img a { text-decoration: none !important; background: #fff !important; margin: 0px; }
 .header { margin: 10px 0 0 0; }
-.header h1 {line-height:56px; font-size:56px; font-weight:500; letter-spacing:-2px; text-transform:uppercase; text-align:center;}
+/*
 .header h1 a { font-weight:normal; }
+.header h1 {}
 .header h2 {font-size:18px; font-weight:200; letter-spacing:-1px; line-height:22px; text-align: left }
+*/
 
 .wrapper { margin-right: 50px; margin-left: 50px; margin-bottom: 25px; }
 
@@ -33,7 +210,7 @@ img a { text-decoration: none !important; background: #fff !important; margin: 0
 	border-radius: 11px;
 }
 
-.post_blanco { background: #white; padding:10px; margin-top: 10px;
+.post_blanco { background: white; padding:10px; margin-top: 10px;
 	 -moz-border-radius: 11px;
 -webkit-border-radius: 11px;
 -khtml-border-radius: 11px;
@@ -61,29 +238,17 @@ ol.notes li.note .answer_content { font-weight: normal; }
 ol.notes li.note blockquote { border-color: #eee; padding: 4px 10px; margin: 10px 0px 0px 25px; }
 ol.notes li.note blockquote a { text-decoration: none; }
 
-h1{
-	color: black;
-	display: block;
-	font-family: ff-din-web-1, ff-din-web-2, HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Arial, Helvetica, sans-serif;
-	font-size: 55px;
-	height: 48px;
-	left: auto;
-	letter-spacing: -3px;
-	line-height: 48px;
-	margin-bottom: 5px;
-}
 
 
 .subtitle{
-
-color: black;
-display: block;
-font-family: ff-din-web-1, ff-din-web-2, HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Arial, Helvetica, sans-serif;
-font-size: 25px;
-height: 48px;
-line-height: 48px;
-margin: 0px auto;
-text-shadow: gray 1px 1px 6px;
+	color: black;
+	display: block;
+	font-family: ff-din-web-1, ff-din-web-2, HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+	font-size: 25px;
+	height: 48px;
+	line-height: 48px;
+	margin: 0px auto;
+	text-shadow: gray 1px 1px 6px;
 }
 
 select { font-size: 12px; }
@@ -150,4 +315,4 @@ margin-bottom: 50px;
 	position:relative;
 	top:1px;
 }
-at
+

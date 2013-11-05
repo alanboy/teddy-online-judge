@@ -1,27 +1,15 @@
-<?php 
+<?php
 	require_once("../serverside/bootstrap.php");
+
+	define("PAGE_TITLE", "Problemas");
+	require_once("includes/head.php");
 ?>
 <html>
-	<head>
-		<link rel="stylesheet" type="text/css" href="css/teddy_style.css" />
-		<title>Teddy Online Judge - Ranking</title>
-			<script src="js/jquery.min.js"></script>
-			<script src="js/jquery-ui.custom.min.js"></script>
-	</head>
 <body>
 
-<div class="wrapper">
-	<?php include_once("includes/header.php"); ?>
-	<?php include_once("includes/menu.php"); ?>
-	<?php include_once("includes/session_mananger.php"); ?>	
-
 	<div class="post_blanco">
-	<h2>Ranking de Teddy</h2>        
+	<h2>Ranking de Teddy</h2>
 	<?php
-
-	include_once("includes/db_con.php");
-
-
 	//vamos a imprimir cosas del usuario
 
 	$query = "select userID, escuela, solved, tried, ubicacion from Usuario order by ";
@@ -117,7 +105,3 @@
 
 	<?php include_once("includes/footer.php"); ?>
 
-</div>
-<?php include("includes/ga.php"); ?>
-</body>
-</html>

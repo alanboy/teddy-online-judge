@@ -2,20 +2,9 @@
 
 	require_once("../serverside/bootstrap.php");
 
+	define("PAGE_TITLE", "Ver Problema");
+	require_once("includes/head.php");
 ?>
-<html>
-	<head>
-		<link rel="stylesheet" type="text/css" href="css/teddy_style.css" />
-		<title>Teddy Online Judge - Ver Problema</title>
-			<script src="js/jquery.min.js"></script>
-			<script src="js/jquery-ui.custom.min.js"></script>
-	</head>
-<body>
-
-<div class="wrapper">
-	<?php include_once("includes/header.php"); ?>
-	<?php include_once("includes/menu.php"); ?>
-	<?php include_once("includes/session_mananger.php"); ?>	
 	<div class="post">
 	<?php
 		$consulta = "select titulo, problema, tiempoLimite, aceptados, intentos from Problema where probID = '" . addslashes($_GET["id"]) . "';";

@@ -1,6 +1,12 @@
 <?php 
 
-require_once("../serverside/bootstrap.php");
+	require_once("../serverside/bootstrap.php");
+
+	define("PAGE_TITLE", "Problemas");
+	require_once("includes/head.php");
+
+
+
 
 //validar el concurso que voy a renderear
 if(!isset($_REQUEST["cid"])){
@@ -50,7 +56,8 @@ if( time() < strtotime($row["Inicio"]) ){
 /***** ****************************
 	CABECERA
  ***** ****************************/
-function start(){
+function start()
+{
 	global $CONTEST;
 	global $STATUS;
 	global $CDATA;	
@@ -157,112 +164,94 @@ function imprimirForma(){
 /***** ****************************
 	ENVIAR PROBLEMA
  ***** ****************************/
-function enviando(){
-		global $CDATA;	
-		
-		
-		//tomo el valor de un elemento de tipo texto del formulario
-		$usuario 		= $_SESSION	["userID"];
-		$prob    		= $_POST["prob"];
-		$CONCURSO_ID 	= $_REQUEST['cid'];
+function enviando()
+{
+	global $CDATA;	
 
-		//revisar que su ultimo envio sea mayor a 5 minutos
-		
-		//revisar que este problema exista para este concurso
-		$PROBLEMAS = explode(' ', $CDATA["Problemas"]);						
-		
-		$found = false;
 
-		for ($i=0; $i< sizeof( $PROBLEMAS ); $i++) {
-			if($prob ==$PROBLEMAS[$i]) $found = true;
-		}
-		
-		if(!$found){
-			echo "<br><div align='center'><b>Ups, este problema no es parte de este concurso.</b><br><br></div>";
-			imprimirForma();
-			return;
-		}
-		
-		
-		
-		//revisar si existe este problema
-		$consulta = "select probID , titulo from Problema where BINARY ( probID = '{$prob}' ) ";
-		$resultado = mysql_query($consulta) or die('Algo anda mal: ' . mysql_error());
+	//tomo el valor de un elemento de tipo texto del formulario
+	$usuario 		= $_SESSION	["userID"];
+	$prob    		= $_POST["prob"];
+	$CONCURSO_ID 	= $_REQUEST['cid'];
 
-		//si este problema no existe, salir
-		if(mysql_num_rows($resultado) != 1) {
-			echo "<br><div align='center'><b>Ups, este problema no existe.</b><br>Vuelve a intentar. Recuerda que el id es el numero que acompa&ntilde;a a cada problema.<br><br></div>";
-			imprimirForma();
-			return;
-		}
-		
-		
-		$row = mysql_fetch_array( $resultado );
-		$TITULO = $row["titulo"];
+	//revisar que su ultimo envio sea mayor a 5 minutos
 
-		//datos del archivo
-		$nombre_archivo = $_FILES['userfile']['name'];
-		$tipo = $_FILES['userfile']['type'];
-		$fname = $_FILES['userfile']['name'];
+	//revisar que este problema exista para este concurso
+	$PROBLEMAS = explode(' ', $CDATA["Problemas"]);						
 
-		//revisar que no existan espacios en blacno en el nombre del archivo
-		$fname = strtr($fname, " ", "0");
-		$fname = strtr($fname, "_", "0");
-		$fname = strtr($fname, "'", "0");
+	$found = false;
 
-		//compruebo si las características del archivo son las que deseo
-		//si (no es text/x-java) y (no termina con .java) tons no es java	
-			
-		if ( !(endsWith($fname, ".java") || endsWith($fname, ".c") || endsWith($fname, ".cpp")|| endsWith($fname, ".py") || endsWith($fname, ".pl")) ) {
-    			echo "<br><br><div align='center'><h2>Error :-(</h2>Debes subir un archivo que contenga un codigo fuente valio y que termine en alguna de las extensiones que <b>teddy</b> soporta.<br>";
-			echo "Tipo no permitido: <b>". $tipo . "</b> para <b>". $_FILES['userfile']['name'] ."</b></div><br>";
+	for ($i=0; $i< sizeof( $PROBLEMAS ); $i++) {
+		if($prob ==$PROBLEMAS[$i]) $found = true;
+	}
 
-			imprimirForma();
-
-			return;
-		}
-		
-		
-		
-		//insertar userID, probID, remoteIP
-		mysql_query ( "INSERT INTO Ejecucion (`userID` , `probID` , `remoteIP`, `Concurso`) VALUES ('{$usuario}', {$prob}, '" . $_SERVER['REMOTE_ADDR']. "', " . $_REQUEST['cid'] . "); " ) or die('Algo anda mal: ' . mysql_error());
-		$resultado = mysql_query ( "SELECT `execID` FROM `Ejecucion` order by `fecha` desc limit 1;" ) or die('Algo anda mal: ' . mysql_error());
-		$row = mysql_fetch_array ( $resultado );
-
-		$execID = $row["execID"];
-
-		//mover el archio a donde debe de estar
-		if (move_uploaded_file($_FILES['userfile']['tmp_name'], "../codigos/" . $execID . "_" . $fname)){
-
-		}else{
-			//if no problem al subirlo	
-			echo "Ocurrio algun error al subir el archivo. No pudo guardarse.";
-		}
-	
+	if(!$found){
+		echo "<br><div align='center'><b>Ups, este problema no es parte de este concurso.</b><br><br></div>";
 		imprimirForma();
+		return;
+	}
+
+
+
+	//revisar si existe este problema
+	$consulta = "select probID , titulo from Problema where BINARY ( probID = '{$prob}' ) ";
+	$resultado = mysql_query($consulta) or die('Algo anda mal: ' . mysql_error());
+
+	//si este problema no existe, salir
+	if(mysql_num_rows($resultado) != 1) {
+		echo "<br><div align='center'><b>Ups, este problema no existe.</b><br>Vuelve a intentar. Recuerda que el id es el numero que acompa&ntilde;a a cada problema.<br><br></div>";
+		imprimirForma();
+		return;
+	}
+
+
+	$row = mysql_fetch_array( $resultado );
+	$TITULO = $row["titulo"];
+
+	//datos del archivo
+	$nombre_archivo = $_FILES['userfile']['name'];
+	$tipo = $_FILES['userfile']['type'];
+	$fname = $_FILES['userfile']['name'];
+
+	//revisar que no existan espacios en blacno en el nombre del archivo
+	$fname = strtr($fname, " ", "0");
+	$fname = strtr($fname, "_", "0");
+	$fname = strtr($fname, "'", "0");
+
+	//compruebo si las características del archivo son las que deseo
+	//si (no es text/x-java) y (no termina con .java) tons no es java	
+
+	if ( !(endsWith($fname, ".java") || endsWith($fname, ".c") || endsWith($fname, ".cpp")|| endsWith($fname, ".py") || endsWith($fname, ".pl")) ) {
+		echo "<br><br><div align='center'><h2>Error :-(</h2>Debes subir un archivo que contenga un codigo fuente valio y que termine en alguna de las extensiones que <b>teddy</b> soporta.<br>";
+		echo "Tipo no permitido: <b>". $tipo . "</b> para <b>". $_FILES['userfile']['name'] ."</b></div><br>";
+
+		imprimirForma();
+
+		return;
+	}
+
+
+
+	//insertar userID, probID, remoteIP
+	mysql_query ( "INSERT INTO Ejecucion (`userID` , `probID` , `remoteIP`, `Concurso`) VALUES ('{$usuario}', {$prob}, '" . $_SERVER['REMOTE_ADDR']. "', " . $_REQUEST['cid'] . "); " ) or die('Algo anda mal: ' . mysql_error());
+	$resultado = mysql_query ( "SELECT `execID` FROM `Ejecucion` order by `fecha` desc limit 1;" ) or die('Algo anda mal: ' . mysql_error());
+	$row = mysql_fetch_array ( $resultado );
+
+	$execID = $row["execID"];
+
+	//mover el archio a donde debe de estar
+	if (move_uploaded_file($_FILES['userfile']['tmp_name'], "../codigos/" . $execID . "_" . $fname)){
+
+	}else{
+		//if no problem al subirlo	
+		echo "Ocurrio algun error al subir el archivo. No pudo guardarse.";
+	}
+
+	imprimirForma();
 }
 
 
 ?>
-<html>
-<head>
-		<link rel="stylesheet" type="text/css" href="css/teddy_style.css" />
-			<title>Teddy Online Judge - Concurso</title>
-			<script src="js/jquery.min.js"></script>
-			<script src="js/jquery-ui.custom.min.js"></script>
-
-	        <script type="text/javascript" src="uploadify/swfobject.js"></script>
-	        <script type="text/javascript" src="uploadify/jquery.uploadify.v2.1.0.min.js"></script>
-			<link rel="stylesheet" type="text/css" href="uploadify/uploadify.css" />
-</head>
-<body>
-
-<div class="wrapper">
-	<?php include_once("includes/header.php"); ?>
-	<?php include_once("includes/menu.php"); ?>
-	<?php include_once("includes/session_mananger.php"); ?>	
-	
-	
 	<!-- 
 		INFORMACION DEL CONCURSO
 	-->
@@ -270,7 +259,6 @@ function enviando(){
 	<?php
 		//informacion del concurso
 		start();
-
 	?>	
 	</div>
 	
@@ -299,43 +287,6 @@ function enviando(){
 						?>
 							<b><span id='time_left'><?php echo $interval->format('%H:%I:%S'); ?></span></b>.
 							<script>
-								function updateTime(){
-
-									data = $("#time_left").html().split(":");
-									hora = data[0];
-									min = data[1];
-									seg = data[2];
-									
-									if(--seg < 0){
-										seg = 59;
-										
-										if(--min < 0){
-											min = 59;
-
-											if(--hora < 0){
-												hora = 59;
-											}
-											
-											hora = hora < 10 ? "0" + hora : hora;
-										}
-										
-										min = min < 10 ? "0" + min : min;
-									}
-
-									seg = seg < 10 ? "0" + seg : seg;
-																		
-									if(hora == 0 && min == 0 && seg == 0)
-									{
-										window.location.reload( false );
-										
-									}
-									
-									//hora = hora < 10 ? "0" + hora : hora;
-
-																							
-									$("#time_left").html(hora+":"+min+":"+seg);
-									
-								}
 								setInterval("updateTime()", 1000);
 							</script>
 						<?php
@@ -399,97 +350,9 @@ function enviando(){
 					</tr> 
 				</thead> 
 				<tbody id="ranking_tabla">
-
 				</tbody>
 				</table>
 			</div>
-			<script>
-			
-			var CurrentRank = null;
-			
-			function showRank(){
-				//console.log("Mostrando rank", CurrentRank);
-				$("#ranking_tabla").fadeOut("fast", function (){
-					html = "";
-					
-					for( a = 0; a < CurrentRank.length; a++ )
-					{	
-						if(a%2 ==0){
-							html += "<TR style=\"background:#e7e7e7; height: 50px;\">";
-						}else{
-							html += "<TR style=\"background:white; height: 50px;\">";
-						}
-						html +=  "<TD align='center' style='font-size: 18px' ><b>" +CurrentRank[a].RANK+ "</b></a></TD>";
-						html +=  "<TD align='center' >" +CurrentRank[a].userID+"</a> </TD>";
-						html +=  "<TD align='center' >" +CurrentRank[a].ENVIOS+"</a> </TD>";
-						html +=  "<TD align='center' >" +CurrentRank[a].OK+"</a> </TD>";
-						
-						var problemas = [<?php foreach($PROBLEMAS as $p){echo $p . ",";}; ?>];
-						//console.log(problemas)
-						//console.log(CurrentRank[a].problemas)
-						
-						for( z = 0 ; z < problemas.length ; z++ ){
-							foo = "";
-							for ( p in CurrentRank[a].problemas  ){
-								if(p == problemas[z]){
-									//estoy en este problema
-									foo = "x";
-									//CurrentRank[a].problemas[p].bad
-									if(CurrentRank[a].problemas[p].ok > 0){
-										
-										tiempo = parseInt(CurrentRank[a].problemas[p].ok_time / 60);
-										tiempo += ":"; 
-										bar = parseInt((parseInt(CurrentRank[a].problemas[p].ok_time % 60)));
-										if(bar<=9){ bar = "0"+bar;}
-										tiempo += bar;
-										//tiempo += parseInt((parseInt(CurrentRank[a].problemas[p].ok_time % 60)*60)/100);
-										/*
-											100 - 60
-											x - 
-											(x*60)/100
-										*/
-										foo = "<b>" +  tiempo + "</b> / "+CurrentRank[a].problemas[p].ok_time+"<br>";
-										foo += "("+CurrentRank[a].problemas[p].bad+")";
-									}else{
-										foo = "-"+CurrentRank[a].problemas[p].bad+"";
-									}
-									
-
-									
-								}
-							}
-							html +=  "<TD align='center' >" + foo +"</TD>";
-
-						}
-
-						html +=  "<TD align='center' >" +CurrentRank[a].PENALTY+" </TD>";
-						html +=  "</TR>";
-
-					}
-
-					document.getElementById("ranking_tabla").innerHTML = html;
-					
-					$("#ranking_tabla").fadeIn();
-				});
-
-			}
-			
-
-			function askforrank (){
-				$.ajax({
-				  url: "ajax/rank.php",
-				  data: "cid= <?php echo $_REQUEST['cid']; ?>",
-				  cache: false,
-				  success: function(data){
-					CurrentRank = jQuery.parseJSON(data);
-					showRank();
-				  }
-				})			
-			}
-			
-			
-
-			</script>
 		</div>
 		<?php
 	}
@@ -522,114 +385,11 @@ function enviando(){
 					</tr> 
 				</thead> 
 				<tbody id="runs_tabla">
-
 				</tbody>
 				</table>
 			</div>
 			<script>
-			
-			var CurrentRuns = null;
-			
-			function showRuns(){
-				//los runs han cambiado, entonces mostrar el rank
-				askforrank();
-				
-				//console.log("Mostrando runs", CurrentRuns);
-				
-				$("#runs_div").fadeOut("fast", function (){
-					html = "";
-
-					for( a = 0; a < CurrentRuns.length; a++ )
-					{	
-
-						if(a%2 ==0){
-							html += "<TR style=\"background:#e7e7e7;\">";
-						}else{
-							html += "<TR style=\"background:white;\">";
-						}
-						
-						//color them statusessss
-						switch(CurrentRuns[a].status){
-							case "COMPILACION":
-								CurrentRuns[a].status = "<span style='color:red;'>" + CurrentRuns[a].status + "</span>";
-							break;
-
-							case "TIEMPO":
-								CurrentRuns[a].status = "<span style='color:brown;'>" + CurrentRuns[a].status + "</span>";
-							break;
-							
-							case "OK":
-								CurrentRuns[a].status = "<span style='color:green;'><b>" + CurrentRuns[a].status + "</b></span>";
-							break;
-							
-							case "RUNTIME_ERROR":
-								CurrentRuns[a].status = "<span style='color:blue;'><b>" + CurrentRuns[a].status + "</b></span>";				
-							break;
-							
-							case "INCORRECTO":
-								CurrentRuns[a].status = "<span style='color:red;'><b>" + CurrentRuns[a].status + "</b></span>";				
-							break;
-							
-							case "JUDGING":
-							case "WAITING":
-								CurrentRuns[a].status = "<span style='color:purple;'>" + CurrentRuns[a].status + "...</span>";	//<img src='img/load.gif'>
-							break;								
-						}
-						
-						html +=  "<TD align='center' ><a href='verCodigo.php?execID=" +CurrentRuns[a].execID+ "'>" +CurrentRuns[a].execID+ "</a></TD>";
-						html +=  "<TD align='center' ><a href='verProblema.php?id=" +CurrentRuns[a].probID+"'>" +CurrentRuns[a].probID+"</a> </TD>";
-						html +=  "<TD align='center' ><a href='runs.php?user=" +CurrentRuns[a].userID+"'>" +CurrentRuns[a].userID+"</a> </TD>";
-						html +=  "<TD align='center' >" +CurrentRuns[a].LANG+"</TD>";
-						html +=  "<TD align='center' >" +CurrentRuns[a].status+"</TD>";
-						html +=  "<TD align='center' >" +(parseInt(CurrentRuns[a].tiempo)/1000)+" Seg. </TD>";
-						html +=  "<TD align='center' >" +CurrentRuns[a].fecha+" </TD>";
-						html +=  "</TR>";
-					}
-
-					document.getElementById("runs_tabla").innerHTML = html;
-					$("#runs_div").fadeIn();
-				})
-
-			}
-			
-			
-			function runsCallback(data){
-				
-				if(CurrentRuns === null){
-					//es la primera vez
-					CurrentRuns = data;
-					showRuns();
-					return;
-				}
-			
-				if(CurrentRuns.length == data.length){
-					// es el mismo, no hacer nada
-					return;
-				}
-					
-				CurrentRuns = data;
-				showRuns();
-
-			}
-			
-			function askforruns (){
-
-				$.ajax({
-				  url: "ajax/runs.php",
-				  data: "cid= <?php echo $_REQUEST['cid']; ?>",
-				  cache: false,
-				  success: function(data){
-					var obj = jQuery.parseJSON(data);
-					runsCallback(obj);
-				  }
-				});	
-				
-				
-				setTimeout("askforruns()",5000);		
-			}
-			
-			askforruns();
-
+				askforruns(<?php echo $_REQUEST['cid']; ?>);
 			</script>
 		</div>
 		<?php
@@ -638,15 +398,4 @@ function enviando(){
 	
 	
 	<?php include_once("includes/footer.php"); ?>
-</div>	
-
-
-
-
-
-<?php include("includes/ga.php"); ?>
-
-
-</body>
-</html>
 

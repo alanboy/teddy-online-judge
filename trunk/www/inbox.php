@@ -1,80 +1,16 @@
 <?php
 	require_once("../serverside/bootstrap.php");
 
+	define("PAGE_TITLE", "Problemas");
+	require_once("includes/head.php");
+
 	if(isset($_SESSION['userID'])){
 		$q = "UPDATE  `teddy`.`Mensaje` SET  `unread` =  '0' WHERE para = '".$_SESSION['userID']."' ;";
 		$resultado = mysql_query($q) or die('Donte be evil with teddy :P ');		
 	}
 
 ?>
-<html>
-	<head>
-		<link rel="stylesheet" type="text/css" href="css/teddy_style.css" />
-		<title>Teddy Online Judge - Inbox</title>
-			<script src="js/jquery.min.js"></script>
-			<script src="js/jquery-ui.custom.min.js"></script>
-		<style>
-
-			.form-big {
-				width:400px;
-				margin:auto;
-				margin-top:30px;
-				padding:30px;
-				border:1px solid #bbb;
-				-moz-border-radius:11px;
-			}
-			form label{
-				display:block;
-				color:#777777;
-				font-size:13px;
-			}
-			form p{
-				color:#777777;
-				font-size:14px;
-				text-align:justify;
-				margin-bottom:20px;
-			}
-			form input.text{
-				background:#FBFBFB none repeat scroll 0 0;
-				border:1px solid #E5E5E5;
-				font-size:24px;
-				margin-bottom:16px;
-				margin-right:6px;
-				margin-top:2px;
-				padding:3px;
-				width:97%;
-			}
-			form select{
-				background:#FBFBFB none repeat scroll 0 0;
-				border:1px solid #E5E5E5;
-				font-size: 12px;
-				margin-bottom:16px;
-				margin-right:6px;
-				margin-top:2px;
-				padding:3px;
-				width:80%;
-			}
-			form input.button {
-				-moz-border-radius-bottomleft:6px;
-				-moz-border-radius-bottomright:6px;
-				-moz-border-radius-topleft:6px;
-				-moz-border-radius-topright:6px;
-				border:1px solid #AAAAAA;
-				font-size:16px;
-				padding:3px;
-			}
-			.right{
-				text-align:right;
-			}
-		</style>
-	</head>
 <body>
-
-<div class="wrapper">
-
-	<?php include_once("includes/header.php"); ?>
-	<?php include_once("includes/menu.php"); ?>
-	<?php include_once("includes/session_mananger.php"); ?>	
 
 	<?php
 

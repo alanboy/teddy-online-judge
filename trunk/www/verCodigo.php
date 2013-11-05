@@ -2,67 +2,45 @@
 
 	require_once("../serverside/bootstrap.php");
 
+	define("PAGE_TITLE", "Editar perfil");
+	require_once("includes/head.php");
+
 ?>
-<html>
-<head>
-		<link rel="stylesheet" type="text/css" href="css/teddy_style.css" />
-		<title>Teddy Online Judge - Ver Codigo Fuente</title>
-			<script src="js/jquery.min.js"></script>
-			<script src="js/jquery-ui.custom.min.js"></script>
-		<link type="text/css" rel="stylesheet" href="css/SyntaxHighlighter.css">
-		<script language="javascript" src="js/shCore.js"></script>
-		<script language="javascript" src="js/shBrushCSharp.js"></script>
-		<script language="javascript" src="js/shBrushJava.js"></script>
-		<script language="javascript" src="js/shBrushCpp.js"></script>
-		<script language="javascript" src="js/shBrushPython.js"></script>
-		<script language="javascript" src="js/shBrushXml.js"></script>
-</head>
-<body>
+	<div class="post_blanco">
+		<h2>Revisar un codigo fuente</h2>
+		<?php
+			function mostrarCodigo( $lenguaje, $execID , $row){
 
-<div class="wrapper">
-	<?php include_once("includes/header.php"); ?>
-	<?php include_once("includes/menu.php"); ?>
-	<?php include_once("includes/session_mananger.php"); ?>	
+				$file  = "../codigos/" . $execID  ;
 
-	<div class="post" style="background:white;">
+				switch($lenguaje)
+				{
+				case "JAVA": 	$file .= ".java"; 	$sintaxcolor = "java"; 		break;
+				case "C": 		$file .= ".c"; 		$sintaxcolor = "c"; 		break;
+				case "C++": 	$file .= ".cpp"; 	$sintaxcolor = "cpp"; 		break;
+				case "C#":		$file .= ".cs"; 	$sintaxcolor = "csharp"; 	break;
+				case "Python": 	$file .= ".py"; 	$sintaxcolor = "py"; 		break;
+				case "Perl": 	$file .= ".pl"; 	$sintaxcolor = "py"; 		break;
+				default : 		$file .= ".java"; 	$sintaxcolor = "java";
+				}
 
-	<h2>Revisar un codigo fuente</h2>
+				$lines = file($file);
+				$codigo = "";
+				$lineas_num = "";
+				foreach( $lines as $line_num => $line ){
+					$codigo .= htmlspecialchars( $line );
+					$lineas_num .= ($line_num + 1) . "<br>";
+				}
 
-<?php
-
-
-
-	function mostrarCodigo( $lenguaje, $execID , $row){
-
-		$file  = "../codigos/" . $execID  ;
-
-		switch($lenguaje){
-			case "JAVA": 	$file .= ".java"; 	$sintaxcolor = "java"; 		break;
-			case "C": 		$file .= ".c"; 		$sintaxcolor = "c"; 		break;
-			case "C++": 	$file .= ".cpp"; 	$sintaxcolor = "cpp"; 		break;
-			case "C#":		$file .= ".cs"; 	$sintaxcolor = "csharp"; 	break;
-			case "Python": 	$file .= ".py"; 	$sintaxcolor = "py"; 		break;
-			case "Perl": 	$file .= ".pl"; 	$sintaxcolor = "py"; 		break;
-			default : 		$file .= ".java"; 	$sintaxcolor = "java";
-		}
-
-		$lines = file($file);
-			$codigo = "";
-			$lineas_num = "";
-			foreach( $lines as $line_num => $line ){
-			$codigo .= htmlspecialchars( $line );
-			$lineas_num .= ($line_num + 1) . "<br>";
-		}
-
-		if($_SESSION['userMode'] == "OWNER"){
-			?>
+				if($_SESSION['userMode'] == "OWNER"){
+?>
 			<div class="post">
 				<div style="font-size: 14px;">Admin Options</div>
 				<a href="rerun.php?execID=<?php echo $execID ?>"><h3>Re-Judge !</h3></a>
 				<a href=""><h3>Enviar un mensaje a este usuario</h3></a>
 			</div>
-			<?php
-		}
+<?php
+				}
 		?>
 		<div class="post">
 			<div align=center >
@@ -164,42 +142,9 @@
 		}
 
 	}
-
-
-	// --- conectarse a la bd ---
-	include_once("includes/db_con.php");
-
-
 	revisarLogin();
-
-	// --- cerrar conexion ---
-	if( isset($resultado))
-		 mysql_free_result($resultado);
-	if( isset($enlace))
-		mysql_close($enlace);
 ?>
-
-	
 	</div>
 
-
-
-
-
 	<?php include_once("includes/footer.php"); ?>
-
-</div>
-
-
-<script language="javascript">
-window.onload = function () {
-
-    dp.SyntaxHighlighter.ClipboardSwf = 'flash/clipboard.swf';
-    dp.SyntaxHighlighter.HighlightAll('code');
-}
-
-</script>
-<?php include("includes/ga.php"); ?>
-</body>
-</html>
 
