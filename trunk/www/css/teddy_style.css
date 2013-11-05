@@ -1,6 +1,6 @@
 
 * { margin: 0; padding: 0; }
-body { color: ; font: normal 12px "Helvetica Neue", Helvetica, Arial, sans-serif; background: #fff; text-shadow:0 0 0 #FFFFFF;}
+body { font: normal 12px "Helvetica Neue", Helvetica, Arial, sans-serif; }
 pre { font-size: 10px; }
 a { color:#333; text-decoration: none; padding: 1px 2px; font-weight:bold; }
 a:hover { color: #666; background: none; }
@@ -12,7 +12,7 @@ img a { text-decoration: none !important; background: #fff !important; margin: 0
 .header { margin: 10px 0 0 0; }
 .header h1 {line-height:56px; font-size:56px; font-weight:500; letter-spacing:-2px; text-transform:uppercase; text-align:center;}
 .header h1 a { font-weight:normal; }
-.header h2 {font-size:18px; font-weight:200; letter-spacing:-1px; line-height:22px; text-align:center; }
+.header h2 {font-size:18px; font-weight:200; letter-spacing:-1px; line-height:22px; text-align: left }
 
 .wrapper { margin-right: 50px; margin-left: 50px; margin-bottom: 25px; }
 
@@ -106,5 +106,48 @@ margin-bottom: 50px;
 
 
 
-
-
+.botonAzul {
+	-moz-box-shadow:inset 0px 1px 0px 0px #bbdaf7;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #bbdaf7;
+	box-shadow:inset 0px 1px 0px 0px #bbdaf7;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #79bbff), color-stop(1, #378de5) );
+	background:-moz-linear-gradient( center top, #79bbff 5%, #378de5 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#79bbff', endColorstr='#378de5');
+	background-color:#79bbff;
+	-webkit-border-top-left-radius:6px;
+	-moz-border-radius-topleft:6px;
+	border-top-left-radius:6px;
+	-webkit-border-top-right-radius:6px;
+	-moz-border-radius-topright:6px;
+	border-top-right-radius:6px;
+	-webkit-border-bottom-right-radius:6px;
+	-moz-border-radius-bottomright:6px;
+	border-bottom-right-radius:6px;
+	-webkit-border-bottom-left-radius:6px;
+	-moz-border-radius-bottomleft:6px;
+	border-bottom-left-radius:6px;
+	text-indent:1.41px;
+	border:1px solid #84bbf3;
+	display:inline-block;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:normal;
+	font-style:normal;
+	height:33px;
+	line-height:33px;
+	width:232px;
+	text-decoration:none;
+	text-align:center;
+	text-shadow:1px 1px 0px #528ecc;
+}
+.botonAzul:hover {
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #378de5), color-stop(1, #79bbff) );
+	background:-moz-linear-gradient( center top, #378de5 5%, #79bbff 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#378de5', endColorstr='#79bbff');
+	background-color:#378de5;
+}.botonAzul:active {
+	position:relative;
+	top:1px;
+}
+at

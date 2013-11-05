@@ -28,6 +28,7 @@
 		<table>
 		<tr>
 		<td style="text-align:justify;">
+		<br>
 		    	<p>Teddy es un oso de peluche, como se puede apreciar en la figura 1.0. Lo que lo distingue de los dem&aacute;s peluches es que Teddy sabe programar.
 			<br><br>
 			Introducido al mundo de la programaci&oacute;n a la tierna edad de d&iacute;a y medio de haber sido fabricado, Teddy es uno de los programadores m&aacute;s h&aacute;biles, habiendo resuelto todos los problemas del mundo. Conoce todos los trucos y t&eacute;cnicas para convertir un problema aparentemente imposible en algo tan sencillo que hasta un oso podr&iacute;a resolver.
@@ -47,12 +48,17 @@
 		</td>
 		</tr>
 		</table>
-
+		<div align="center" >
+		<div class="botonAzul">Quiero practicar</div>
+		<div class="botonAzul">Quiero organizar un concurso</div>
+		</div >
 	</div>
 
 	<div class="post">
 		<div align="center"><h2>Ultimas Noticias</h2></div>
-
+		<!--
+<div class="fb-like-box" data-href="http://www.facebook.com/TeddyOnlineJudge" data-width="1300" data-colorscheme="light" data-show-faces="false" data-header="false" data-stream="true" data-show-border="false"></div>
+		-->
 		<ul>
 		<?php 
 		$res = mysql_query("select * from Aviso order by fecha desc limit 10"); 

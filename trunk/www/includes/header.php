@@ -4,9 +4,12 @@
 		<img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub">
 	</a>
 
-<div class="header" align="center" >
+<div class="header" align="left" >
 		<table border=0>
 			<tr>
+				<td rowspan=2>
+					<img style="height:80px" src="img/teddy.jpg">
+				</td>
 				<td><h1>teddy online judge</h1></td>
 				<td rowspan=2 valign=top>
 					<div 

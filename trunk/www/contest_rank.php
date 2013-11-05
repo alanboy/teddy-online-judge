@@ -11,19 +11,13 @@ if(!isset($_REQUEST["cid"])){
 $q = "SELECT * from Concurso where CID = ". mysql_real_escape_string( $_REQUEST['cid'] ) .";";
 $resultado = mysql_query($q) or pretty_die("Error al buscar este concurso.");
 
-
-
-
 if(mysql_num_rows($resultado) != 1) {
 	die("Este concurso no existe.");
 }
 
-
-
 $CONTEST = NULL;
 $STATUS = null;
 $CDATA = null;
-	
 
 //este concurso existe
 $CONTEST = $_REQUEST['cid'] ;
