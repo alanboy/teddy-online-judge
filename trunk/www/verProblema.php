@@ -3,6 +3,7 @@
 	require_once("../serverside/bootstrap.php");
 
 	define("PAGE_TITLE", "Ver Problema");
+
 	require_once("includes/head.php");
 ?>
 	<div class="post">
@@ -138,10 +139,5 @@
 	}
 	?>
 
-
 	<?php include_once("includes/footer.php"); ?>
 
-</div>
-<?php include("includes/ga.php"); ?>
-</body>
-</html>

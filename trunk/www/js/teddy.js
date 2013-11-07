@@ -1,4 +1,7 @@
 
+var CurrentRuns = null;
+var CurrentRank = null;
+
 window.onload = function ()
 {
 	dp.SyntaxHighlighter.ClipboardSwf = 'flash/clipboard.swf';
@@ -8,108 +11,73 @@ window.onload = function ()
 
 //////////////////////////////////////////////
 // editprofile.php
-function _validate()
-{
-	if($('nombre').value.length<7){
-		return Array("Ingrese su nombre completo por favor.", $('nombre'));
-	}
-	if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($('email').value))){
-		return Array("Ingrese un email valido.", $('email'));
-	}
 
-	if($("nick").value.indexOf(" ") > -1){
-		return Array("Tu nick no puede contener espacios.", $('nick'));
-	}
-
-	if($("twitter").value.indexOf("@") != -1){
-		//return Array("Tu id de twitter sin el arroba plis :P", $('twitter'));
-		$("twitter").value = $("twitter").value.substring(1);
-	}
-	/*
-	   if($("password").value.length<5){
-	   return Array("Ingresa un password con una logitud de 5 caracteres.", $('password'));
-	   }
-	   if($("password").value!=$("re_password").value){
-	   return Array("Los passwords ingresados no son iguales. Confirma nuevamente tu password", $("re_password"));
-	   }
-	*/
-	if($("escuela").value.length==0){
-		return Array("Ingresa tu escuela de procedencia, es muy importante para para nosotros. Gracias", $('escuela'));
-	}
-	return true;
-}
-
-
-function validate()
-{
-	rs = _validate();
-	if(rs==true){
-		$("form").value="true";
-		return true; 
-	}
-	else {
-		alert(rs[0]);
-		rs[1].focus();
-		rs[1].select();
-	}
-	return false;
-}
 
 //////////////////////////////////////////////
 //registro.php
 var states = new Array("Mexico","Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antarctica", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burma", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo, Democratic Republic", "Congo, Republic of the", "Costa Rica", "Cote d'Ivoire", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "East Timor", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Greenland", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Korea, North", "Korea, South", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Mongolia", "Morocco", "Monaco", "Mozambique", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Norway", "Oman", "Pakistan", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Samoa", "San Marino", " Sao Tome", "Saudi Arabia", "Senegal", "Serbia and Montenegro", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "Spain", "Sri Lanka", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe");
 
 
-function _validate(){
-
-	if( $('#nombre')[0].value.length<7){
+function _validate()
+{
+	if( $('#nombre')[0].value.length<7)
+	{
 		return Array("Ingrese su nombre completo por favor.", $('#nombre')[0]);
 	}
 
-	if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($('#email')[0].value))){
+	if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($('#email')[0].value)))
+	{
 		return Array("Ingrese un email valido.", $('#email')[0]);
 	}
 
-	if($("#nick")[0].value.indexOf(" ") > -1){
+	if($("#nick")[0].value.indexOf(" ") > -1)
+	{
 		return Array("Tu nick no puede contener espacios.", $('#nick')[0]);
 	}
 
-	if($("#twitter")[0].value.indexOf("@") != -1){
+	if($("#twitter")[0].value.indexOf("@") != -1)
+	{
 		//return Array("Tu id de twitter sin el arroba plis :P", $('twitter'));
 		$("#twitter")[0].value = $("#twitter")[0].value.substring(1);
 	}
 
-	if($("#nick")[0].value.length < 5){
+	if($("#nick")[0].value.length < 5)
+	{
 		return Array("Tu nick no debe ser menor a 5 caracteres.", $('#nick')[0]);
 	}
 
-	if($("#password")[0].value.length<5){
+	if($("#password")[0].value.length<5)
+	{
 		return Array("Ingresa un password con una logitud de 5 caracteres.", $('#password')[0]);
 	}
-	if($("#password")[0].value != $("#re_password")[0].value){
+
+	if($("#password")[0].value != $("#re_password")[0].value)
+	{
 		return Array("Los passwords ingresados no son iguales. Confirma nuevamente tu password", $("#re_password")[0]);
 	}
-	if($("#escuela")[0].value.length==0){
+	if($("#escuela")[0].value.length==0)
+	{
 		return Array("Ingresa tu escuela de procedencia, es muy importante para para nosotros. Gracias", $('#escuela')[0]);
 	}
 	return true;
 }
 
-function validate(){
+function validate()
+{
 
 	rs = _validate();
-	console.log("validando", rs)
-
-		if(rs=== true){
-			$("form").value="true";
-			return true; 
-		}else {
-			alert(rs[0]);
-			rs[1].focus();
-			rs[1].select();
-			return false;
-		}
-
+	if(rs === true)
+	{
+		$("form").value="true";
+		return true;
+	}
+	else
+	{
+		alert(rs[0]);
+		rs[1].focus();
+		rs[1].select();
+		return false;
+	}
 }
 
 
@@ -118,16 +86,14 @@ function validate(){
 function show_new_contest()
 {
 	$("#new_contest_button").slideUp('fast', function (){
-			$("#new_contest_form").slideDown();				
-			});
-
+			$("#new_contest_form").slideDown();
+		});
 }
-
 
 //////////////////////////////////////////////
 //contest_rank.php
-function updateTime(){
-
+function updateTime()
+{
 	data = $("#time_left").html().split(":");
 	hora = data[0];
 	min = data[1];
@@ -156,7 +122,6 @@ function updateTime(){
 }
 
 
-var CurrentRuns = null;
 
 function showRuns()
 {
@@ -259,20 +224,18 @@ function askforruns (cid)
 
 
 
-var CurrentRank = null;
 
 function showRank()
 {
-	//console.log("Mostrando rank", CurrentRank);
 	$("#ranking_tabla").fadeOut("fast", function (){
 		html = "";
 
 		for( a = 0; a < CurrentRank.length; a++ )
 		{
 			if(a%2 ==0){
-				html += "<TR style=\"background:#e7e7e7; height: 50px;\">";
+			html += "<TR style=\"background:#e7e7e7; height: 50px;\">";
 			}else{
-				html += "<TR style=\"background:white; height: 50px;\">";
+			html += "<TR style=\"background:white; height: 50px;\">";
 			}
 			html +=  "<TD align='center' style='font-size: 18px' ><b>" +CurrentRank[a].RANK+ "</b></a></TD>";
 			html +=  "<TD align='center' >" +CurrentRank[a].userID+"</a> </TD>";
@@ -283,14 +246,17 @@ function showRank()
 			//console.log(problemas)
 			//console.log(CurrentRank[a].problemas)
 
-			for( z = 0 ; z < problemas.length ; z++ ){
+			for( z = 0 ; z < problemas.length ; z++ )
+			{
 			foo = "";
-			for ( p in CurrentRank[a].problemas  ){
-				if(p == problemas[z]){
-					//estoy en este problema
+			for ( p in CurrentRank[a].problemas  )
+			{
+				if(p == problemas[z])
+				{
 					foo = "x";
 					//CurrentRank[a].problemas[p].bad
-					if(CurrentRank[a].problemas[p].ok > 0){
+					if(CurrentRank[a].problemas[p].ok > 0)
+					{
 
 						tiempo = parseInt(CurrentRank[a].problemas[p].ok_time / 60);
 						tiempo += ":"; 
@@ -311,19 +277,14 @@ function showRank()
 				}
 			}
 			html +=  "<TD align='center' >" + foo +"</TD>";
-
 			}
-
 			html +=  "<TD align='center' >" +CurrentRank[a].PENALTY+" </TD>";
 			html +=  "</TR>";
+		}
 
-			}
-
-	document.getElementById("ranking_tabla").innerHTML = html;
-
-	$("#ranking_tabla").fadeIn();
+		document.getElementById("ranking_tabla").innerHTML = html;
+		$("#ranking_tabla").fadeIn();
 	});
-
 }
 
 

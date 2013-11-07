@@ -2,48 +2,16 @@
 	require_once("../serverside/bootstrap.php");
 
 	define("PAGE_TITLE", "Problemas");
+
 	require_once("includes/head.php");
 ?>
-<html>
-<body>
-
 	<div class="post_blanco">
-	<h2>Ranking de Teddy</h2>
-	<?php
-	//vamos a imprimir cosas del usuario
-
-	$query = "select userID, escuela, solved, tried, ubicacion from Usuario order by ";
-
-
-	if(isset($_GET["order"])){
-		switch ($_REQUEST["order"] ) {
-			case "ubicacion" : 	$query .= "ubicacion"; break;
-			case "escuela" :	$query .= "escuela"; break;
-			case "resueltos" : 	$query .= "solved"; break;
-			case "envios" : 	$query .= "tried"; break;
-			default:
-				$query .= "solved desc, tried";
-		}		
-	}else{
-		$query .= "solved desc, tried";
-	}
-
-	
-
-	$resultado = mysql_query($query) or die('Algo anda mal: ' . mysql_error());
-	echo "<b> ". mysql_num_rows($resultado) . "</b> usuarios<br>";
-	?>
-
 	<div align="center" >
 	<table border='0' style="font-size: 14px;" > 
 	<thead> <tr >
 		<th width='5%'>Rank</th> 
 		<th width='5%'>Usuario</th> 
-		<th width='15%'>
-			<!--<a href="rank.php?order=ubicacion">-->
-			Ubicacion
-			</a>
-		</th> 
+		<th width='15%'>Ubicacion</th> 
 		<th width='15%'><!--<a href="rank.php?order=escuela">-->Escuela<!--</a>--></th> 
 		<th width='5%'><!--<a href="rank.php?order=resueltos">-->Resueltos<!--</a>--></th> 
 		<th width='5%'><!--<a href="rank.php?order=envios">-->Envios<!--</a>--></th> 
@@ -52,10 +20,8 @@
 	</thead> 
 	<tbody>
 	<?php
-	$rank = 1;
-	$flag = true;
-    	while($row = mysql_fetch_array($resultado)){
-
+	while($false)
+	{
 		$nick = $row['userID'];
 
 		if( $row['solved'] != 0 )

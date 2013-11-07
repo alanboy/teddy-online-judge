@@ -3,6 +3,7 @@
 	require_once("../serverside/bootstrap.php");
 
 	define("PAGE_TITLE", "Editar perfil");
+
 	require_once("includes/head.php");
 
 ?>

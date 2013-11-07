@@ -2,33 +2,19 @@
 	require_once("../serverside/bootstrap.php");
 
 	define("PAGE_TITLE", "Runs");
+
 	require_once("includes/head.php");
 
 ?>
 	<div class="post_blanco">
 	<?php
-	//encontrar todos los titulos y asignarselos a un array
-	$query = mysql_query("select probID, titulo from Problema");
-	$probset = array();
-	while($foo = mysql_fetch_array($query)){
-		//print( $foo["probID"] . " "  . $foo["titulo"] );
-		$probset[ $foo["probID"] ] = $foo["titulo"];
-	}
-
-
-	$consulta = "SELECT `execID`, `userID`, `probID`, `status`, `tiempo`, `fecha`, `LANG`, `Concurso` FROM `Ejecucion` order by fecha desc LIMIT 100";
 
 	if(isset($_GET["user"])){
-		/*
-		 * ESTADISTICAS DEL USUARIO
-		 * */
-		
-		
 		//concursos
-     	$sql = 'SELECT DISTINCT concurso FROM  `Ejecucion` WHERE concurso > 0 AND userID =  "' . addslashes($_GET['user']) . '"';
+		$sql = 'SELECT DISTINCT concurso FROM  `Ejecucion` WHERE concurso > 0 AND userID =  "' . addslashes($_GET['user']) . '"';
 		$resultado = mysql_query($sql) or die('Algo anda mal: ' . mysql_error());
 		$ncontests = mysql_num_rows($resultado);
-						
+
 		//vamos a imprimir cosas del usuario
 		$query = "select userID, nombre, solved, tried, escuela, ubicacion, twitter, mail from Usuario where userID = '" . addslashes($_GET['user']) . "'";
 		$resultado = mysql_query($query) or die('Algo anda mal: ' . mysql_error());

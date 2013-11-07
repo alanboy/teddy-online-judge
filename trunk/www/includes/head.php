@@ -14,7 +14,6 @@
 		<script language="javascript" src="js/shBrushCpp.js"></script>
 		<script language="javascript" src="js/shBrushPython.js"></script>
 		<script language="javascript" src="js/shBrushXml.js"></script>
-
 		<script language="javascript" src="js/teddy.js"></script>
 	</head>
 	

@@ -2,9 +2,10 @@
 	require_once("../serverside/bootstrap.php");
 
 	define("PAGE_TITLE", "Problemas");
-	require_once("includes/head.php");
-?>
 
+	require_once("includes/head.php");
+
+?>
 	<div class="post_blanco">
 		<div align="center" >
 			<h2>Bienvenido a Teddy</h2>
@@ -122,37 +123,28 @@
 		&amp;	chl=Aceptado|Incorrecto|Tiempo|Compilacion|Runtime+Error|Otros"
 		alt="Lenguajes enviados a Teddy" />
 
-
-	<?php	
-
-
+	<?php
 		//$res = mysql_query("SELECT LANG FROM `Ejecucion` WHERE fecha = '" .  ."'");
 		$days = 6;
 		$data_for_chart  = "";
 		$data_for_chart_dates  = "";
 
-		while ( $days >= 0 ) {
-
+		while ( $days >= 0 )
+		{
 			$dia  = mktime(0, 0, 0, date("m")  , date("d")-$days, date("Y"));
-
 			$res = mysql_query("SELECT execID, fecha FROM `Ejecucion` WHERE fecha like '" . date("Y-m-d", $dia) . " %:%:%'");
-
-
 			$data_for_chart .= mysql_num_rows($res) . ",";
 			$data_for_chart_dates .= date("M+d|", $dia);	
-			$days -- ;	
-
+			$days -- ;
 		}
 
 		$data_for_chart = substr($data_for_chart , 0, strlen($data_for_chart) - 1 );
 		$data_for_chart_dates = substr($data_for_chart_dates , 0, strlen($data_for_chart_dates) - 1 );
-		
 	?>
 	</div>
 <br>
 
 	<div align="center">
-
 		<img src="http://chart.apis.google.com/chart?
 			chs=400x200
 		&amp;	chtt=Envios+de+los+ultimos+7+dias
@@ -166,60 +158,41 @@
 		&amp;	chl=<?php echo $data_for_chart_dates; ?>"
 		alt="Lenguajes enviados a Teddy" />
 	
-		<?php	
-			date_default_timezone_set('America/Mexico_City');
+		<?php
 
 			//$res = mysql_query("SELECT LANG FROM `Ejecucion` WHERE fecha = '" .  ."'");
 			$days = 6;
 			$data_for_chart  = "";
 			$data_for_chart_dates  = "";
 
-			while ( $days >= 0 ) {
-
+			while ( $days >= 0 )
+			{
 				$dia  = mktime(0, 0, 0, date("m") - $days , date("d") , date("Y"));
 
 				$res = mysql_query("sELECT count(execID) FROM `Ejecucion` WHERE fecha like '" . date("Y-m", $dia) . "-% %:%:%'");
-				//$res = mysql_query("sELECT count(execID) FROM `Ejecucion` WHERE fecha like '2010-04-% %:%:%'");
 				$row = mysql_fetch_array($res);
 				$data_for_chart .= $row[0] . ",";
 				$data_for_chart_dates .= date("M|", $dia);	
-				$days -- ;	
-				
-				//echo "<!--  ". "sELECT count(execID) FROM `Ejecucion` WHERE fecha like '" . date("Y-m", $dia) . "-% %:%:%'" ."  -->\n";
-				//echo "<!--  ". var_dump($row) ."  -->\n\n";
-
+				$days -- ;
 			}
 
 			$data_for_chart = substr($data_for_chart , 0, strlen($data_for_chart) - 1 );
 			$data_for_chart_dates = substr($data_for_chart_dates , 0, strlen($data_for_chart_dates) - 1 );
-
 		?>
 
 			<img src="http://chart.apis.google.com/chart?
 				chs=400x200
-			&amp;	chtt=Envios+de+los+ultimos+meses
-			&amp;	cht=ls
-			&amp;	chd=t:<?php echo $data_for_chart; ?>
-			&amp;	chds=0,1000
-			&amp;	chg=20,20
-			&amp;	chm=N,000000,0,-1,11
-			&amp;	chxt=x,y
-			&amp;	chco=0000FF
-			&amp;	chl=<?php echo $data_for_chart_dates; ?>"
-
-			alt="Envios a Teddy" />
-	</div>
-
+				&amp;	chtt=Envios+de+los+ultimos+meses
+				&amp;	cht=ls
+				&amp;	chd=t:<?php echo $data_for_chart; ?>
+				&amp;	chds=0,1000
+				&amp;	chg=20,20
+				&amp;	chm=N,000000,0,-1,11
+				&amp;	chxt=x,y
+				&amp;	chco=0000FF
+				&amp;	chl=<?php echo $data_for_chart_dates; ?>"
+				alt="Envios a Teddy" />
 
 	</div>
-
-
-
+	</div>
 	<?php include_once("includes/footer.php"); ?>
-
-</div>
-
-<?php include("includes/ga.php"); ?>
-</body>
-</html>
-

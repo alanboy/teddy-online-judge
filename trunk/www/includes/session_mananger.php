@@ -1,13 +1,9 @@
 <?php
 
-	/* 
-	sesion activa
-	 */
 function ok(){
 	?>
 	<div class="post">
 		<div class="navcenter" align=center>
-
 			<table border=0 style="width:100%">
 				<tr class="navcenter">
 					<td colspan=1>

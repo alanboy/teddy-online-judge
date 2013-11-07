@@ -2,6 +2,7 @@
 	require_once("../serverside/bootstrap.php");
 
 	define("PAGE_TITLE", "Problemas");
+
 	require_once("includes/head.php");
 
 ?>

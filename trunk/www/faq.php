@@ -2,16 +2,16 @@
 	require_once("../serverside/bootstrap.php");
 
 	define("PAGE_TITLE", "Problemas");
-	require_once("includes/head.php");
-?>
 
+	require_once("includes/head.php");
+
+?>
 
 <div class="post">
 <p>
 <b>&iquest; Que es Teddy  ?</b><br>
 Teddy es un juez. En la seccion de <a href="problemas.php">problemas</a> podras encontrar enunciados con una entrada y una salida.
 </p>
-
 
 <p>
 <b>&iquest; Que lenguajes puede revisar Teddy  ?</b><br>
