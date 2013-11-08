@@ -159,8 +159,6 @@
 		alt="Lenguajes enviados a Teddy" />
 	
 		<?php
-
-			//$res = mysql_query("SELECT LANG FROM `Ejecucion` WHERE fecha = '" .  ."'");
 			$days = 6;
 			$data_for_chart  = "";
 			$data_for_chart_dates  = "";

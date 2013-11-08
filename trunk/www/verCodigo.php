@@ -6,6 +6,8 @@
 
 	require_once("includes/head.php");
 
+	// This page requires a logged user
+	require_once("includes/require_login.php")
 ?>
 	<div class="post_blanco">
 		<h2>Revisar un codigo fuente</h2>

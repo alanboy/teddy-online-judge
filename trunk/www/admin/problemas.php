@@ -1,38 +1,22 @@
 <?php
-    require_once("../../serverside/bootstrap.php");
+
+	require_once("../../serverside/bootstrap.php");
+
+	define("PAGE_TITLE", "Editar perfil");
+
+	require_once("../includes/head.php");
+
+	// This page requires a logged user
+	require_once("includes/require_login.php")
 
 ?>
+<div class="post_blanco"  align=center>
+		<h2>Problemas</h2>
 
-<html>
-	<head>
-		<link rel="stylesheet" type="text/css" href="../css/teddy_style.css" />
-    		<title>Admin - Problemas</title>
-			<script src="../js/jquery.min.js"></script>
-			<script src="../js/jquery-ui.custom.min.js"></script>
-    </head>
-    <body>
-
-    <div class="wrapper">
-	    <div class="header">
-	    	<h1>teddy online judge</h1>
-	    	<h2>teddy es un oso de peluche</h2>
-	    </div>
-
-    	<?php include_once("../includes/admin.menu.php"); ?>
-
-        <div class="post_blanco"  align=center>
-        <h2>Problemas</h2>
-
-
-
-
-
-
-    <?php
-
-        $consulta = "select * from Problema ";
-        $resultado = mysql_query($consulta) or die('Algo anda mal: ' . mysql_error());
-    ?>
+<?php
+		$consulta = "select * from Problema ";
+	$resultado = mysql_query($consulta) or die('Algo anda mal: ' . mysql_error());
+?>
 
     <table border='0' width=100%> 
 	<thead> <tr >
@@ -102,20 +86,11 @@
             <TD align='center'>editar</TD>
         </tr>
         <?php
-       
 	}
-
 	?>		
 	</tbody>
 	</table>
+	</div>
 
+	<?php include_once("../includes/footer.php"); ?>
 
-
-    </div>
-
-
-    <?php include_once("../includes/footer.php"); ?>
-</div>
-<?php include("../includes/ga.php"); ?>
-</body>
-</html>

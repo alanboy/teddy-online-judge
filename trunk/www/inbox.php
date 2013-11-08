@@ -2,32 +2,26 @@
 	require_once("../serverside/bootstrap.php");
 
 	define("PAGE_TITLE", "Problemas");
+
 	require_once("includes/head.php");
 
-	if(isset($_SESSION['userID'])){
-		$q = "UPDATE  `teddy`.`Mensaje` SET  `unread` =  '0' WHERE para = '".$_SESSION['userID']."' ;";
-		$resultado = mysql_query($q) or die('Donte be evil with teddy :P ');		
-	}
+	// This page requires a logged user
+	require_once("includes/require_login.php")
 
-?>
-<body>
-
-	<?php
-
+		/*
+	// Mark message as read
 		if(isset($_REQUEST['enviado']) && $_REQUEST['enviado'] = "si"){
 			echo '<div class="post_blanco"  align=center>';
-
 			$msg = addslashes($_REQUEST['msg']);
 			$q = "INSERT INTO Mensaje (de , para , mensaje, fecha ) VALUES (   '{$_SESSION['userID']}',  'alanboy',  '{$msg}', '" .date("Y-m-d H:i:s", time()).  "');";
 			$resultado = mysql_query($q) or die('Donte be evil with teddy :P ' );
 			echo "Mensaje enviado !";
 			echo '</div>';
 		}
+		 */
 
-	?>
-	
+?>
 	<div class="post_blanco"  align=center>
-		
 		<?php
 			
 			if(!isset($_SESSION['userID'])){
@@ -92,9 +86,3 @@
 
 	<?php include_once("includes/footer.php"); ?>
 
-</div>
-
-<?php include("includes/ga.php"); ?>
-
-</body>
-</html>

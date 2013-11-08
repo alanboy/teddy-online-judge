@@ -1,45 +1,23 @@
 <?php 
 
-    require_once("../../serverside/bootstrap.php");
+	require_once("../../serverside/bootstrap.php");
+
+	define("PAGE_TITLE", "Editar perfil");
+
+	require_once("../includes/head.php");
+
+	// This page requires a logged user
+	require_once("includes/require_login.php")
 
 ?>
-<html>
-<head>
-		<link rel="stylesheet" type="text/css" href="../css/teddy_style.css" />
-		<title>Admin - Soluciones</title>
-		<script src="../js/jquery.min.js"></script>
-		<script src="../js/jquery-ui.custom.min.js"></script>
-		<link type="text/css" rel="stylesheet" href="../css/SyntaxHighlighter.css">
-		<script language="javascript" src="../js/shCore.js"></script>
-		<script language="javascript" src="../js/shBrushCSharp.js"></script>
-		<script language="javascript" src="../js/shBrushJava.js"></script>
-		<script language="javascript" src="../js/shBrushCpp.js"></script>
-		<script language="javascript" src="../js/shBrushPython.js"></script>
-		<script language="javascript" src="../js/shBrushXml.js"></script>
-</head>
-<body>
-
-<div class="wrapper">
-	<div class="header">
-		<h1>teddy online judge</h1>
-		<h2>teddy es un oso de peluche</h2>
-	</div>
-
-   	<?php include_once("../includes/admin.menu.php"); ?>
-
-	<div class="post" style="background:white;">
-
+<div class="post_blanco">
 	<h2>Revisar un codigo fuente</h2>
 
 <?php
-
-
-
 	function mostrarCodigo( $lenguaje, $execID , $row){
-
 		$file  = "../../codigos/" . $execID  ;
-
-		switch($lenguaje){
+		switch($lenguaje)
+		{
 			case "JAVA": $file .= ".java"; $sintaxcolor = "java"; break;
 			case "C": $file .= ".c"; $sintaxcolor = "c"; break;
 			case "C++": $file .= ".cpp"; $sintaxcolor = "cpp"; break;
@@ -97,10 +75,6 @@
 	}
 
 
-
-
-
-
 	    $asdf =  mysql_real_escape_string($_REQUEST["execID"]);
 		$consulta = "select * from Ejecucion where BINARY ( execID = '{$asdf}' )";
 		$resultado = mysql_query($consulta) or die('Algo anda mal: ' . mysql_error());
@@ -109,42 +83,10 @@
 			echo "<b>Este codigo no existe</b>";
 			return;
 		}
-
 		$row = mysql_fetch_array($resultado);
-
-
-    	mostrarCodigo($row['LANG'], $_REQUEST["execID"] , $row);
-
-		
-
-	// --- cerrar conexion ---
-	if( isset($resultado))
-		 mysql_free_result($resultado);
-	if( isset($enlace))
-		mysql_close($enlace);
+		mostrarCodigo($row['LANG'], $_REQUEST["execID"] , $row);
 ?>
-
-	
 	</div>
 
-
-
-
-
 	<?php include_once("../includes/footer.php"); ?>
-
-</div>
-
-
-<script language="javascript">
-window.onload = function () {
-
-    dp.SyntaxHighlighter.ClipboardSwf = '../flash/clipboard.swf';
-    dp.SyntaxHighlighter.HighlightAll('code');
-}
-
-</script>
-<?php include("../includes/ga.php"); ?>
-</body>
-</html>
 

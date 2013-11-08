@@ -1,28 +1,17 @@
 <?php 
 
-    require_once("../../serverside/bootstrap.php");
+	require_once("../../serverside/bootstrap.php");
+
+	define("PAGE_TITLE", "Editar perfil");
+
+	require_once("../includes/head.php");
+
+	// This page requires a logged user
+	require_once("includes/require_login.php")
+
 ?>
-<html>
-	<head>
-		<link rel="stylesheet" type="text/css" href="../css/teddy_style.css" />
-    		<title>Admin - Usuarios</title>
-			<script src="../js/jquery.min.js"></script>
-			<script src="../js/jquery-ui.custom.min.js"></script>
-	</head>
-<body>
-
-<div class="wrapper">
-	<div class="header">
-		<h1>teddy online judge</h1>
-		<h2>teddy es un oso de peluche</h2>
-	</div>
-
-   	<?php include_once("../includes/admin.menu.php"); ?>
-
 	<div class="post_blanco">
 	<?php
-
-
 	$consulta = "SELECT * FROM `Usuario` ";
 	$resultado = mysql_query($consulta);
 	?>
@@ -44,32 +33,30 @@
 	</thead> 
 	<tbody>
 	<?php
-    	$flag = true;
+	$flag = true;
 
-    	while($row = mysql_fetch_array($resultado)){
-		
-    		if($flag){
-    			echo "<TR style='background:#e7e7e7;'>";
-    			$flag = false;
-    		}else{
-    			echo "<TR style='background:white;'>";
-    			$flag = true;
-    		}
-            ?>
-                        
-                		<TD align='center' ><?php echo $row['userID']?></TD>
-                		<TD align='center' ><?php echo utf8_decode($row['nombre']) ?></TD>
-                		<TD align='center' ><?php echo $row['mail']?></TD>
-                		<TD align='center' ><?php echo $row['twitter']?></TD>
-                		<TD align='center' ><?php echo $row['ubicacion']?></TD>
-                		<TD align='center' ><?php echo utf8_decode($row['escuela']) ?></TD>
-                		<TD align='center' ><?php echo $row['cuenta']?></TD>
-                		<TD align='center' ><?php echo $row['solved']?></TD>
-                		<TD align='center' ><?php echo $row['tried']?></TD>
-                		<TD align='center' >x</TD>
-                        </tr>
-            <?php
+	while($row = mysql_fetch_array($resultado)){
 
+		if($flag){
+			echo "<TR style='background:#e7e7e7;'>";
+			$flag = false;
+		}else{
+			echo "<TR style='background:white;'>";
+			$flag = true;
+		}
+?>
+						<TD align='center' ><?php echo $row['userID']?></TD>
+						<TD align='center' ><?php echo utf8_decode($row['nombre']) ?></TD>
+						<TD align='center' ><?php echo $row['mail']?></TD>
+						<TD align='center' ><?php echo $row['twitter']?></TD>
+						<TD align='center' ><?php echo $row['ubicacion']?></TD>
+						<TD align='center' ><?php echo utf8_decode($row['escuela']) ?></TD>
+						<TD align='center' ><?php echo $row['cuenta']?></TD>
+						<TD align='center' ><?php echo $row['solved']?></TD>
+						<TD align='center' ><?php echo $row['tried']?></TD>
+						<TD align='center' >x</TD>
+						</tr>
+<?php
 	}
 	?>		
 	</tbody>
@@ -77,13 +64,5 @@
 	</div>
 	</div>
 
-
-
-
-
 	<?php include_once("../includes/footer.php"); ?>
 
-</div>
-<?php include("../includes/ga.php"); ?>
-</body>
-</html>

@@ -1,27 +1,17 @@
 <?php 
 
-    require_once("../../serverside/bootstrap.php");
+	require_once("../../serverside/bootstrap.php");
+
+	define("PAGE_TITLE", "Editar perfil");
+
+	require_once("../includes/head.php");
+
+	// This page requires a logged user
+	require_once("includes/require_login.php")
+
 ?>
-<html>
-	<head>
-		<link rel="stylesheet" type="text/css" href="../css/teddy_style.css" />
-    		<title>Admin - Ejecuciones</title>
-			<script src="../js/jquery.min.js"></script>
-			<script src="../js/jquery-ui.custom.min.js"></script>
-	</head>
-<body>
-
-<div class="wrapper">
-	<div class="header">
-		<h1>teddy online judge</h1>
-		<h2>teddy es un oso de peluche</h2>
-	</div>
-
-   	<?php include_once("../includes/admin.menu.php"); ?>
-
 	<div class="post_blanco">
 	<?php
-
 	//encontrar todos los titulos y asignarselos a un array
 	$query = mysql_query("select probID, titulo from Problema");
 	$probset = array();
@@ -96,13 +86,5 @@
 	</div>
 	</div>
 
-
-
-
-
 	<?php include_once("../includes/footer.php"); ?>
 
-</div>
-<?php include("../includes/ga.php"); ?>
-</body>
-</html>
