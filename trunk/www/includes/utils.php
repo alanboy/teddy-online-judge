@@ -1,12 +1,14 @@
 <?php
 
+class utils
+{
+	function endsWith( $str, $sub ) 
+	{
+		return ( substr( $str, strlen( $str ) - strlen( $sub ) ) == $sub );
+	}
 
-/**
-  * Utility class
-  **/
-class utils{
-	
-	public static function color_result( $res ){
+	public static function color_result( $res )
+	{
 		switch($res){
 			case "COMPILACION":
 				return "<span style='color:red;'>" . $res . "</span>";
@@ -25,90 +27,20 @@ class utils{
 				
 			case "JUDGING":
 				
-
 			case "WAITING":
 				return "<span style='color:purple;'>" . $res . "...</span>";	//<img src='img/load.gif'>
 		}
-		
 		return $res;
-
 	}
-
-	public static function js_countdown(){
-		/*
-		?>
-		<b><span id='time_left'><?php echo $interval->format('%H:%I:%S'); ?></span></b>.
-									<script>
-										function updateTime(){
-
-											data = $("#time_left").html().split(":");
-											hora = data[0];
-											min = data[1];
-											seg = data[2];
-
-											if(--seg < 0){
-												seg = 59;
-
-												if(--min < 0){
-													min = 59;
-
-													if(--hora < 0){
-														hora = 59;
-													}
-
-													hora = hora < 10 ? "0" + hora : hora;
-												}
-
-												min = min < 10 ? "0" + min : min;
-											}
-
-											seg = seg < 10 ? "0" + seg : seg;
-
-											if(hora == 0 && min == 0 && seg == 0)
-											{
-												window.refresh();
-
-											}
-
-											//hora = hora < 10 ? "0" + hora : hora;
-
-
-											$("#time_left").html(hora+":"+min+":"+seg);
-
-										}
-										setInterval("updateTime()", 1000);
-									</script>
-								<?php
-							}
-		* */
-	}
-
-
-	public static function json_die( $reason = "Error en Teddy !" ){
-		die(json_encode( array( "success" => false, "reason" => $reason )));	
-	}
-
 }
 
-
-
-
-
-
-
-
-
-/**
-  * Envio de soluciones
-  **/
-class envios{
-
-
-
-	private static function print_problem_chooser( $contest_id = null ){
-
+class envios
+{
+	private static function print_problem_chooser( $contest_id = null )
+	{
 		//cualquier problema es valido
-		if($contest_id === null){
+		if($contest_id === null)
+		{
 			?>
 			<div>
 			   <input type="text" id="prob_id" placeholder="Problema"  value="" maxlength="5"> 
@@ -116,7 +48,7 @@ class envios{
 			<?php
 			return;
 		}
-		
+
 		//$valid_problems deberia ser un array
 		//con problemas validos para enviar
 		$q = mysql_query( "SELECT * FROM Concurso WHERE CID = " . $contest_id . ";" ) or die ( mysql_error( ) ) ;
@@ -125,27 +57,18 @@ class envios{
 		$probs = explode(' ', $row["Problemas"]);
 
 	    echo "<select id=\"prob_id\">";	
-		for ($i=0; $i< sizeof( $probs ); $i++) {
+		for ($i=0; $i< sizeof( $probs ); $i++)
+		{
 			echo "<option value=". $probs[$i] .">". $probs[$i] ."</option>"; 
 		}
-
 		echo "</select>";
-	
 	}
 
-
-
-
-	/**
-	  *
-	  *	  
-	  **/
-	private static function print_flash_upload(){
+	private static function print_flash_upload()
+	{
 		?>
 			<div   id="upload_0">
-
 				<input id="flash_upload_file" name="fileInput" type="file" />
-
 			</div>
 
 			<script>
@@ -188,16 +111,9 @@ class envios{
 		<?php
 		
 	}
-	
-	
-	
-	
 
-	/**
-	  *
-	  *	  
-	  **/
-	private static function print_text_area(){
+	private static function print_text_area()
+	{
 		?>
 			<Script>
 				function checkForText(text){
@@ -232,16 +148,8 @@ class envios{
 		
 	}
 
-
-
-
-
-
-	/**
-	  *
-	  *	  
-	  **/
-	private static function print_basic_upload(){
+	private static function print_basic_upload()
+	{
 		?>
 		<div  id="upload_1" style="display:none;" >
 			<form action="ajax.php" method="POST" enctype="multipart/form-data">
@@ -253,17 +161,8 @@ class envios{
 		
 	}
 
-
-
-
-
-
-	/**
-	  *
-	  *	  
-	  **/
-	public static function imprimir_forma_de_envio( $es_concurso = null ){
-	
+	public static function imprimir_forma_de_envio( $es_concurso = null )
+	{
 		?>
 		<script>
 			var source_file = {
@@ -275,7 +174,6 @@ class envios{
 			
 			var forma_de_envio_method = 0;
 
-
 			function change_upload_method()
 			{
 				$("#upload_" + forma_de_envio_method ).fadeOut('fast', function(){
@@ -283,13 +181,6 @@ class envios{
 						forma_de_envio_method = 2;
 					else
 						forma_de_envio_method = 0;
-					/*
-					if((forma_de_envio_method + 1) == 3)
-						forma_de_envio_method = 0
-					else
-						forma_de_envio_method++;
-					*/
-
 					$("#upload_" + forma_de_envio_method ).fadeIn();
 				});
 			}
@@ -315,14 +206,11 @@ class envios{
 						$("#waiting_space").fadeIn('fast', function(){
 							source_file.execID = response.execID;
 							check_for_results( );
-						});//fadeIn						
+						});//fadeIn
 					}
-
 				});//fadeOut
 			}
-		
-		
-			
+
 			function send()
 			{
 				
@@ -370,32 +258,23 @@ class envios{
 									plain_source: $("#plain_text_area").val()
 									<?php if($es_concurso !== null) echo ", 'id_concurso': " . $es_concurso; ?>
 								},
-
 								success: function(data){
 								
 									try{
 										doneUploading( $.parseJSON(data) );	
-
 									}catch(e){
 										console.error(e);
-
 									}
-						
-						  		},
+								},
 								failure: function (){
 									showResult(false, "Algo anda mal, intenta de nuevo.");
 									
 								}
 							});//ajax
 					break;
-					
 					default:
-					
 				}
-				
-
 			}//function
-
 
 			function parse_the_result_from_teddy(json)
 			{
@@ -410,12 +289,10 @@ class envios{
 					tiempo: "0"
 					userID: "alanboy"
 				*/
-				
-				//console.log(json)
-				
 				var comment = "";
-				
-				switch(json.status){
+
+				switch(json.status)
+				{
 					case "NO_SALIDA": 
 						comment = "Ups, tu programa no creo un archivo data.out !";
 					break;
@@ -454,41 +331,32 @@ class envios{
 				
 				return html;
 			}
-			
-			
-			
+
 			function check_for_results()
 			{
-				
-				
 				$.ajax({ 
 					url: "ajax/run_status.php", 
 					data: {
 						execID : source_file.execID
 					},
-					success: function(data){
-						
+					success: function(data)
+					{
 						j = jQuery.parseJSON(data);
 
-						if( j.status == "WAITING" || j.status == "JUDGING" ){
-
+						if( j.status == "WAITING" || j.status == "JUDGING" )
+						{
 							//volver a revisar el estado en uno o medio segundo
 							setTimeout("check_for_results()", 1000);
-
 						}else{
 							//parse the judinging result
 							showResult( true, parse_the_result_from_teddy(j) );
-														
 						}
 					},
 					failure: function (){
 						showResult(false, "Error en Teddy !");
 					}
 				});
-
 			}
-
-
 		</script>
 		<div align=center>
 			<br><br>
@@ -556,14 +424,3 @@ class envios{
 	
 }
 
-
-
-
-
-
-/**
-  * Utility functions
-  **/
-function endsWith( $str, $sub ) {
-   return ( substr( $str, strlen( $str ) - strlen( $sub ) ) == $sub );
-}

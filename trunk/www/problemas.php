@@ -1,4 +1,5 @@
 <?php
+
 	require_once("../serverside/bootstrap.php");
 
 	define("PAGE_TITLE", "Problemas");
@@ -12,9 +13,6 @@
 		</div>
 
 		<div align="center">
-		<!--
-			Hay un total de <b><span id='probs_left'></span></b> problemas no resueltos
-		-->
 		<table>
 		<thead>
 		<tr>
@@ -28,16 +26,23 @@
 		</thead>
 		<tbody>
 		<?php
-		while(false)
+		$params = array("public" => "SI");
+		$result = c_problema::lista($params);
+		if (SUCCESS($result))
 		{
-			echo "<TR style=\"background:#e7e7e7;\">";
-			echo "<TD align='center' >". $row['probID'] ."</TD>";
-			echo "<TD align='left' ><a href='verProblema.php?id=". $row['probID']  ."'>". $row['titulo']   ."</a> </TD>";
-			echo "<TD align='center' >". $row['vistas']   ." </TD>";
-			echo "<TD align='center' >". $row['aceptados']   ." </TD>";
-			echo "<TD align='center' >". $row['intentos']   ." </TD>";
-			printf("<TD align='center' >%2.2f%%</TD>", $ratio);
-			echo "</TR>";
+			$problemas = $result["problemas"];
+			for ($i = 0; $i < sizeof($problemas); $i++)
+			{
+				$prob = $problemas[$i];
+				echo "<TR style='background:#e7e7e7;'>";
+				echo "<TD align='center' >". $prob['probID'] ."</TD>";
+				echo "<TD align='left' ><a href='verProblema.php?id=". $prob['probID']  ."'>". $prob['titulo']   ."</a> </TD>";
+				echo "<TD align='center' >". $prob['vistas']   ." </TD>";
+				echo "<TD align='center' >". $prob['aceptados']   ." </TD>";
+				echo "<TD align='center' >". $prob['intentos']   ." </TD>";
+				//printf("<TD align='center' >%2.2f%%</TD>", $ratio);
+				echo "</TR>";
+			}
 		}
 		?>
 		</tbody>

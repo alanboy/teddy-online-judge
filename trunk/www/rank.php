@@ -4,10 +4,10 @@
 	define("PAGE_TITLE", "Problemas");
 
 	require_once("includes/head.php");
+
 ?>
-	<div class="post_blanco">
-	<div align="center" >
-	<table border='0' style="font-size: 14px;" > 
+<div class="post_blanco">
+	<table>
 	<thead> <tr >
 		<th width='5%'>Rank</th> 
 		<th width='5%'>Usuario</th> 
@@ -20,54 +20,27 @@
 	</thead> 
 	<tbody>
 	<?php
-	while($false)
-	{
-		$nick = $row['userID'];
+		$res = c_usuario::rank();
+		$rank = $res["rank"];
+		for ($n = 0; $n < sizeof($rank); $n++)
+		{
+			$user = $rank[$n];
+			echo "<TR >";
+			echo "<TD align='center' >". $n ."</TD>";
+			echo "<TD >". $user["userID"] ."</TD>";
+			echo "<TD >". $user["ubicacion"] ."</TD>";
+			echo "<TD >". $user["escuela"] ."</TD>";
+			echo "<TD >". $user["solved"] ."</TD>";
+			echo "<TD >". $user["tried"] ."</TD>";
 
-		if( $row['solved'] != 0 )
-			$ratio = substr( ($row['solved'] / $row['tried'])*100 , 0, 5);
-		else
-			$ratio = 0.0;
-
-		//checar si hay una sesion y si si hay mostrar el usuario actual en cierto color
-		if(isset($_SESSION['userID']) &&  $_SESSION['userID'] == $row['userID'] ){
-	        echo "<TR style=\"background:#566D7E; color:white;\">";
-			$flag = !$flag;
-		}else{ 
-			if($flag){
-				echo "<TR style=\"background:#e7e7e7;\">";
-				$flag = false;
-			}else{
-				echo "<TR style=\"background:white;\">";
-				$flag = true;
-			}
+			$ratio = substr( ($user['solved'] / ($user['tried']+1))*100 , 0, 5);
+			printf("<TD align='center' > %2.2f%% </TD>", $ratio);
+			echo "</tr>";
 		}
-
-		echo "<TD align='center' >". $rank ."</TD>";
-		
-		if(isset($_SESSION['userID']) &&  $_SESSION['userID'] == $row['userID'] ){
-			echo "<TD align='center' ><a style=\"color:white;\" href='runs.php?user=". htmlentities($row['userID'])  ."'>". $nick   ."</a> </TD>";
-		}else{
-			echo "<TD align='center' ><a href='runs.php?user=". htmlentities($row['userID'])  ."'>". $nick   ."</a> </TD>";
-		}
-		echo "<TD align='center' >".  htmlentities(utf8_decode($row['ubicacion'])) ." </TD>";
-		echo "<TD align='center' >".  htmlentities(utf8_decode($row['escuela'])) ." </TD>";
-		echo "<TD align='center' >". $row['solved']  ." </TD>";
-		echo "<TD align='center' >". $row['tried']   ." </TD>";
-		//echo "<TD align='center' > {$ratio}% </TD>";
-		printf("<TD align='center' > %2.2f%% </TD>", $ratio);
-
-
-		echo "</TR>";
-		$rank++;
-	}
-	?>		
+	?>
 	</tbody>
 	</table>
-	</div>
-	</div>
+</div>
 
-
-
-	<?php include_once("includes/footer.php"); ?>
+<?php include_once("includes/footer.php"); ?>
 

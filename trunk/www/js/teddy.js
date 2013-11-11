@@ -9,14 +9,11 @@ window.onload = function ()
 }
 
 
-//////////////////////////////////////////////
-// editprofile.php
 
 
 //////////////////////////////////////////////
 //registro.php
 var states = new Array("Mexico","Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antarctica", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burma", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo, Democratic Republic", "Congo, Republic of the", "Costa Rica", "Cote d'Ivoire", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "East Timor", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Greenland", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Korea, North", "Korea, South", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Mongolia", "Morocco", "Monaco", "Mozambique", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Norway", "Oman", "Pakistan", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Samoa", "San Marino", " Sao Tome", "Saudi Arabia", "Senegal", "Serbia and Montenegro", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "Spain", "Sri Lanka", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe");
-
 
 function _validate()
 {
@@ -62,9 +59,8 @@ function _validate()
 	return true;
 }
 
-function validate()
+function validateNewUser()
 {
-
 	rs = _validate();
 	if(rs === true)
 	{
@@ -312,6 +308,8 @@ function encriptar(xD, mensaje)
 		u_U = parseInt(__.charCodeAt(o_O)); if(o_O%2==0 ) u_U += _; else u_U -= _; var $_$ = u_U.toString(2); while( $_$.length < 9) $_$ = "0" + $_$; ____ += $_$; } _ = parseInt(_).toString(2); while( _.length < 9 ) _ = "0" + _; __ = _ + "" +____;var ___ = ""; var _____ = 0; for( i = 0; i < __.length; i++){ ___ += __.charAt(i) == 0 ? mensaje.charAt(_____) : mensaje.charAt( _____ ).toUpperCase(); if(_____ == (mensaje.length - 1)) _____ = 0; else _____++; } return ___; 
 }
 
+
+
 function lost_returned(data)
 {
 	$('#message').fadeOut('slow', function() {
@@ -353,56 +351,50 @@ function lost()
 			});
 }
 
-function submitdata(){
+function login()
+{
 	$('#login_area').slideUp('slow', function() {
 			$('#wrong').slideUp('slow');
 			$('#message').slideDown('slow', function() {
 				$.ajax({
-					url: "includes/login_app.php", 
+					url: "ajax.php", 
 					dataType: 'json',
 					type : "POST",
-					data: { 
-						'user': document.getElementById("user").value, 
-						'pswd': encriptar(document.getElementById("pswd").value, "teddy" )
+					data: {
+					'user': $("#user").val(),
+					'pswd': encriptar(document.getElementById("pswd").value, "teddy" )
 					},
 					context: document.body, 
 					complete: returned
 					});
 				});
 			});
-	return false;
+return false;
 }
 
-function returned( data ){
+function returned( data )
+{
 	$('#message').fadeOut('slow', function() {
 			var x = null;
-
 			try{
-			x = jQuery.parseJSON( data.responseText );
+				x = jQuery.parseJSON( data.responseText );
 			}catch(e){
-			//invalid json
-			alert("Algo anda mal con teddy. Por favor envia un mail a alanboy@itcelaya.edu.mx si este problema persiste.");
-			console.log(x,e)
-			//location.reload(true);
-			return;
+				alert("Algo  salio mal.");
+				return;
 			}
 
-			if(x.badguy){
-			document.getElementById("login_area").innerHTML = x.msg;
-			$("#login_area").slideDown("slow");
-			return;
+			if(x.sucess)
+			{
+				location.reload(true);
 			}
-
-			if(x.sucess){
-			location.reload(true);
-			}else{
+			else
+			{
 				$("#wrong").slideDown("slow", function (){ 
-						$('#login_area').slideDown('slow', function() {
-							$("#login_area").effect("shake", { times:2 }, 100);
-							});
-						});
-
+					$('#login_area').slideDown('slow', function() {
+						$("#login_area").effect("shake", { times:2 }, 100);
+					});
+				});
 			}
-	});//efecto
+	});
 }
 

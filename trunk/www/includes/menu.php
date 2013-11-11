@@ -1,6 +1,3 @@
-<?php
-
-?>
 <div class="post">
 	<div class="navcenter">
 		<a href="index.php">home</a>&nbsp;&nbsp;&nbsp;

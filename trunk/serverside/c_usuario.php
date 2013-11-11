@@ -1,8 +1,10 @@
 <?php
 
+//use Respect\Validation\Validator as validator;
+//$usernameValidator = validator::alnum()->noWhitespace()->length(1,15);
+
 class c_usuario extends c_controller
 {
-
 	public static function canCreateContest($request)
 	{
 			$consulta = "select COUNT( DISTINCT probID ) from Ejecucion where ( userID = '". addslashes( $_SESSION['userID'] ) ."' AND  status = 'OK' )";
@@ -16,13 +18,27 @@ class c_usuario extends c_controller
 		$values = array($request["nick"], $request["email"]);
 	}
 
+	public static function rank($request = null)
+	{
+		$sql = "select * from Usuario order by nombre;";
+		$inputarray = array();
+
+		global $db;
+		$result = $db->Execute($sql, $inputarray);
+
+		return array(
+				"result" => "ok", 
+				"rank" => $result->GetArray()
+			);
+	}
+
 	public static function nuevo($request)
 	{
-		//test_param($request, "nick");
-		//test_param($request, "mail");
 
+		// Validate logic
 		if(self::getByNickOrEmail($request))
 		{
+
 		}
 
 		$sql = "insert into Usuario (userID, nombre, pswd, ubicacion, escuela, mail, twitter) values (?,?,?,?,?,?,?,)";
@@ -39,6 +55,8 @@ class c_usuario extends c_controller
 
 		global $db;
 		$db->Execute($sql, $inputarray);
+
+		return array( "result" => "ok" );
 	}
 
 	public static function editar()

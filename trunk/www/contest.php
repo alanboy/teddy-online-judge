@@ -12,9 +12,7 @@
 	<td valign=top>
 	<div id="new_contest_form" class="post_blanco">
 		<h2>Crear un concurso</h2>
-		<?php
-			include("includes/form.new-contest.php");
-		?>
+		<?php include("includes/form.new-contest.php"); ?>
 	</div>
 	</td>
 
@@ -24,7 +22,7 @@
 		<tr>
 		<td>
 		<?php
-		while( $row = mysql_fetch_array($resultado) )
+		while (false)
 		{
 				echo "<div style=\"font-size: 16px\"><a href=\"contest_rank.php?cid=" . $row["CID"] .  "\"><b>".$row["Titulo"]."</b>&nbsp;<img src=\"img/1.png\"></a></div>";
 				echo "<b>Descripcion</b> " . $row["Descripcion"] . "<br>";
@@ -60,7 +58,7 @@
 
 		//concursos futuros
 		echo "<h2>Concursos Pasados</h2>";
-		if(mysql_num_rows($resultado) > 0)
+		if(0)
 		{
 			while( $row = mysql_fetch_array($resultado) )
 			{
