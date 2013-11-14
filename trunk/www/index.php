@@ -45,9 +45,6 @@
 
 	<div class="post">
 		<div align="center"><h2>Ultimas Noticias</h2></div>
-		<!--
-<div class="fb-like-box" data-href="http://www.facebook.com/TeddyOnlineJudge" data-width="1300" data-colorscheme="light" data-show-faces="false" data-header="false" data-stream="true" data-show-border="false"></div>
-		-->
 		<ul>
 		<?php 
 		$res = mysql_query("select * from Aviso order by fecha desc limit 10"); 

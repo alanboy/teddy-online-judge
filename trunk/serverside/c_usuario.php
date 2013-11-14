@@ -12,10 +12,33 @@ class c_usuario extends c_controller
 			$row = mysql_fetch_array($resultado);
 	}
 
+	/**
+	 * @param nick
+	 * @param mail
+	 *
+	 *
+	 * */
 	public static function getByNickOrEmail($request)
 	{
-		$query = "select * from Usuario where userID = ? or mail = ?";
-		$values = array($request["nick"], $request["email"]);
+		$sql = "select * from Usuario where userID = ? or mail = ? limit 1";
+		$inputarray = array($request["nick"], $request["email"]);
+
+		global $db;
+		$result = $db->Execute($sql, $inputarray);
+		$resultData = $result->GetArray();
+
+		if (sizeof($resultData) == 0)
+		{
+			return array(
+					"result" => "ok",
+					"user" => null
+				);
+		}
+
+		return array(
+				"result" => "ok",
+				"user" => $resultData[0]
+			);
 	}
 
 	public static function rank($request = null)
@@ -75,72 +98,6 @@ class c_usuario extends c_controller
 			WHERE  `Usuario`.`userID` =  '{$_SESSION['userID']}' LIMIT 1 ;";
 
 		$rs = mysql_query($query) or die(mysql_error());
-	}
-
-
-	public static function login($request)
-	{
-		if (!isset($_POST["user"])) {
-			TEDDY_LOG("Faltan parametros para iniciar sesion");
-			echo json_encode(array(
-				"sucess" => false,
-				"success" => false
-			));
-			return;
-		}
-
-		$usuario = addslashes( $_POST["user"] );
-		$pass = $_POST["pswd"];
-
-		if (($usuario != $_POST["user"])) {
-			echo "{\"sucess\": false, \"badguy\": true, \"msg\": \"Portate bien <b>". $_SERVER['REMOTE_ADDR'] ."</b>\"}";
-			return;
-		}
-
-		//consultasr contraseña de estre presunto usuario
-		$consulta = "select pswd, cuenta, userID, mail from Usuario where BINARY ( userID = '{$usuario}' or mail = '{$usuario}')";
-		$resultado = mysql_query($consulta) or die('Dont be evil with teddy :P ');
-		TEDDY_LOG("hi there");
-
-		//si regreso 0 resultados tons este usuario ni existe
-		if(mysql_num_rows($resultado) != 1) {
-			$_SESSION['status'] = "WRONG";
-			if( isset($resultado))
-				mysql_free_result($resultado);
-			mysql_close($enlace);
-			echo "{\"sucess\": false, \"badguy\": false}";
-			return;
-		}
-
-
-		//si existe este usuario, revisar su contraseña
-		$row = mysql_fetch_array($resultado);
-
-		if(crypt($pass, $row[0] ) != $row[0]){
-			$_SESSION['status'] = "WRONG";
-			echo "{\"sucess\": false, \"badguy\": false}";
-			if( isset($resultado))
-				mysql_free_result($resultado);
-			mysql_close($enlace);
-			return;
-		}
-
-		$_SESSION['userID'] = $row['userID'];
-		$_SESSION['mail'] = $row['mail'];
-		$_SESSION['status'] = "OK";
-		$_SESSION['userMode'] = $row["cuenta"] ;
-		echo "{\"sucess\": true, \"badguy\": false}";
-
-	}
-
-
-	public static function logout($request)
-	{
-		unset($_SESSION['status']);
-		unset($_SESSION['userID']);
-		unset($_SESSION['userMode']);
-		unset($_SESSION['mail']);
-		echo "<script> window.location = '" . $_SERVER['HTTP_REFERER'] . "';</script>";
 	}
 }
 

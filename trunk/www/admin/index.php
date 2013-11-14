@@ -8,6 +8,7 @@
 
 	// This page requires a logged user
 	require_once("includes/require_login.php")
+
 ?>
 
 	<?php include_once("../includes/footer.php"); ?>

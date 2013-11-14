@@ -9,84 +9,60 @@
 	// This page requires a logged user
 	require_once("includes/require_login.php")
 
-	//$q = "UPDATE  `teddy`.`Mensaje` SET  `unread` =  '0' WHERE  para = '".$_SESSION['userID']."' ;";
-
 ?>
 	<div class="post_blanco"  align=center>
 				<table border=0>
 					<form class="form-big" method=POST >
 						<tr><td>Enviar Mensaje</td></tr>
-						<tr><td>Para<input name="para" type=text id="msg_to"></td></tr>					
+						<tr><td>Para<input name="para" type=text id="msg_to"></td></tr>
 						<tr><td><textarea name="msg" cols=44 rows=5></textarea></td></tr>
-						<tr><td><input type=submit value="Enviar Mensaje"></td></tr>					
+						<tr><td><input type=submit value="Enviar Mensaje"></td></tr>
 						<input type=hidden name="enviado" value="si" >
 					</form>
 				</table>
 				<?php
 				$q = "SELECT * FROM Mensaje WHERE de = '{$_SESSION['userID']}' OR para = '{$_SESSION['userID']}' ORDER BY fecha DESC";
-
-				$resultado = mysql_query($q) or die('Donte be evil with teddy :P ');
-			
 				echo "<table border=0>";
 				$total = 0;
+				while($row = mysql_fetch_array($resultado))
+				{
+?>
 
-				while($row = mysql_fetch_array($resultado)){
-
-					?>
-						
 						<tr style="background-color: #white;">
 							<td>De <b><?php echo $row['de']; ?></b>&nbsp;&nbsp;</td> 
 							<td>Para <b><?php echo $row['para']; ?></b>
 								&nbsp;&nbsp;<span style="cursor: pointer" onclick="document.getElementById('msg_to').value = '<?php echo $row['para']; ?>';">[reply]</span>&nbsp;&nbsp;
-								<?php
-									if($row['unread'] != 0){
-										?>&nbsp;&nbsp;<span>[UNREAD]</span>&nbsp;&nbsp; <?php
-									}
+<?php
+					if($row['unread'] != 0){
+						?>&nbsp;&nbsp;<span>[UNREAD]</span>&nbsp;&nbsp; <?php
+					}
 
-								?>
+?>
 							</td> 
 							<td>Fecha <b><?php echo $row['fecha']; ?></b>&nbsp;&nbsp;</td>
 						</tr>
 						<tr><td colspan=3><hr></td><tr>
 						<tr style="background-color: #white;">
-							<td colspan=3><?php 
-							//echo $row['mensaje']."<br>"; 
-							// Order of replacement
-							$str     = $row['mensaje'];
-							$order   = array("\r\n", "\n", "\r");
-							$replace = '<br />';
+						<td colspan=3><?php 
+					//echo $row['mensaje']."<br>"; 
+					// Order of replacement
+					$str     = $row['mensaje'];
+					$order   = array("\r\n", "\n", "\r");
+					$replace = '<br />';
 
-							// Processes \r\n's first so they aren't converted twice.
-							$newstr = str_replace($order, $replace, $str);
+					$newstr = str_replace($order, $replace, $str);
 
-							echo $newstr;
-						?></td>
+					echo $newstr;
+?></td>
 						</tr>
 						<tr>
 							<td colspan=3>&nbsp;</td>
 						</tr>
-					<?php
+<?php
 				}
-				echo "</table>";			
+				echo "</table>";
 		?>
-
-	
 	</div>
 
-
-
-
 	<?php include_once("../includes/footer.php"); ?>
-
-</div>
-
-<?php include("../includes/ga.php"); ?>
-</body>
-</html>
-
-<?php
-	if( isset($resultado))
-		mysql_free_result($resultado);
-		
-?>
 

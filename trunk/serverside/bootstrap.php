@@ -16,6 +16,7 @@ require_once("config.php");
 require_once("c_controller.php");
 require_once("c_usuario.php");
 require_once("c_problema.php");
+require_once("c_sesion.php");
 
 // Inlclude libs
 require_once("c_mail.php");

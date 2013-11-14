@@ -8,9 +8,14 @@ window.onload = function ()
 	dp.SyntaxHighlighter.HighlightAll('code');
 }
 
-
-
-
+/*
+ * Mensajes
+							var foo = function(){
+								$("#mailbox_menu").fadeTo("slow", .4, function(){
+									$("#mailbox_menu").fadeTo("slow", 1, foo);
+								});
+							}
+							*/
 //////////////////////////////////////////////
 //registro.php
 var states = new Array("Mexico","Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antarctica", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burma", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo, Democratic Republic", "Congo, Republic of the", "Costa Rica", "Cote d'Ivoire", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "East Timor", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Greenland", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Korea, North", "Korea, South", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Mongolia", "Morocco", "Monaco", "Mozambique", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Norway", "Oman", "Pakistan", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Samoa", "San Marino", " Sao Tome", "Saudi Arabia", "Senegal", "Serbia and Montenegro", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "Spain", "Sri Lanka", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe");
@@ -192,7 +197,8 @@ function runsCallback(data)
 
 	if(CurrentRuns.length == data.length)
 	{
-		// es el mismo, no hacer nada
+		//asumir que es el mismo, aunque no necesariamente
+		//es el caso 
 		return;
 	}
 
@@ -218,17 +224,14 @@ function askforruns (cid)
 		});
 }
 
-
-
-
 function showRank()
 {
 	$("#ranking_tabla").fadeOut("fast", function (){
-		html = "";
-
-		for( a = 0; a < CurrentRank.length; a++ )
-		{
-			if(a%2 ==0){
+			html = "";
+			for( a = 0; a < CurrentRank.length; a++ )
+			{
+			if(a%2 ==0)
+			{
 			html += "<TR style=\"background:#e7e7e7; height: 50px;\">";
 			}else{
 			html += "<TR style=\"background:white; height: 50px;\">";
@@ -237,23 +240,20 @@ function showRank()
 			html +=  "<TD align='center' >" +CurrentRank[a].userID+"</a> </TD>";
 			html +=  "<TD align='center' >" +CurrentRank[a].ENVIOS+"</a> </TD>";
 			html +=  "<TD align='center' >" +CurrentRank[a].OK+"</a> </TD>";
-
 			var problemas = [ /* <?php foreach($PROBLEMAS as $p){echo $p . ",";}; ?> */ ];
 			//console.log(problemas)
 			//console.log(CurrentRank[a].problemas)
-
 			for( z = 0 ; z < problemas.length ; z++ )
 			{
-			foo = "";
+			var rankValueHtml = "";
 			for ( p in CurrentRank[a].problemas  )
 			{
 				if(p == problemas[z])
 				{
-					foo = "x";
+					rankValueHtml = "x";
 					//CurrentRank[a].problemas[p].bad
 					if(CurrentRank[a].problemas[p].ok > 0)
 					{
-
 						tiempo = parseInt(CurrentRank[a].problemas[p].ok_time / 60);
 						tiempo += ":"; 
 						bar = parseInt((parseInt(CurrentRank[a].problemas[p].ok_time % 60)));
@@ -265,24 +265,23 @@ function showRank()
 						   x - 
 						   (x*60)/100
 						   */
-						foo = "<b>" +  tiempo + "</b> / "+CurrentRank[a].problemas[p].ok_time+"<br>";
-						foo += "("+CurrentRank[a].problemas[p].bad+")";
+						rankValueHtml = "<b>" +  tiempo + "</b> / "+CurrentRank[a].problemas[p].ok_time+"<br>";
+						rankValueHtml += "("+CurrentRank[a].problemas[p].bad+")";
 					}else{
-						foo = "-"+CurrentRank[a].problemas[p].bad+"";
+						rankValueHtml = "-"+CurrentRank[a].problemas[p].bad+"";
 					}
 				}
 			}
-			html +=  "<TD align='center' >" + foo +"</TD>";
+	html +=  "<TD align='center' >" + rankValueHtml +"</TD>";
 			}
-			html +=  "<TD align='center' >" +CurrentRank[a].PENALTY+" </TD>";
-			html +=  "</TR>";
-		}
+	html +=  "<TD align='center' >" +CurrentRank[a].PENALTY+" </TD>";
+	html +=  "</TR>";
+			}
 
-		document.getElementById("ranking_tabla").innerHTML = html;
-		$("#ranking_tabla").fadeIn();
+	document.getElementById("ranking_tabla").innerHTML = html;
+	$("#ranking_tabla").fadeIn();
 	});
 }
-
 
 function askforrank()
 {
@@ -297,37 +296,20 @@ function askforrank()
 		});
 }
 
-//////////////////////////////////////////////
-//session_manager.php
-function encriptar(xD, mensaje)
+function logout()
 {
-	var __ = xD;
-	var _ = parseInt(Math.random()*32);
-	var ____ = "";
-	for (o_O=0;o_O<__.length; o_O++) { 
-		u_U = parseInt(__.charCodeAt(o_O)); if(o_O%2==0 ) u_U += _; else u_U -= _; var $_$ = u_U.toString(2); while( $_$.length < 9) $_$ = "0" + $_$; ____ += $_$; } _ = parseInt(_).toString(2); while( _.length < 9 ) _ = "0" + _; __ = _ + "" +____;var ___ = ""; var _____ = 0; for( i = 0; i < __.length; i++){ ___ += __.charAt(i) == 0 ? mensaje.charAt(_____) : mensaje.charAt( _____ ).toUpperCase(); if(_____ == (mensaje.length - 1)) _____ = 0; else _____++; } return ___; 
-}
-
-
-
-function lost_returned(data)
-{
-	$('#message').fadeOut('slow', function() {
-				try{
-					x = jQuery.parseJSON( data.responseText );
-				}catch(e){
-					location.reload(true);
-					return;
-				}
-
-				if (x.success) {
-					alert("Se ha enviado un correo a este usuario con instrucciones para obtener una nueva contrase&ntilde;a");
-					$('#login_area').slideDown('slow');
-				}else{
-					alert(x.reason);
-					$('#login_area').slideDown('slow');
-				}
-			});//efecto
+	$.ajax({
+		url: "ajax.php",
+		dataType: "json",
+		type : "POST",
+		data: {
+			'controller' : "c_sesion",
+			'method' : "logout"
+		}
+	}).always(function (response){
+		// Probar response con errores
+		window.location.reload( false );
+	});//always
 }
 
 function lost()
@@ -340,15 +322,21 @@ function lost()
 	$('#login_area').slideUp('slow', function() {
 			$('#wrong').slideUp('slow');
 			$('#message').slideDown('slow', function() {
-				$.ajax({ 
-					url: "ajax/lost_pass.php", 
-					dataType: 'json',
-					data: { 'user' : document.getElementById("user").value },
-					context: document.body, 
-					complete: lost_returned
+				$.ajax({
+						url: "ajax.php",
+						dataType: 'json',
+						data: {
+							'controller' : "c_user",
+							'method' : "lostpassword",
+							'user' : $("#user").val()
+						}
+					}).always(function(response){
+						//response
+						$('#login_area').slideDown('slow');
 					});
+				
 				});
-			});
+		});
 }
 
 function login()
@@ -357,44 +345,36 @@ function login()
 			$('#wrong').slideUp('slow');
 			$('#message').slideDown('slow', function() {
 				$.ajax({
-					url: "ajax.php", 
-					dataType: 'json',
+					context: document.body,
+					url: "ajax.php",
+					dataType: "json",
 					type : "POST",
 					data: {
-					'user': $("#user").val(),
-					'pswd': encriptar(document.getElementById("pswd").value, "teddy" )
+						'controller' : "c_sesion",
+						'method' : "login",
+						'pass': $("#pass").val(),
+						'user': $("#user").val()
 					},
-					context: document.body, 
-					complete: returned
-					});
-				});
-			});
-return false;
+				})
+				.always(function (response){
+						$('#message').fadeOut('slow', function() {
+							if(response.user)
+							{
+								location.reload(true);
+							}
+							else
+							{
+							$("#wrong").slideDown("slow", function (){ 
+								$('#login_area').slideDown('slow', function() {
+									$("#login_area").effect("shake", { times:2 }, 100);
+									});
+								});
+							}
+						});//fadeOut
+					});//always
+				});//slide down
+			});//slide up
+	return false;
 }
 
-function returned( data )
-{
-	$('#message').fadeOut('slow', function() {
-			var x = null;
-			try{
-				x = jQuery.parseJSON( data.responseText );
-			}catch(e){
-				alert("Algo  salio mal.");
-				return;
-			}
-
-			if(x.sucess)
-			{
-				location.reload(true);
-			}
-			else
-			{
-				$("#wrong").slideDown("slow", function (){ 
-					$('#login_area').slideDown('slow', function() {
-						$("#login_area").effect("shake", { times:2 }, 100);
-					});
-				});
-			}
-	});
-}
 
