@@ -237,12 +237,17 @@ class c_concurso extends c_controller
 		}
 	}
 
-	public static function concursosActivos()
+	private static function concursosLista($sql)
 	{
 		$timestamp = date( "Y-m-d H:i:s" );
 
-		$sql = "select * from Concurso where BINARY ( ? > Inicio AND ?  < Final ) limit 10";
-		$inputarray = array( $timestamp, $timestamp );
+		$nArguments = substr_count($sql, '?');
+		$inputarray = array(  );
+
+		while ($nArguments-- > 0)
+		{
+			array_push($inputarray, $timestamp);
+		}
 
 		global $db;
 		$result = $db->Execute($sql, $inputarray);
@@ -252,41 +257,25 @@ class c_concurso extends c_controller
 				"result" => "ok",
 				"concursos" => $resultData
 			);
+	}
+
+	public static function concursosActivos()
+	{
+		$sql = "select * from Concurso where BINARY ( ? > Inicio AND ?  < Final ) limit 10";
+		return self::concursosLista($sql);
 	}
 
 
 	public static function concursosPasados()
 	{
-		$timestamp = date( "Y-m-d H:i:s" );
-
 		$sql = "select * from Concurso where BINARY ( Final < ? ) limit 10";
-		$inputarray = array( $timestamp );
-
-		global $db;
-		$result = $db->Execute($sql, $inputarray);
-		$resultData = $result->GetArray();
-
-		return array(
-				"result" => "ok",
-				"concursos" => $resultData
-			);
+		return self::concursosLista($sql);
 	}
 
 	public static function concursosFuturos()
 	{
-		$timestamp = date( "Y-m-d H:i:s" );
-
-		$sql = "select * from Concurso where BINARY ( Inicio > ?) limit 10";
-		$inputarray = array( $timestamp );
-
-		global $db;
-		$result = $db->Execute($sql, $inputarray);
-		$resultData = $result->GetArray();
-
-		return array(
-				"result" => "ok",
-				"concursos" => $resultData
-			);
+		$sql = "select * from Concurso where BINARY ( Inicio > ? ) limit 10";
+		return self::concursosLista($sql);
 	}
 
 	public static function nuevo()
