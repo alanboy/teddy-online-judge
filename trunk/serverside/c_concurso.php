@@ -2,7 +2,7 @@
 
 class c_concurso extends c_controller
 {
-	public statuc function rank()
+	public static function rank()
 	{
 		if(isset($_REQUEST['cid'])){
 			$cid = addslashes($_REQUEST['cid']);
@@ -89,11 +89,6 @@ class c_concurso extends c_controller
 			}
 		}
 
-
-
-
-
-
 		// Comparison function
 		function cmp($a, $b)
 		{
@@ -136,39 +131,36 @@ class c_concurso extends c_controller
 		foreach( $data as $row ){
 			array_push($json, $row);
 		}
-
 		echo json_encode($json);
-
 	}
 
 
 	public static function info()
 	{
-	{
-	global $CONTEST;
-	global $STATUS;
-	global $CDATA;	
-	
-	if($CONTEST == NULL) {
-		echo  "<div align='center'><h2>Este concurso no es valido.</h2></div>" ;
-		return;
-	}
+		global $CONTEST;
+		global $STATUS;
+		global $CDATA;	
 
-	?>
+		if($CONTEST == NULL) {
+			echo  "<div align='center'><h2>Este concurso no es valido.</h2></div>" ;
+			return;
+		}
+
+?>
 	<div align=center>
-		
+
 	<div><h2><?php echo $CDATA["Titulo"]; ?></h2></div>
 	<div><?php echo $CDATA["Descripcion"]; ?></div>
-	
+
 	<table border='0' cellspacing="5" style="font-size: 14px;" > 
 	<thead>
 		<tr align=center>
 		<th >Organizador</th>
-		<?php
+<?php
 		if($STATUS == "NOW" || $STATUS == "PAST"){
 			echo "<th >Problemas</th>";
 		}
-		?>
+?>
 		<th >Inicia</th>
 		<th >Termina</th>
 		</tr> 
@@ -176,18 +168,18 @@ class c_concurso extends c_controller
 	<tbody >
 		<tr align=center style="background-color: #e7e7e7">
 			<td><?php echo $CDATA["Owner"]; ?></td>
-			
-			<?php
-			// Si ya comenzo o esta en el pasado
-			if($STATUS == "NOW" || $STATUS == "PAST"){
-				echo "<td>";
-				$probs = explode(' ', $CDATA["Problemas"]);
-				for ($i=0; $i< sizeof( $probs ); $i++) {
-					echo "<a target='_blank' href='verProblema.php?id=". $probs[$i]  ."&cid=". $_REQUEST['cid'] ."'>". $probs[$i] ."</a>&nbsp;";
-				}		
-				echo "</td>";			
-			}
-			?>
+
+<?php
+		// Si ya comenzo o esta en el pasado
+		if($STATUS == "NOW" || $STATUS == "PAST"){
+			echo "<td>";
+			$probs = explode(' ', $CDATA["Problemas"]);
+			for ($i=0; $i< sizeof( $probs ); $i++) {
+				echo "<a target='_blank' href='verProblema.php?id=". $probs[$i]  ."&cid=". $_REQUEST['cid'] ."'>". $probs[$i] ."</a>&nbsp;";
+			}		
+			echo "</td>";			
+		}
+?>
 
 			<td><?php echo $CDATA["Inicio"]; ?></td>
 			<td><?php echo $CDATA["Final"]; ?></td>
@@ -196,17 +188,14 @@ class c_concurso extends c_controller
 	</table>
 	<a href="showcase.php?cid=<?php echo $_REQUEST["cid"]; ?>">[showcase/tablero para proyectar resultados]</a>
 	</div>
-	<?php
-
-	
-}
-	
+<?php
 	}
 
 	public static function canshow()
 	{
 		//validar el concurso que voy a renderear
-		if(!isset($_REQUEST["cid"])){
+		if(!isset($_REQUEST["cid"]))
+		{
 			die(header("Location: contest.php"));
 		}
 
@@ -214,7 +203,8 @@ class c_concurso extends c_controller
 		$q = "SELECT * from Concurso where CID = ". mysql_real_escape_string( $_REQUEST['cid'] ) .";";
 		$resultado = mysql_query($q) or pretty_die("Error al buscar este concurso.");
 
-		if(mysql_num_rows($resultado) != 1) {
+		if(mysql_num_rows($resultado) != 1)
+		{
 			die("Este concurso no existe.");
 		}
 
@@ -247,21 +237,59 @@ class c_concurso extends c_controller
 		}
 	}
 
-	public static function lista()
+	public static function concursosActivos()
 	{
-		//obtener fecha
 		$timestamp = date( "Y-m-d H:i:s" );
 
-		//obtener concusros de ahorita
-		echo "<h2>Concursos Activos</h2>&nbsp;&nbsp;";
-		$consulta = "select * from Concurso where BINARY ( '{$timestamp}' > Inicio AND  '{$timestamp}' < Final )";
-		$resultado = mysql_query($consulta) or die('Algo anda mal: ' . mysql_error());
+		$sql = "select * from Concurso where BINARY ( ? > Inicio AND ?  < Final ) limit 10";
+		$inputarray = array( $timestamp, $timestamp );
 
+		global $db;
+		$result = $db->Execute($sql, $inputarray);
+		$resultData = $result->GetArray();
+
+		return array(
+				"result" => "ok",
+				"concursos" => $resultData
+			);
 	}
 
 
+	public static function concursosPasados()
+	{
+		$timestamp = date( "Y-m-d H:i:s" );
 
-	public static nuevo()
+		$sql = "select * from Concurso where BINARY ( Final < ? ) limit 10";
+		$inputarray = array( $timestamp );
+
+		global $db;
+		$result = $db->Execute($sql, $inputarray);
+		$resultData = $result->GetArray();
+
+		return array(
+				"result" => "ok",
+				"concursos" => $resultData
+			);
+	}
+
+	public static function concursosFuturos()
+	{
+		$timestamp = date( "Y-m-d H:i:s" );
+
+		$sql = "select * from Concurso where BINARY ( Inicio > ?) limit 10";
+		$inputarray = array( $timestamp );
+
+		global $db;
+		$result = $db->Execute($sql, $inputarray);
+		$resultData = $result->GetArray();
+
+		return array(
+				"result" => "ok",
+				"concursos" => $resultData
+			);
+	}
+
+	public static function nuevo()
 	{
 			$cname 	= addslashes($_REQUEST["cname"]);
 			$cdesc 	= addslashes($_REQUEST["cdesc"]);

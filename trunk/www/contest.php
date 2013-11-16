@@ -7,7 +7,7 @@
 	require_once("includes/head.php");
 
 ?>
-<table>
+<table border=1>
 	<tr>
 	<td valign=top>
 	<div id="new_contest_form" class="post_blanco">
@@ -15,62 +15,37 @@
 		<?php include("includes/form.new-contest.php"); ?>
 	</div>
 	</td>
-
 	<td>
-	<div class="post"  align=center>
-		<table >
+	<div class="post">
+		<table border=1 >
 		<tr>
 		<td>
+		<h2>Concursos Actuales</h2>
 		<?php
-		while (false)
+		$resultado = c_concurso::concursosActivos();
+		if (SUCCESS($resultado))
 		{
-				echo "<div style=\"font-size: 16px\"><a href=\"contest_rank.php?cid=" . $row["CID"] .  "\"><b>".$row["Titulo"]."</b>&nbsp;<img src=\"img/1.png\"></a></div>";
-				echo "<b>Descripcion</b> " . $row["Descripcion"] . "<br>";
-				echo "<b>Organizador</b> ". $row['Owner'] ."<br>";
-				echo "<b>Hora de inicio</b> " . $row["Inicio"] . "<br>";
-				echo "<b>Hora de cierre</b> " . $row["Final"] . "<br>";
-				$probs = explode(' ', $row["Problemas"]);
-				echo "<b>Problemas </b>" . sizeof( $probs ) ;
-				echo "<br><br>";
+			gui::listaDeConcursos($resultado["concursos"]);
 		}
 		?>
 		</td>
 		<td>
+		<h2>Concursos pasados</h2>
 		<?php
-		if(0)
+		$resultado = c_concurso::concursosPasados();
+		if (SUCCESS($resultado))
 		{
-			while( $row = mysql_fetch_array($resultado) )
-			{
-				echo "<div style=\"font-size: 16px\"><a href=\"contest_rank.php?cid=" . $row["CID"] .  "\"><b>".$row["Titulo"]."</b>&nbsp;<img src=\"img/1.png\"></a></div>";
-				echo "<b>Descripcion</b> " . $row["Descripcion"] . "<br>";
-				echo "<b>Organizador</b> ". $row['Owner'] ."<br>";
-				echo "<b>Hora de inicio</b> " . $row["Inicio"] . "<br>";
-				echo "<b>Hora de cierre</b> " . $row["Final"] . "<br>";
-				$probs = explode(' ', $row["Problemas"]);
-				echo "<b>Problemas </b>" . sizeof( $probs ) ;
-				echo "<br><br>";
-			}
+			gui::listaDeConcursos($resultado["concursos"]);
 		}
 		?>
 		</td>
 		<td>
+		<h2>Concursos Futuros </h2>
 		<?php
-
-		//concursos futuros
-		echo "<h2>Concursos Pasados</h2>";
-		if(0)
+		$resultado = c_concurso::concursosFuturos();
+		if (SUCCESS($resultado))
 		{
-			while( $row = mysql_fetch_array($resultado) )
-			{
-				echo "<div style=\"font-size: 16px\"><a href=\"contest_rank.php?cid=" . $row["CID"] .  "\"><b>".$row["Titulo"]."</b>&nbsp;<img src=\"img/1.png\"></a></div>";
-				echo "<b>Descripcion</b> " . $row["Descripcion"] . "<br>";
-				echo "<b>Organizador</b> ". $row['Owner'] ."<br>";
-				echo "<b>Hora de inicio</b> " . $row["Inicio"] . "<br>";
-				echo "<b>Hora de cierre</b> " . $row["Final"] . "<br>";
-				$probs = explode(' ', $row["Problemas"]);
-				echo "<b>Problemas </b>" . sizeof( $probs ) ;
-				echo "<br><br>";
-			}
+			gui::listaDeConcursos($resultado["concursos"]);
 		}
 		?>
 		</td>

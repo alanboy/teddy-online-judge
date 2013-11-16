@@ -224,12 +224,7 @@ h3 { color:#666; font-weight: normal; margin-top:10px; }
 h4 { color:#666; font-weight: normal;  }
 img_border { background: #fff !important; border: 1px solid #999;  margin: 10px; }
 img a { text-decoration: none !important; background: #fff !important; margin: 0px; }
-.header { margin: 10px 0 0 0; }
-/*
-.header h1 a { font-weight:normal; }
-.header h1 {}
-.header h2 {font-size:18px; font-weight:200; letter-spacing:-1px; line-height:22px; text-align: left }
-*/
+.header { margin-left: auto; }
 
 .wrapper { margin-right: 50px; margin-left: 50px; margin-bottom: 25px; }
 

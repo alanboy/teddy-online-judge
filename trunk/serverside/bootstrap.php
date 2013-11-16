@@ -17,6 +17,9 @@ require_once("c_controller.php");
 require_once("c_usuario.php");
 require_once("c_problema.php");
 require_once("c_sesion.php");
+require_once("c_concurso.php");
+
+require_once("gui.php");
 
 // Inlclude libs
 require_once("c_mail.php");
