@@ -2,11 +2,8 @@
 
 	// This script is included by every page
 	// that requires a logged user
-	//
-	//
-	//
 
-	if (true)
+	if (!c_sesion::isLoggedIn())
 	{
 		?>
 		<div class="post_blanco">
@@ -16,5 +13,4 @@
 		include_once("includes/footer.php"); 
 		exit;
 	}
-	
 

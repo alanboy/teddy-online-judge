@@ -2,7 +2,7 @@
 	<div class="navcenter">
 		<a href="index.php">home</a>&nbsp;&nbsp;&nbsp;
 		<?php
-		if(isset($_SESSION['userID'])){
+		if (c_sesion::isLoggedIn()){
 			/* is logged */
 
 		}else{

@@ -3,6 +3,11 @@
 class c_sesion extends c_controller
 {
 
+	public static function isLoggedIn($request = null)
+	{
+		return isset($_SESSION['userID']);
+	}
+
 	/**
 	 * @param nick
 	 * @param email
