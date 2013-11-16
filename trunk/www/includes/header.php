@@ -8,7 +8,9 @@
 		<table>
 			<tr>
 				<td rowspan=2>
-					<img style="height:80px" src="img/teddy.jpg">
+					<span class="rounded_image" style="background-image:url(img/teddy.jpg);">
+						<img src="img/teddy.jpg" style="opacity:0;">
+					</span>
 				</td>
 				<td><h1>teddy online judge</h1></td>
 				<td rowspan=2 valign=top>

@@ -135,60 +135,26 @@ class c_concurso extends c_controller
 	}
 
 
-	public static function info()
+	public static function info($request)
 	{
-		global $CONTEST;
-		global $STATUS;
-		global $CDATA;	
+		$sql = "SELECT * from Concurso where CID = ? limit 1;";
+		$inputarray = array($request["cid"]);
 
-		if($CONTEST == NULL) {
-			echo  "<div align='center'><h2>Este concurso no es valido.</h2></div>" ;
-			return;
+		global $db;
+		$result = $db->Execute($sql, $inputarray);
+		$resultData = $result->GetArray();
+
+		$contest = null;
+		if (sizeof($resultData)== 1)
+		{
+			$contest = $resultData[0];
+			$contest["status"] = "PAST";
 		}
 
-?>
-	<div align=center>
-
-	<div><h2><?php echo $CDATA["Titulo"]; ?></h2></div>
-	<div><?php echo $CDATA["Descripcion"]; ?></div>
-
-	<table border='0' cellspacing="5" style="font-size: 14px;" > 
-	<thead>
-		<tr align=center>
-		<th >Organizador</th>
-<?php
-		if($STATUS == "NOW" || $STATUS == "PAST"){
-			echo "<th >Problemas</th>";
-		}
-?>
-		<th >Inicia</th>
-		<th >Termina</th>
-		</tr> 
-	</thead> 
-	<tbody >
-		<tr align=center style="background-color: #e7e7e7">
-			<td><?php echo $CDATA["Owner"]; ?></td>
-
-<?php
-		// Si ya comenzo o esta en el pasado
-		if($STATUS == "NOW" || $STATUS == "PAST"){
-			echo "<td>";
-			$probs = explode(' ', $CDATA["Problemas"]);
-			for ($i=0; $i< sizeof( $probs ); $i++) {
-				echo "<a target='_blank' href='verProblema.php?id=". $probs[$i]  ."&cid=". $_REQUEST['cid'] ."'>". $probs[$i] ."</a>&nbsp;";
-			}		
-			echo "</td>";			
-		}
-?>
-
-			<td><?php echo $CDATA["Inicio"]; ?></td>
-			<td><?php echo $CDATA["Final"]; ?></td>
-		</tr>
-	</tbody>
-	</table>
-	<a href="showcase.php?cid=<?php echo $_REQUEST["cid"]; ?>">[showcase/tablero para proyectar resultados]</a>
-	</div>
-<?php
+		return array(
+					"result" => "ok",
+					"concurso" => $contest
+				);
 	}
 
 	public static function canshow()

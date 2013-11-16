@@ -5,14 +5,21 @@
 
 	require_once("includes/head.php");
 
+
+	// Move this to some controller 
+	$sql = "SELECT table_name, TABLE_ROWS FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = ?;";
+	$inputarray = array("teddy");
+	$result = $db->Execute($sql, $inputarray);
+	$stats = $result->GetArray();
+
 ?>
 	<div class="post_blanco">
 		<div align="center" >
 			<h2>Bienvenido a Teddy</h2>
-			<b><?php echo mysql_num_rows( mysql_query("SELECT * FROM `Ejecucion`") ); ?></b> ejecuciones &nbsp; 
-			<b><?php echo mysql_num_rows( mysql_query("SELECT * FROM `Usuario`") );   ?></b> usuarios &nbsp; 
-			<b><?php echo mysql_num_rows( mysql_query("SELECT * FROM `Problema` WHERE publico = 'SI'") ); ?></b> problemas &nbsp; 
-			<b><?php echo mysql_num_rows( mysql_query("SELECT * FROM `Concurso`") ); ?></b> concursos 
+			<b><?php echo $stats["Ejecucion"]; ?></b> ejecuciones &nbsp; 
+			<b><?php echo $stats["Usuario"]; ?></b> usuarios &nbsp; 
+			<b><?php echo $stats["Problema"]; ?></b> problemas &nbsp; 
+			<b><?php echo $stats["Concurso"]; ?></b> concursos &nbsp; 
 		</div>
 		<table>
 		<tr>
@@ -27,8 +34,6 @@
 			Teddy no tiene dificultad evaluando c&oacute;digo en C/C++, Java, Python, PHP, VisualBasic.NET (aunque VisualBasic 6 no es de su particular agrado), C# o Perl.
 			<br><br>
 			Teddy ir&aacute; llevando un conteo de qu&eacute; problemas ha resuelto cada quien, y en cu&aacute;nto tiempo. Si logras acumular una cantidad considerable de puntos, quien sabe... 
-
-			<!-- &iexcl;Teddy te podr&iacute;a dar una sorpr<a href="h.php">e</a>sa! -->
 			&iexcl;Teddy te podr&iacute;a dar una sorpresa!
 			</p>
 		</td>
@@ -37,26 +42,6 @@
 		</td>
 		</tr>
 		</table>
-		<div align="center" >
-		<div class="botonAzul">Quiero practicar</div>
-		<div class="botonAzul">Quiero organizar un concurso</div>
-		</div >
-	</div>
-
-	<div class="post">
-		<div align="center"><h2>Ultimas Noticias</h2></div>
-		<ul>
-		<?php 
-		$res = mysql_query("select * from Aviso order by fecha desc limit 10"); 
-		while($row = mysql_fetch_array($res)){
-			print("<li><b>". $row["fecha"] . "</b> " .$row["aviso"] ."</li>");
-		} 
-		?>
-		</ul>
-		<br>
-
-		<div align="center">
-		</div>
 	</div>
 
 	<div class="post_blanco">
@@ -64,19 +49,15 @@
 		<div align="center"><h2>Estadisticas</h2></div>
 		<div align ="center">
 		<?php
+		// Wow, this sucks.
 		$java = mysql_num_rows( mysql_query("SELECT LANG FROM `Ejecucion` WHERE LANG = 'JAVA'") );
 		$c = mysql_num_rows( mysql_query("SELECT LANG FROM `Ejecucion` WHERE LANG = 'C'") );
 		$cpp = mysql_num_rows( mysql_query("SELECT LANG FROM `Ejecucion` WHERE LANG = 'C++'") );
 		$perl = mysql_num_rows( mysql_query("SELECT LANG FROM `Ejecucion` WHERE LANG = 'Perl'") );
 		$python = mysql_num_rows( mysql_query("SELECT LANG FROM `Ejecucion` WHERE LANG = 'Python'") );
 		$php = mysql_num_rows( mysql_query("SELECT LANG FROM `Ejecucion` WHERE LANG = 'Php'") );
-		/*
-		SELECT COUNT( * ) AS  `Filas` ,  `status` 
-		FROM  `Ejecucion` 
-		GROUP BY  `status` 
-		ORDER BY  `status`
-		*/
-		$total = $java + $c + $cpp + $perl + $python;
+
+		$total = $java + $c + $cpp + $perl + $python + $php;
 		if($total == 0) $total = 1;
 		$java = ($java * 100)/$total;
 		$c = ($c * 100)/$total;
@@ -88,9 +69,9 @@
 		<img src="http://chart.apis.google.com/chart?
 			chs=400x200
 		&amp;	chtt=Lenguajes+usados
-		&amp;	chd=t:<?php print($java.','.$c.','.$cpp.','.$python.','.$perl); ?>
+		&amp;	chd=t:<?php print($java.','.$c.','.$cpp.','.$python.','.$perl.','.$php); ?>
 		&amp;	cht=p
-		&amp;	chl=Java|C|Cpp|Python|Perl"
+		&amp;	chl=Java|C|Cpp|Python|Perl|PHP"
 		alt="Lenguajes enviados a Teddy" />
 
 		<?php
@@ -121,7 +102,6 @@
 		alt="Lenguajes enviados a Teddy" />
 
 	<?php
-		//$res = mysql_query("SELECT LANG FROM `Ejecucion` WHERE fecha = '" .  ."'");
 		$days = 6;
 		$data_for_chart  = "";
 		$data_for_chart_dates  = "";
