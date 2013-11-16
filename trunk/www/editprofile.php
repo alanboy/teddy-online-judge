@@ -7,7 +7,11 @@
 	require_once("includes/head.php");
 
 	// This page requires a logged user
-	require_once("includes/require_login.php")
+	require_once("includes/require_login.php");
+
+	$respuesta = c_sesion::usuarioActual();
+	$datos = $respuesta["user"];
+
 ?>
 	<div class="post" >
 		<form action="" method="post" onsubmit="return validate()" class="datos">

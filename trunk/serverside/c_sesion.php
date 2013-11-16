@@ -8,6 +8,21 @@ class c_sesion extends c_controller
 		return isset($_SESSION['userID']);
 	}
 
+	public static function usuarioActual()
+	{
+		$user = null;
+		if (self::isLoggedIn())
+		{
+			$result = c_usuario::getByNickOrEmail(array( "nick" => $_SESSION['userID']));
+			if (SUCCESS($result))
+			{
+				$user = $result["user"];
+			}
+		}
+
+		return array("result" => "ok", "user" => $user);
+	}
+
 	/**
 	 * @param nick
 	 * @param email
