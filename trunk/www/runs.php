@@ -10,33 +10,35 @@
 	<div class="post_blanco">
 	<?php
 
-	if(isset($_GET["user"]))
+	if (isset($_GET["user"]))
 	{
 		include ("includes/profile.php");
 	}
 	else
 	{
-?>
-			<div align="center">
-				<h2>Run-Status</h2>
-				Mostrando los ultimos 100 envios a Teddy. 
-			</div>
-<?php
+		?>
+		<div align="center">
+			<h2>Run-Status</h2>
+			Mostrando los ultimos 100 envios a Teddy.
+		</div>
+		<?php
 	}
+
 	?>
 	<div align="center" >
-	<table   > 
-	<thead> <tr >
-		<th width='12%'>execID</th> 
-		<th width='12%'>Problema</th> 
-		<th width='12%'>Usuario</th> 
-		<th width='12%'>Lenguaje</th> 
-		<th width='12%'>Resultado</th> 
-		<th width='12%'>Tiempo</th> 
-		<th width='12%'>Fecha</th>
-		</tr> 
-	</thead> 
-	<tbody>
+		<table>
+		<thead>
+			<tr >
+			<th width='12%'>execID</th> 
+			<th width='12%'>Problema</th> 
+			<th width='12%'>Usuario</th> 
+			<th width='12%'>Lenguaje</th> 
+			<th width='12%'>Resultado</th> 
+			<th width='12%'>Tiempo</th> 
+			<th width='12%'>Fecha</th>
+			</tr> 
+		</thead> 
+		<tbody>
 	<?php
 	$consulta = "SELECT `execID`, `userID`, `probID`, `status`, `tiempo`, `fecha`, `LANG`, `Concurso`  FROM `Ejecucion` order by fecha desc limit 100";
 	$resultado = mysql_query($consulta);
@@ -71,3 +73,4 @@
 	</div>
 
 	<?php include_once("includes/footer.php"); ?>
+

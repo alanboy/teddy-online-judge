@@ -5,6 +5,11 @@
 		return $res["result"] === "ok";
 	}
 
+	function sanitize($res)
+	{
+		return $htmlentities(utf8_decode($res));
+	}
+
 	function writeFormInput($label, $id, $placeholder = null)
 	{
 		echo "<label for='$id'>$label</label>";

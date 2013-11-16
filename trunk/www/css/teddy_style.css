@@ -1,4 +1,44 @@
 
+.rounded_image {
+-webkit-background-size: 48px 48px;
+-webkit-box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 2px 0px;
+background-position: 50% 0%;
+background-repeat: no-repeat;
+background-size: 48px 48px;
+border-bottom-color: rgb(176, 184, 191);
+border-bottom-left-radius: 30px;
+border-bottom-right-radius: 30px;
+border-bottom-style: solid;
+border-bottom-width: 1px;
+border-image-outset: 0px;
+border-image-repeat: stretch;
+border-image-slice: 100%;
+border-image-source: none;
+border-image-width: 1;
+border-left-color: rgb(176, 184, 191);
+border-left-style: solid;
+border-left-width: 1px;
+border-right-color: rgb(176, 184, 191);
+border-right-style: solid;
+border-right-width: 1px;
+border-top-color: rgb(176, 184, 191);
+border-top-left-radius: 30px;
+border-top-right-radius: 30px;
+border-top-style: solid;
+border-top-width: 1px;
+box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 2px 0px;
+color: rgb(90, 107, 119);
+display: block;
+float: left;
+height: 48px;
+line-height: 16px;
+margin: 0px;
+padding: 0px;
+vertical-align: baseline;
+width: 48px;
+}
+
+
 			#avatar{
 				margin-top: -3px;
 				margin-right: 3px;

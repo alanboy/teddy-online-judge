@@ -5,6 +5,14 @@
 
 class c_usuario extends c_controller
 {
+
+
+	public static function solvedProblems($request)
+	{
+		$query = "select distinct probID from Ejecucion where userID = ? AND status = 'OK' order by probID";
+		$reques["userID"];
+	}
+
 	public static function canCreateContest($request)
 	{
 			$consulta = "select COUNT( DISTINCT probID ) from Ejecucion where ( userID = '". addslashes( $_SESSION['userID'] ) ."' AND  status = 'OK' )";
@@ -20,8 +28,18 @@ class c_usuario extends c_controller
 	 * */
 	public static function getByNickOrEmail($request)
 	{
+		$searchValue = null;
+		if (isset($request["nick"]))
+		{
+			$searchValue = $request["nick"];
+		}
+		else if (isset($request["mail"]))
+		{
+			$searchValue = $request["mail"];
+		}
+
 		$sql = "select * from Usuario where userID = ? or mail = ? limit 1";
-		$inputarray = array($request["nick"], $request["email"]);
+		$inputarray = array($searchValue, $searchValue);
 
 		global $db;
 		$result = $db->Execute($sql, $inputarray);
@@ -34,6 +52,15 @@ class c_usuario extends c_controller
 					"user" => null
 				);
 		}
+
+		// Calcular el rank
+		if( $resultData[0]["solved"] != 0 )
+		{
+			$rat = ($resultData[0]["solved"]/$resultData[0]["tried"])*100;
+			$resultData[0]["ratio"] = substr( $rat , 0 , 5 ) . "%";
+		}
+		else
+			$resultData[0]["ratio"] = "0.0%";
 
 		return array(
 				"result" => "ok",
