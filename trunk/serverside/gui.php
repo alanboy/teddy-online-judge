@@ -20,6 +20,33 @@ class gui
 	
 	public static function listaDeRuns($runs)
 	{
+		?>
+		<table>
+		<thead>
+		<tr >
+		<th width='12%'>execID</th> 
+		<th width='12%'>Usuario</th> 
+		<th width='12%'>Lenguaje</th> 
+		<th width='12%'>Tiempo</th> 
+		<th width='12%'>Fecha</th>
+		</tr> 
+		</thead> 
+		<tbody>
+		<?php
+			for ($n = 0; $n < sizeof($runs); $n++)
+			{
+				$row = $runs[$n];
+				echo "<TD align='center' ><a href='verCodigo.php?execID={$row['execID']}'>". $row['execID'] ."</a></TD>";
+				echo "<TD align='center' ><a href='runs.php?user=". $row['userID']  ."'>". $row["userID"]   ."</a> </TD>";
+				echo "<TD align='center' >". $row['LANG']   ."</TD>";
+				echo "<TD align='center' ><b>". $row['tiempo'] / 1000  ."</b>s</TD>";
+				echo "<TD align='center' >". $row["fecha"]   ." </TD>";
+				echo "</TR>";
+			}
+		?>
+		</tbody>
+		</table>
+		<?php
 	}
 
 	public static function informacionDeConcuso($concurso)

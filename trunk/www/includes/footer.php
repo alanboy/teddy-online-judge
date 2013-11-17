@@ -32,11 +32,6 @@
 <script src="//platform.twitter.com/widgets.js" type="text/javascript"></script>
 
 <?php
-	if (isset($resultado))
-	{
-		mysql_free_result($resultado);
-	}
-
 	if (!$TEDDY_GA_MUTE) 
 	{
 	?><!-- GOOGLE Analitics -->

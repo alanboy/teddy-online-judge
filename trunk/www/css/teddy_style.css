@@ -239,10 +239,42 @@ img a { text-decoration: none !important; background: #fff !important; margin: 0
 	background: #f2f0f0; 
 	padding:10px;
 	margin-top: 10px; 
-	-moz-border-radius: 11px;
-	-webkit-border-radius: 11px;
-	-khtml-border-radius: 11px;
-	border-radius: 11px;
+
+-moz-border-radius: 11px;
+-webkit-border-radius: 11px;
+-khtml-border-radius: 11px;
+border-radius: 11px;
+
+-webkit-background-size: 48px 48px;
+-webkit-box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 2px 0px;
+background-position: 50% 0%;
+background-repeat: no-repeat;
+background-size: 48px 48px;
+border-bottom-color: rgb(176, 184, 191);
+
+border-bottom-left-radius: 10px;
+border-bottom-right-radius: 10px;
+border-top-left-radius: 10px;
+border-top-right-radius: 10px;
+
+border-bottom-style: solid;
+border-bottom-width: 1px;
+border-image-outset: 0px;
+border-image-repeat: stretch;
+border-image-slice: 100%;
+border-image-source: none;
+border-image-width: 1;
+border-left-color: rgb(176, 184, 191);
+border-left-style: solid;
+border-left-width: 1px;
+border-right-color: rgb(176, 184, 191);
+border-right-style: solid;
+border-right-width: 1px;
+border-top-color: rgb(176, 184, 191);
+border-top-style: solid;
+border-top-width: 1px;
+box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 2px 0px;
+color: rgb(90, 107, 119);
 }
 
 .post_blanco { background: white; padding:10px; margin-top: 10px;

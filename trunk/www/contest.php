@@ -7,7 +7,7 @@
 	require_once("includes/head.php");
 
 ?>
-<table border=1>
+<table>
 	<tr>
 	<td valign=top>
 	<div id="new_contest_form" class="post_blanco">
@@ -17,40 +17,40 @@
 	</td>
 	<td>
 	<div class="post">
-		<table border=1 >
-		<tr>
-		<td>
-		<h2>Concursos Actuales</h2>
-		<?php
-		$resultado = c_concurso::concursosActivos();
-		if (SUCCESS($resultado))
-		{
-			gui::listaDeConcursos($resultado["concursos"]);
-		}
-		?>
-		</td>
-		<td>
-		<h2>Concursos pasados</h2>
-		<?php
-		$resultado = c_concurso::concursosPasados();
-		if (SUCCESS($resultado))
-		{
-			gui::listaDeConcursos($resultado["concursos"]);
-		}
-		?>
-		</td>
-		<td>
-		<h2>Concursos Futuros </h2>
-		<?php
-		$resultado = c_concurso::concursosFuturos();
-		if (SUCCESS($resultado))
-		{
-			gui::listaDeConcursos($resultado["concursos"]);
-		}
-		?>
-		</td>
-		</tr>
-	</table>
+		<table >
+			<tr  style="vertical-align: top">
+				<td>
+				<h2>Concursos Actuales</h2>
+				<?php
+				$resultado = c_concurso::concursosActivos();
+				if (SUCCESS($resultado))
+				{
+					gui::listaDeConcursos($resultado["concursos"]);
+				}
+				?>
+				</td>
+				<td>
+				<h2>Concursos Pasados</h2>
+				<?php
+				$resultado = c_concurso::concursosPasados();
+				if (SUCCESS($resultado))
+				{
+					gui::listaDeConcursos($resultado["concursos"]);
+				}
+				?>
+				</td>
+				<td>
+				<h2>Concursos Futuros</h2>
+				<?php
+				$resultado = c_concurso::concursosFuturos();
+				if (SUCCESS($resultado))
+				{
+					gui::listaDeConcursos($resultado["concursos"]);
+				}
+				?>
+				</td>
+			</tr>
+		</table>
 </div>
 </td>
 </tr>

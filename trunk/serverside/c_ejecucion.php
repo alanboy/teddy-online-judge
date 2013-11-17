@@ -2,11 +2,17 @@
 
 class c_ejecucion extends c_controller
 {
-	public static function  listar($request)
+	public static function  lista()
 	{
-	
-		$consulta = "SELECT `execID`, `userID`, `probID`, `status`, `tiempo`, `fecha`, `LANG`, `Concurso`  FROM `Ejecucion` order by fecha desc limit 100";
-	
+		$sql = "SELECT `execID`, `userID`, `probID`, `status`, `tiempo`, `fecha`, `LANG`, `Concurso`  FROM `Ejecucion` order by fecha desc limit 100";
+
+		global $db;
+		$result = $db->Execute($sql);
+
+		return array(
+				"result" => "ok", 
+				"runs" => $result->GetArray()
+			);
 	}
 
 	public static function nuevo()

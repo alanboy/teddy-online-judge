@@ -18,6 +18,7 @@ require_once("c_usuario.php");
 require_once("c_problema.php");
 require_once("c_sesion.php");
 require_once("c_concurso.php");
+require_once("c_ejecucion.php");
 
 require_once("gui.php");
 

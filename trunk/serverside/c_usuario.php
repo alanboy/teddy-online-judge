@@ -1,8 +1,5 @@
 <?php
 
-//use Respect\Validation\Validator as validator;
-//$usernameValidator = validator::alnum()->noWhitespace()->length(1,15);
-
 class c_usuario extends c_controller
 {
 
@@ -18,6 +15,20 @@ class c_usuario extends c_controller
 			$consulta = "select COUNT( DISTINCT probID ) from Ejecucion where ( userID = '". addslashes( $_SESSION['userID'] ) ."' AND  status = 'OK' )";
 			$resultado = mysql_query($consulta) or die('Algo anda mal: ' . mysql_error());
 			$row = mysql_fetch_array($resultado);
+	}
+
+	public static function runs($request)
+	{
+		$sql = "SELECT `execID`, `userID`, `probID`, `status`, `tiempo`, `fecha`, `LANG`, `Concurso`  FROM `Ejecucion`  where userID = ? order by fecha desc limit 100";
+		$inputarray = array( $request["user"] );
+
+		global $db;
+		$result = $db->Execute($sql, $inputarray);
+
+		return array(
+				"result" => "ok",
+				"runs" => $result->GetArray()
+			);
 	}
 
 	/**
