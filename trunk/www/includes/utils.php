@@ -2,7 +2,7 @@
 
 class utils
 {
-	function endsWith( $str, $sub ) 
+	function endsWith( $str, $sub )
 	{
 		return ( substr( $str, strlen( $str ) - strlen( $sub ) ) == $sub );
 	}
@@ -43,7 +43,7 @@ class envios
 		{
 			?>
 			<div>
-			   <input type="text" id="prob_id" placeholder="Problema"  value="" maxlength="5"> 
+				<input type="text" id="prob_id" placeholder="Problema"  value="" maxlength="5">
 			</div>
 			<?php
 			return;
@@ -56,7 +56,7 @@ class envios
 
 		$probs = explode(' ', $row["Problemas"]);
 
-	    echo "<select id=\"prob_id\">";	
+		echo "<select id=\"prob_id\">";	
 		for ($i=0; $i< sizeof( $probs ); $i++)
 		{
 			echo "<option value=". $probs[$i] .">". $probs[$i] ."</option>"; 
@@ -71,42 +71,9 @@ class envios
 				<input id="flash_upload_file" name="fileInput" type="file" />
 			</div>
 
-			<script>
-            $(document).ready(function() {
-                $('#flash_upload_file').uploadify({
-                    'uploader'  : 'uploadify/uploadify.swf',
-                    'script'    : 'ajax/enviar.php',
-                    'cancelImg' : 'uploadify/cancel.png',
-                    'auto'      : false,
-                    'height'    : 30,
-                    'sizeLimit' : 1024*1024,
-                    'buttonText': 'Buscar Archivo',
-					'fileDesc' 	:'Codigo Fuente',
-					'fileExt'	: '*.c;*.cpp;*.java;*.cs;*.pl;*.py;*.php',
-                    'onSelect'  : function (e, q, f)  { 
-							source_file.file_name = f.name;
-							var parts = f.name.split(".");
-							source_file.lang_ext = parts[parts.length -1 ];
-							$("#ready_to_submit").fadeIn();
-							
-						},
-                    'onCancel'  : function ()  { 
-							$("#ready_to_submit").fadeOut();
-							
-						},
-                    'onComplete'  : function (a,b,c,json_response,f){ 
-							try{
-								doneUploading( $.parseJSON(json_response));	
-							}catch(e){
-								console.error(e);
-							}
-						
-						},
-				 	'onError'  : function (){ 
-							alert('Error');
-					}
-                });
-            });
+		<script>
+		$(document).ready(function() {
+		});
 			</script>
 		<?php
 		
@@ -213,49 +180,41 @@ class envios
 
 			function send()
 			{
-				
-				switch(forma_de_envio_method){
-					
-					
-					
+				switch(forma_de_envio_method)
+				{
 					// - - - - - -- - - -- - - - - - -- - -
 					// Lo enviare con flash
-					// - - - - - -- - - -- - - - - - -- - -
-					case 0 : 
+					case 0 :
 					$('#flash_upload_file').uploadifySettings('scriptData' , {
-							'id_problema':  $("#prob_id").val(),
-							'lang'		 : source_file.lang_ext,
-							'sid'	 	: '<?php echo session_id(); ?>'
+							problem_id:  $("#prob_id").val(),
+							lang		 : source_file.lang_ext,
+							controller	: "c_ejecucion",
+							method		: "nuevo",
+							sid	 		: '<?php echo session_id(); ?>'
 							<?php if($es_concurso !== null) echo ", 'id_concurso': " . $es_concurso; ?>
 							
 						});
 						
 					$('#flash_upload_file').uploadifyUpload();
 					break;
-					
-					
-					
-					
-					// - - - - - -- - - -- - - - - - -- - -					
-					// Lo enviare con el tag de file
-					// - - - - - -- - - -- - - - - - -- - -					
-					case 1 : 
 
+					// - - - - - -- - - -- - - - - - -- - 
+					// Lo enviare con el tag de file
+					case 1 :
 					break;
-					
-					
-					
-					// - - - - - -- - - -- - - - - - -- - -					
+
+					// - - - - - -- - - -- - - - - - -- - -
 					// Lo enviare en texto plano
-					// - - - - - -- - - -- - - - - - -- - -					
-					case 2 : 
+					case 2 :
 						$.ajax({ 
 								url: "ajax/enviar.php", 
 								type : "POST",	
 								data: {
 									lang 		: $('#lang').val(),
 									id_problema	: $('#prob_id').val(),
-									plain_source: $("#plain_text_area").val()
+									plain_source: $("#plain_text_area").val(),
+									controller	: "c_ejecucion",
+									method		: "nuevo"
 									<?php if($es_concurso !== null) echo ", 'id_concurso': " . $es_concurso; ?>
 								},
 								success: function(data){
@@ -341,8 +300,6 @@ class envios
 					},
 					success: function(data)
 					{
-						j = jQuery.parseJSON(data);
-
 						if( j.status == "WAITING" || j.status == "JUDGING" )
 						{
 							//volver a revisar el estado en uno o medio segundo
@@ -362,9 +319,7 @@ class envios
 			<br><br>
 
 			<div id="result_space" style="display:none;">
-				
 			</div>
-
 
 			<table border=0 id="waiting_space" style="display:none;">
 				<tr>
@@ -372,8 +327,6 @@ class envios
 					<td>Revisando...</td>
 				</tr>
 			</table>
-
-
 
 			<table border=0 id="form_space" style="text-align:center">
 				<tr>
@@ -395,9 +348,7 @@ class envios
 					?>
 					</td>
 				</tr>
-
 				<tr>
-					
 					<td><br><br>Problema</td>
 				</tr>
 				<tr>
@@ -414,7 +365,7 @@ class envios
 							<input type="button" value="Enviar" onClick="send()">
 						</div>
 					</td>
-				</tr>			
+				</tr>
 			</table>
 		</div>
 		<?php

@@ -2,10 +2,43 @@
 var CurrentRuns = null;
 var CurrentRank = null;
 
+//$(document).ready(function() { });
 window.onload = function ()
 {
 	dp.SyntaxHighlighter.ClipboardSwf = 'flash/clipboard.swf';
 	dp.SyntaxHighlighter.HighlightAll('code');
+
+	$('#flash_upload_file').uploadify({
+		'uploader'  : 'uploadify/uploadify.swf',
+		'script'    : 'ajax.php',
+		'cancelImg' : 'uploadify/cancel.png',
+		'auto'      : false,
+		'height'    : 30,
+		'sizeLimit' : 1024*1024,
+		'buttonText': 'Buscar Archivo',
+		'fileDesc' 	: 'Codigo Fuente',
+		'fileExt'	: '*.c;*.cpp;*.java;*.cs;*.pl;*.py;*.php',
+		'onSelect'  : function (e, q, f) {
+						source_file.file_name = f.name;
+						var parts = f.name.split(".");
+						source_file.lang_ext = parts[parts.length -1 ];
+						$("#ready_to_submit").fadeIn();
+					},
+		'onCancel'  : function (){
+						$("#ready_to_submit").fadeOut();
+					},
+		'onComplete'  : function (a,b,c,json_response,f) {
+						try{
+							doneUploading( $.parseJSON(json_response));	
+						}catch(e){
+							console.error(e);
+						}
+					},
+		'onError'  : function () {
+							alert('Error');
+					}
+	});
+
 }
 
 /*
@@ -40,7 +73,6 @@ function _validate()
 
 	if($("#twitter")[0].value.indexOf("@") != -1)
 	{
-		//return Array("Tu id de twitter sin el arroba plis :P", $('twitter'));
 		$("#twitter")[0].value = $("#twitter")[0].value.substring(1);
 	}
 

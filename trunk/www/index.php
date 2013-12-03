@@ -12,14 +12,38 @@
 	$result = $db->Execute($sql, $inputarray);
 	$stats = $result->GetArray();
 
+	$namedStats = array();
+	for ($i = 0 ; $i < sizeof($stats); $i++)
+	{
+		switch($stats[$i]["table_name"])
+		{
+		case "Ejecucion":
+			$namedStats["Ejecucion"] = $stats[$i]["TABLE_ROWS"];
+			break;
+
+		case "Usuario"  :
+			$namedStats["Usuario"] = $stats[$i]["TABLE_ROWS"];
+			break;
+
+		case "Problema" :
+			$namedStats["Problema"] = $stats[$i]["TABLE_ROWS"];
+			break;
+
+		case "Concurso" :
+			$namedStats["Concurso"] = $stats[$i]["TABLE_ROWS"];
+			break;
+		}
+	}
+
+
 ?>
 	<div class="post_blanco">
 		<div align="center" >
 			<h2>Bienvenido a Teddy</h2>
-			<b><?php echo $stats["Ejecucion"]; ?></b> ejecuciones &nbsp; 
-			<b><?php echo $stats["Usuario"]; ?></b> usuarios &nbsp; 
-			<b><?php echo $stats["Problema"]; ?></b> problemas &nbsp; 
-			<b><?php echo $stats["Concurso"]; ?></b> concursos &nbsp; 
+			<b><?php echo $namedStats["Ejecucion"]; ?></b> ejecuciones &nbsp; 
+			<b><?php echo $namedStats["Usuario"]; ?></b> usuarios &nbsp;
+			<b><?php echo $namedStats["Problema"]; ?></b> problemas &nbsp;
+			<b><?php echo $namedStats["Concurso"]; ?></b> concursos &nbsp;
 		</div>
 		<table>
 		<tr>
@@ -171,3 +195,4 @@
 	</div>
 	</div>
 	<?php include_once("includes/footer.php"); ?>
+

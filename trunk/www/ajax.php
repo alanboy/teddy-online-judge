@@ -13,4 +13,17 @@
 	{
 		echo json_encode($res);
 	}
+	else
+	{
+		$reason = "Error interno en Teddy.";
 
+		if (isset($res["reason"]))
+		{
+			$reason = $res["reason"];
+		}
+
+		echo json_encode(array(
+				"result" => "error",
+				"reason" => $reason
+			));
+	}

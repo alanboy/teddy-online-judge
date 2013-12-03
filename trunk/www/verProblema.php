@@ -39,7 +39,7 @@
 			{
 				//si es concurso
 			?>
-					<!--
+				<!--
 					<div align="center" >
 					Enviar problema para el concurso
 					<form action="contest_rank.php?cid=<?php echo $_REQUEST['cid']; ?>" method="POST" enctype="multipart/form-data">
@@ -53,7 +53,7 @@
 					<input type="hidden" name="cid" value="<?php echo $_REQUEST['cid']; ?>">
 					</form> 
 					</div>
-					-->
+				-->
 			<?php
 			}
 		}

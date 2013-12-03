@@ -33,7 +33,7 @@ require_once("includes/utils.php");
 
 // Create a "SuperCage" to wrap all possible user input
 // the SuperCage should be created before doing *anything* else
-//$input = Inspekt::makeSuperCage();
+// $input = Inspekt::makeSuperCage();
 
 // Connect to DB
 $db = ADONewConnection('mysql');
