@@ -7,6 +7,7 @@ Teddy es un evaluador de problemas de programacion.
 
 API
 ==================
+```
 c_concurso.php::canshow()
 c_concurso.php::concursosActivos()
 c_concurso.php::concursosFuturos()
@@ -45,3 +46,4 @@ c_usuario.php::solvedProblems($request)
 gui.php::informacionDeConcuso($concurso)
 gui.php::listaDeConcursos($concursos)
 gui.php::listaDeRuns($runs)
+```
