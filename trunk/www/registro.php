@@ -6,37 +6,14 @@
 
 	require_once("includes/head.php");
 
-	if (isset($_POST["form"]))
-	{
-		$result = c_usuario::nuevo($_POST);
-
-		if (SUCCESS($result))
-		{
-			?>
-			<div class="post_blanco">
-				Ok !
-			</div>
-			<?php
-		}
-		else
-		{
-			?>
-			<div class="post_blanco">
-			Ups, algo no salio bien
-			</div>
-			<?php
-		}
-	}
-
-
 ?>
 <div class="post_blanco">
-	<form action="" method="post" onsubmit="return validateNewUser()">
+	<form  >
 		<h2>Ingresa los datos necesarios para registrarte en el Juez Teddy.</h2>
+
+		<?php writeFormInput("Usuario:",			"nick"); ?>
 		<?php writeFormInput("Nombre completo",		"nombre"); ?>
 		<?php writeFormInput("Correo electronico:",	"email"); ?>
-		<?php writeFormInput("Twitter:",			"twitter"); ?>
-		<?php writeFormInput("Nick:",				"nick"); ?>
 		<?php writeFormInput("Password:",			"password"); ?>
 		<?php writeFormInput("Confirna password:",	"re_password"); ?>
 
@@ -52,8 +29,7 @@
 
 		<?php writeFormInput("Escuela de Procedencia :", "escuela"); ?>
 
-		<input type="submit" class="button" value="Registrar" />
-		<input type="hidden" id="form" name="form" value="false" />
+		<input type="button" class="button" value="Registrar" onClick="Util.SerializeAndCallApi( $(this).parent(), Teddy.c_usuario.nuevo );" />
 	</form>
 </div>
 

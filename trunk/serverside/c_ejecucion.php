@@ -25,17 +25,17 @@ class c_ejecucion extends c_controller
 	{
 		if (!isset($_SESSION["userID"]))
 		{
-			utils::json_die("Debes iniciar sesion para poder enviar problemas.");
+			return array("result" => "error", "reason" =>"Debes iniciar sesion para poder enviar problemas.");
 		}
 
 		if (!(isset($request['id_problema']) && isset($request['lang'])))
 		{
-			utils::json_die("Faltan parametros.");
+			return array("result" => "error", "reason" => "Faltan parametros");
 		}
 
 		if (empty($_FILES) && !isset($request["plain_source"]))
 		{
-			utils::json_die("No se envio el codigo fuente.");
+			return array("result" => "error", "reason" => "No se envio el codigo fuente.");
 		}
 
 		$usuario      = $_SESSION["userID"];
@@ -51,16 +51,17 @@ class c_ejecucion extends c_controller
 			$id_concurso  = null;
 		}
 
+		// @todo Reescribir esto:
 		//buscar el id de este problea y que sea publico
 		//revisar si existe este problema
 		$consulta = "select probID , titulo from Problema where BINARY ( probID = '{$id_problema}' AND publico = 'SI') ";
 		$resultado = mysql_query( $consulta ) or utils::json_die("Error al buscar el problema en la BD.");
 
-
 		//insertar un nuevo run y obtener el id insertado
 		//como estado, hay que ponerle uploading
-		if(mysql_num_rows($resultado) == 0) {
-			utils::json_die("Este problema no existe !");
+		if (mysql_num_rows($resultado) == 0)
+		{
+			return array("result" => "error", "reason" => "El problema no existe.");
 		}
 
 		$lang_desc = null;
@@ -74,7 +75,7 @@ class c_ejecucion extends c_controller
 			case "cs"       : $lang_desc = "C#";    break;
 			case "pl"       : $lang_desc = "Perl";  break;
 			default:
-				utils::json_die("Este no es un lenguaje reconocido por Teddy.");
+				return array("result" => "error", "reason" =>"Este no es un lenguaje reconocido por Teddy.");
 		}
 
 		/**
@@ -101,16 +102,14 @@ class c_ejecucion extends c_controller
 		global $db;
 		$result = $db->Execute($sql, $inputarray);
 
-		//get latest ID
-		//$execID = mysql_insert_id();
+		// @TODO Overflow
 		$execID = $db->Insert_ID( );
 
 		if (!empty($_FILES))
 		{
-			//se nos envio un archivo
 			if (!move_uploaded_file($_FILES['Filedata']['tmp_name'], "../../codigos/" . $execID . "." . $lang  ))
 			{
-				utils::json_die("Whoops, error al subir el archivo");
+				return array("result" => "error", "reason" => "Error al subir el archivo");
 			}
 
 		}
@@ -126,7 +125,7 @@ class c_ejecucion extends c_controller
 				return array("result" => "error", "reason" => "No se puede escribir en el directorio de codigos.");
 			}
 
-			//se envio el codigo fuente
+			// Crear un archivo y escribir el contenido
 			if (file_put_contents("../codigos/".$execID . "." . $lang, $_REQUEST['plain_source']) === false)
 			{
 				return array("result" => "error");
@@ -136,68 +135,6 @@ class c_ejecucion extends c_controller
 		return array("result" => "ok", "execID" => $execID);
 	}
 
-	/*
-	public static function nuevo($request)
-	{
-		$prob			= isset( $request["prob"] ) ? $request["prob"] : NULL;
-		$CONCURSO_ID 	= isset( $request["cid"] ) ? $request["cid"] : NULL;
-
-		$result = c_sesion::usuarioActual();
-		if (SUCCESS($result))
-		{
-			$usuario = $result["user"];
-		}
-
-		//revisar que su ultimo envio sea mayor a 5 minutos
-
-		//revisar que este problema exista para este concurso
-
-		//revisar si existe este problema
-		$respuesta = c_problema::problema( $request );
-		$problema = $respuesta["problema"];
-
-		//si este problema no existe, salir
-		if (is_null($problema))
-		{
-			return array("error" => "Problema no existe");
-		}
-
-		//datos del archivo
-		$nombre_archivo = $_FILES['userfile']['name'];
-		$tipo = $_FILES['userfile']['type'];
-		$fname = $_FILES['userfile']['name'];
-
-		//revisar que no existan espacios en blacno en el nombre del archivo
-		$fname = strtr($fname, " ", "0");
-		$fname = strtr($fname, "_", "0");
-		$fname = strtr($fname, "'", "0");
-
-		//compruebo si las características del archivo son las que deseo
-		//si (no es text/x-java) y (no termina con .java) tons no es java
-		if (!(endsWith($fname, ".java") || endsWith($fname, ".c") || endsWith($fname, ".cpp")|| endsWith($fname, ".py") || endsWith($fname, ".pl")) )
-		{
-			echo "Tipo no permitido: <b>". $tipo . "</b> para <b>". $_FILES['userfile']['name'] ."</b></div><br>";
-			return;
-		}
-
-		//insertar userID, probID, remoteIP
-		mysql_query ( "INSERT INTO Ejecucion (`userID` , `probID` , `remoteIP`, `Concurso`) VALUES ('{$usuario}', {$prob}, '" . $_SERVER['REMOTE_ADDR']. "', " . $_REQUEST['cid'] . "); " ) or die('Algo anda mal: ' . mysql_error());
-		$resultado = mysql_query ( "SELECT `execID` FROM `Ejecucion` order by `fecha` desc limit 1;" ) or die('Algo anda mal: ' . mysql_error());
-		$row = mysql_fetch_array ( $resultado );
-
-		$execID = $row["execID"];
-
-		//mover el archio a donde debe de estar
-		if (move_uploaded_file($_FILES['userfile']['tmp_name'], "../codigos/" . $execID . "_" . $fname)){
-
-		}else{
-			//if no problem al subirlo	
-			echo "Ocurrio algun error al subir el archivo. No pudo guardarse.";
-		}
-
-		//imprimirForma();
-	}
-	 */
 
 }
 

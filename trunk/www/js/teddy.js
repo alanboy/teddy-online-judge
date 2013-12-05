@@ -2,6 +2,83 @@
 var CurrentRuns = null;
 var CurrentRank = null;
 
+var Teddy =
+{
+	//
+	// API namespace
+	//
+	api :
+	{
+		//
+		// ajax()
+		//
+		ajax : function(httpmethod, controller, method, params, callback)
+		{
+			params.controller = controller;
+			params.method = method;
+
+			$.ajax({
+				context: document.body,
+				url: "ajax.php",
+				dataType: "json",
+				type : httpmethod ,
+				data: $.extend({}, params)
+			})
+			.always(function (response){
+					console.log(response);
+					callback.call(null, response);
+			});//always
+		}
+	},
+
+	//
+	// c_usuario namespace
+	//
+	c_usuario :
+	{
+		//
+		// nuevo() 
+		//
+		nuevo : function(args)
+		{
+			Teddy.api.ajax(
+					"POST",
+					"c_usuario",
+					"nuevo",
+					args);
+		}
+	}
+}
+
+
+Util =
+{
+	SerializeAndCallApi : function(form_with_data, api_to_call, callback)
+	{
+		var data = [];
+		$($(form_with_data).serializeArray()).each(function(i, input){
+					data[ input.name  ] = input.value;
+				});
+		api_to_call.call(null, data, function(){});
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //$(document).ready(function() { });
 window.onload = function ()
 {
@@ -38,7 +115,6 @@ window.onload = function ()
 							alert('Error');
 					}
 	});
-
 }
 
 /*

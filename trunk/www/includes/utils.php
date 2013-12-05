@@ -186,7 +186,7 @@ class envios
 					// Lo enviare con flash
 					case 0 :
 					$('#flash_upload_file').uploadifySettings('scriptData' , {
-							problem_id:  $("#prob_id").val(),
+							id_problema:  $("#prob_id").val(),
 							lang		 : source_file.lang_ext,
 							controller	: "c_ejecucion",
 							method		: "nuevo",

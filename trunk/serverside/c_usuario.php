@@ -93,30 +93,45 @@ class c_usuario extends c_controller
 			);
 	}
 
+	/**
+	 *
+	 * @param nombre
+	 * @param email
+	 * @param password
+	 * @param ubicacion
+	 * @param escuela
+	 * @param nick
+	 * @param twitter
+	 *
+	 * */
 	public static function nuevo($request)
 	{
-
 		// Validate logic
 		if(self::getByNickOrEmail($request))
 		{
 
 		}
 
-		$sql = "insert into Usuario (userID, nombre, pswd, ubicacion, escuela, mail, twitter) values (?,?,?,?,?,?,?,)";
+		$sql = "insert into Usuario (userID, nombre, pswd, ubicacion, escuela, mail, twitter) values (?,?,?,?,?,?,?)";
 
 		$inputarray = array(
+			$request["nick"],
 			$request["nombre"],
-			$request["email"],
 			$request["password"],
 			$request["ubicacion"],
 			$request["escuela"],
-			$request["nick"],
-			$request["twitter"]
+			$request["email"],
+			"foo"
 		);
 
 		global $db;
-		$db->Execute($sql, $inputarray);
+		$res = $db->Execute($sql, $inputarray);
 
+		if($res===false)
+		{
+			error_log("TEDDY:" . $db->ErrorNo() ." " . $db->ErrorMsg() );
+			return array( "result" => "error", "reason" => "Error interno." );
+		}
 		return array( "result" => "ok" );
 	}
 
