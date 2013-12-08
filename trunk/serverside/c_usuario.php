@@ -48,6 +48,10 @@ class c_usuario extends c_controller
 		{
 			$searchValue = $request["mail"];
 		}
+		else if (isset($request["user"]))
+		{
+			$searchValue = $request["user"];
+		}
 
 		$sql = "select * from Usuario where userID = ? or mail = ? limit 1";
 		$inputarray = array($searchValue, $searchValue);

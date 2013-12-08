@@ -29,9 +29,19 @@
 
 		<?php writeFormInput("Escuela de Procedencia :", "escuela"); ?>
 
-		<input type="button" class="button" value="Registrar" onClick="Util.SerializeAndCallApi( $(this).parent(), Teddy.c_usuario.nuevo );" />
+		<input type="button" class="button" value="Registrar" onClick="RegistrarUsuario(this)" />
 	</form>
 </div>
-
+	<script>
+	function RegistrarUsuario(form)
+	{
+		Util.SerializeAndCallApi( 
+			$(form).parent(), 
+			Teddy.c_usuario.nuevo,
+			function(result) {
+				window.location = "login.php?registered=1";
+			});
+	}
+	</script>
 	<?php include_once("includes/footer.php"); ?>
 

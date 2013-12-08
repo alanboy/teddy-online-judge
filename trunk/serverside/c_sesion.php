@@ -13,7 +13,7 @@ class c_sesion extends c_controller
 		$user = null;
 		if (self::isLoggedIn())
 		{
-			$result = c_usuario::getByNickOrEmail(array( "nick" => $_SESSION['userID']));
+			$result = c_usuario::getByNickOrEmail(array( "user" => $_SESSION['userID']));
 			if (SUCCESS($result))
 			{
 				$user = $result["user"];
@@ -24,18 +24,18 @@ class c_sesion extends c_controller
 	}
 
 	/**
-	 * @param nick
+	 * @param user
 	 * @param email
 	 * @param pass
 	 *
 	 * */
 	public static function login($request)
 	{
-		$request["nick"] = $request["user"];
+		$request["user"] = isset($request["user"]) ? $request["user"] : null;
 		$request["email"] = $request["user"];
 
 		$sql = "select pswd, cuenta, userID, mail from Usuario where BINARY ( userID = ? or mail = ? )";
-		$inputarray = array($request["nick"], $request["email"]);
+		$inputarray = array($request["user"], $request["email"]);
 
 		global $db;
 		$result = $db->Execute($sql, $inputarray);
@@ -58,7 +58,10 @@ class c_sesion extends c_controller
 				);
 			}
 		}
-		return array("result" => "ok", "user" => null);
+
+		return array(
+			"result" => "error",
+			"reason" => "Credenciales invalidas." );
 	}
 
 	/**

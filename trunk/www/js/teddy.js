@@ -1,7 +1,4 @@
 
-var CurrentRuns = null;
-var CurrentRank = null;
-
 var Teddy =
 {
 	//
@@ -25,8 +22,11 @@ var Teddy =
 				data: $.extend({}, params)
 			})
 			.always(function (response){
-					console.log(response);
-					callback.call(null, response);
+					if (response.result == "error" ){
+						alert(response.reason);
+					}else{
+						callback.call(null, response);
+					}
 			});//always
 		}
 	},
@@ -39,16 +39,36 @@ var Teddy =
 		//
 		// nuevo() 
 		//
-		nuevo : function(args)
+		nuevo : function(args, cb)
 		{
 			Teddy.api.ajax(
 					"POST",
 					"c_usuario",
 					"nuevo",
-					args);
+					args,
+					cb);
+		}
+	},
+
+	//
+	// c_sesion
+	//
+	c_sesion :
+	{
+		//
+		//iniciarsesion()
+		//
+		iniciar : function(args, cb)
+		{
+			Teddy.api.ajax(
+					"POST",
+					"c_sesion",
+					"login",
+					args,
+					cb);
 		}
 	}
-}
+}// Teddy
 
 
 Util =
@@ -59,7 +79,8 @@ Util =
 		$($(form_with_data).serializeArray()).each(function(i, input){
 					data[ input.name  ] = input.value;
 				});
-		api_to_call.call(null, data, function(){});
+		//console.log(form_with_data, data);
+		api_to_call.call(null, data, callback);
 	}
 }
 
@@ -74,10 +95,9 @@ Util =
 
 
 
-
-
-
-
+// To be refactored:
+var CurrentRuns = null;
+var CurrentRank = null;
 
 //$(document).ready(function() { });
 window.onload = function ()
@@ -448,42 +468,7 @@ function lost()
 		});
 }
 
-function login()
-{
-	$('#login_area').slideUp('slow', function() {
-			$('#wrong').slideUp('slow');
-			$('#message').slideDown('slow', function() {
-				$.ajax({
-					context: document.body,
-					url: "ajax.php",
-					dataType: "json",
-					type : "POST",
-					data: {
-						'controller' : "c_sesion",
-						'method' : "login",
-						'pass': $("#pass").val(),
-						'user': $("#user").val()
-					},
-				})
-				.always(function (response){
-						$('#message').fadeOut('slow', function() {
-							if(response.user)
-							{
-								location.reload(true);
-							}
-							else
-							{
-							$("#wrong").slideDown("slow", function (){ 
-								$('#login_area').slideDown('slow', function() {
-									$("#login_area").effect("shake", { times:2 }, 100);
-									});
-								});
-							}
-						});//fadeOut
-					});//always
-				});//slide down
-			});//slide up
-	return false;
-}
+//function login()
+
 
 
