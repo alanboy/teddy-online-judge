@@ -1,3 +1,13 @@
+.hidden{
+	display: none;
+}
+
+#notif_area{
+	background-color: red;
+	color:white;
+	text-align: center;
+
+}
 
 .rounded_image {
 -webkit-background-size: 48px 48px;

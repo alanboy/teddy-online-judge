@@ -19,6 +19,10 @@
 	</div>
 </div>
 
+<div id="notif_area"  class="post hidden" >
+	<div class="navcenter">
+	</div>
+</div>
 <!--
 Admin menu
 <div class="post">

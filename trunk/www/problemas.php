@@ -8,11 +8,8 @@
 
 ?>
 	<div class="post_blanco" >
-		<div align="center">
-			<h2>Problem-Set</h2>
-		</div>
+		<h2>Problem-Set</h2>
 
-		<div align="center">
 		<table>
 		<thead>
 		<tr>
@@ -26,8 +23,10 @@
 		</thead>
 		<tbody>
 		<?php
+		
 		$params = array("public" => "SI");
 		$result = c_problema::lista($params);
+		
 		if (SUCCESS($result))
 		{
 			$problemas = $result["problemas"];
@@ -40,10 +39,11 @@
 				echo "<TD align='center' >". $prob['vistas']   ." </TD>";
 				echo "<TD align='center' >". $prob['aceptados']   ." </TD>";
 				echo "<TD align='center' >". $prob['intentos']   ." </TD>";
-				//printf("<TD align='center' >%2.2f%%</TD>", $ratio);
+				printf("<TD align='center' >%2.2f%%</TD>", 0);
 				echo "</TR>";
 			}
 		}
+
 		?>
 		</tbody>
 		</table>
@@ -51,4 +51,3 @@
 	</div>
 
 	<?php include_once("includes/footer.php"); ?>
-

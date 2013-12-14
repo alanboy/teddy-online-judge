@@ -25,7 +25,6 @@ class c_sesion extends c_controller
 
 	/**
 	 * @param user
-	 * @param email
 	 * @param pass
 	 *
 	 * */

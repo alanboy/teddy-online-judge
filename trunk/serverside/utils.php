@@ -1,23 +1,47 @@
 <?php
 
-	function SUCCESS($res)
+function SUCCESS($res)
+{
+	return $res["result"] === "ok";
+}
+
+function sanitize($res)
+{
+	return $htmlentities(utf8_decode($res));
+}
+
+
+
+class utils
+{
+	function endsWith( $str, $sub )
 	{
-		return $res["result"] === "ok";
+		return ( substr( $str, strlen( $str ) - strlen( $sub ) ) == $sub );
 	}
 
-	function sanitize($res)
+	public static function color_result( $res )
 	{
-		return $htmlentities(utf8_decode($res));
-	}
-
-	function writeFormInput($label, $id, $placeholder = null)
-	{
-		echo "<label for='$id'>$label</label>";
-		$value = "";
-		if (isset($_POST[$id]))
-		{
-			$value = $_POST[$id];
+		switch($res){
+			case "COMPILACION":
+				return "<span style='color:red;'>" . $res . "</span>";
+				
+			case "TIEMPO":
+				return "<span style='color:brown;'>" . $res . "</span>";
+				
+			case "OK":
+				return "<span style='color:green;'><b>" . $res . "</b></span>";
+				
+			case "RUNTIME_ERROR":
+				return "<span style='color:blue;'><b>" . $res . "</b></span>";				
+				
+			case "INCORRECTO":
+				return "<span style='color:red;'><b>" . $res . "</b></span>";				
+				
+			case "JUDGING":
+				
+			case "WAITING":
+				return "<span style='color:purple;'>" . $res . "...</span>";	//<img src='img/load.gif'>
 		}
-		echo "<input type='text' id='$id' name='$id' class='text' value='$value' />";
+		return $res;
 	}
-
+}

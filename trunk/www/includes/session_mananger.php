@@ -56,13 +56,15 @@ if (isset($_SESSION['userID']))
 ?>
 	<div class="post" >
 		<div id="login_area" class="navcenter">
-			<form method="post" onSubmit="return login()">
-				<img  src="img/37.png"> <input type="text" value="" id="user" placeholder="usuario o email">
-				<img  src="img/55.png"> <input type="password" value="" id="pass" placeholder="contrase&ntilde;a">
-				<input type="submit" value="Iniciar Sesion">
-				<input type="button" onClick="lost()" id="lost_pass" value="Olvide mi contase&ntilde;a"> 
+			
+			<form id="login-form-top-nav" method="POST" >
+				<img  src="img/37.png"> <input type='text' id="user" name="user"  value='' />
+				<img  src="img/55.png"> <input type='password' id="pass" name="pass"  value='' />
+				<input type="submit" class="button" value="Iniciar sesion"  />
+				<input type="button" class="button" value="Olvide mi contrase&ntilde;a" onClick="OlvideMiContrasena(this)" />
 			</form>
 		</div>
+
 		<div align=center id="wrong" style="display:none;">
 			<img  src="img/12.png"> Datos invalidos
 		</div>
@@ -70,6 +72,20 @@ if (isset($_SESSION['userID']))
 			<img src="img/load.gif">
 		</div>
 	</div>
+	<script>
+	function IniciarSesionTopNav()
+	{
+		Util.SerializeAndCallApi( 
+			$("#login-form-top-nav"), 
+			Teddy.c_sesion.iniciar,
+			function(result) {
+				window.location = "runs.php?user=" + result.user.userID;
+			});
+		return false;
+	}
+	
+	$("#login-form-top-nav").submit(IniciarSesionTopNav);
+	</script>
 <?php
 }
 

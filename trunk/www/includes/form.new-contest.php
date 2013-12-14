@@ -11,7 +11,7 @@
 
 		<label for="inicio">Hora actual en Teddy (<?php echo date("d-m-Y H:i:s", mktime(date("H"), date("i") )); ?>)<br><br>
 				Inicio del Concurso ( DD-MM-YYYY HH:MM:SS )
-			</label>
+		</label>
 
 		<input type="text" id="inicio" name="inicio" class="text" 
 			value="<?php echo date("d-m-Y H:i:s", mktime(date("H"), date("i") + 10 )); ?>" />

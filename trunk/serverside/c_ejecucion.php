@@ -15,6 +15,19 @@ class c_ejecucion extends c_controller
 			);
 	}
 
+	public static function  status($request)
+	{
+		$sql = "SELECT `status`  FROM `Ejecucion` where execID = ? limit 1";
+
+		global $db;
+		$data = array( $request["execID"] );
+		$result = $db->Execute($sql, $data)->GetArray();
+
+		return array(
+				"result" => "ok", 
+				"status" => $result[0][0]
+			);
+	}
 
 	/**
 	 * @param id_problema int el id del problema a resolver
@@ -25,7 +38,7 @@ class c_ejecucion extends c_controller
 	{
 		if (!isset($_SESSION["userID"]))
 		{
-			return array("result" => "error", "reason" =>"Debes iniciar sesion para poder enviar problemas.");
+			return array("result" => "error", "reason" => "Debes iniciar sesion para poder enviar problemas.");
 		}
 
 		if (!(isset($request['id_problema']) && isset($request['lang'])))
@@ -51,15 +64,12 @@ class c_ejecucion extends c_controller
 			$id_concurso  = null;
 		}
 
-		// @todo Reescribir esto:
-		//buscar el id de este problea y que sea publico
-		//revisar si existe este problema
-		$consulta = "select probID , titulo from Problema where BINARY ( probID = '{$id_problema}' AND publico = 'SI') ";
-		$resultado = mysql_query( $consulta ) or utils::json_die("Error al buscar el problema en la BD.");
+		global $db;
+		$sql = "select probID from Problema where BINARY ( probID = ? AND publico = 'SI') ";
+		$inputarray = array($request["id_problema"]);
+		$resultado = $db->Execute($sql, $inputarray);
 
-		//insertar un nuevo run y obtener el id insertado
-		//como estado, hay que ponerle uploading
-		if (mysql_num_rows($resultado) == 0)
+		if ($resultado->RecordCount() == 0)
 		{
 			return array("result" => "error", "reason" => "El problema no existe.");
 		}
@@ -74,15 +84,16 @@ class c_ejecucion extends c_controller
 			case "py"       : $lang_desc = "Python";break;
 			case "cs"       : $lang_desc = "C#";    break;
 			case "pl"       : $lang_desc = "Perl";  break;
+			case "php"      : $lang_desc = "Php";   break;
 			default:
 				return array("result" => "error", "reason" =>"Este no es un lenguaje reconocido por Teddy.");
 		}
 
 		/**
 		 * @todo
-		 * -vamos a ver si estoy en un concurso, y si estoy en un concurso, que ese problema pertenesca a ese concurso 
-		 * -vamos a ver que no haya enviado hace menos de 5 min si esta en un concurso
-		 * 
+		 * - vamos a ver si estoy en un concurso, y si estoy en un concurso, que ese problema pertenesca a ese concurso 
+		 * - vamos a ver que no haya enviado hace menos de 5 min si esta en un concurso
+		 * - insertar un nuevo run y obtener el id insertado, como estado, hay que ponerle uploading
 		 **/
 		if ($id_concurso === null)
 		{
@@ -99,11 +110,14 @@ class c_ejecucion extends c_controller
 			$inputarray = array( $usuario, $id_problema, $_SERVER['REMOTE_ADDR'], $lang_desc, $id_concurso, date("Y-m-d H:i:s", mktime(date("H"), date("i") )));
 		}
 
-		global $db;
 		$result = $db->Execute($sql, $inputarray);
 
-		// @TODO Overflow
-		$execID = $db->Insert_ID( );
+		// Si hacemos esto $execID = $db->Insert_ID( ); hay un Overflow porque los ids son muy grandes
+		$sql = "select execID from Ejecucion where ( userId = ? ) order by fecha DESC LIMIT 1";
+		$inputarray = array($usuario);
+		$resultado = $db->Execute($sql, $inputarray)->GetArray();
+		$execID = $resultado[0]["execID"];
+
 
 		if (!empty($_FILES))
 		{

@@ -23,7 +23,13 @@ var Teddy =
 			})
 			.always(function (response){
 					if (response.result == "error" ){
-						alert(response.reason);
+						//@todo test for reason
+						if(response.reason !== undefined) {
+							$("#notif_area").html(response.reason).show();
+						}else{
+							$("#notif_area").html("Error Interno. No sabemos que paso. No hay sospechosos.").show();
+						}
+						
 					}else{
 						callback.call(null, response);
 					}
@@ -67,6 +73,37 @@ var Teddy =
 					args,
 					cb);
 		}
+	},
+
+	//
+	// c_ejecucion
+	//
+	c_ejecucion :
+	{
+		//
+		// nuevo()
+		//
+		nuevo : function(args, cb)
+		{
+			Teddy.api.ajax(
+					"POST",
+					"c_ejecucion",
+					"nuevo",
+					args,
+					cb);
+		},
+		//
+		// status()
+		//
+		status : function(args, cb)
+		{
+			Teddy.api.ajax(
+					"POST",
+					"c_ejecucion",
+					"status",
+					args,
+					cb);
+		}		
 	}
 }// Teddy
 
@@ -79,7 +116,7 @@ Util =
 		$($(form_with_data).serializeArray()).each(function(i, input){
 					data[ input.name  ] = input.value;
 				});
-		//console.log(form_with_data, data);
+		//console.log(data);
 		api_to_call.call(null, data, callback);
 	}
 }

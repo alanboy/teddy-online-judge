@@ -113,7 +113,7 @@ class c_usuario extends c_controller
 		// Validate logic
 		if(self::getByNickOrEmail($request))
 		{
-
+			return array( "result" => "error", "reason" => "Este usuario/email ya estan registrados." );
 		}
 
 		$sql = "insert into Usuario (userID, nombre, pswd, ubicacion, escuela, mail, twitter) values (?,?,?,?,?,?,?)";

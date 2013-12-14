@@ -1,38 +1,6 @@
 <?php
 
-class utils
-{
-	function endsWith( $str, $sub )
-	{
-		return ( substr( $str, strlen( $str ) - strlen( $sub ) ) == $sub );
-	}
 
-	public static function color_result( $res )
-	{
-		switch($res){
-			case "COMPILACION":
-				return "<span style='color:red;'>" . $res . "</span>";
-				
-			case "TIEMPO":
-				return "<span style='color:brown;'>" . $res . "</span>";
-				
-			case "OK":
-				return "<span style='color:green;'><b>" . $res . "</b></span>";
-				
-			case "RUNTIME_ERROR":
-				return "<span style='color:blue;'><b>" . $res . "</b></span>";				
-				
-			case "INCORRECTO":
-				return "<span style='color:red;'><b>" . $res . "</b></span>";				
-				
-			case "JUDGING":
-				
-			case "WAITING":
-				return "<span style='color:purple;'>" . $res . "...</span>";	//<img src='img/load.gif'>
-		}
-		return $res;
-	}
-}
 
 class envios
 {
@@ -41,40 +9,41 @@ class envios
 		//cualquier problema es valido
 		if($contest_id === null)
 		{
+			if (isset($_GET["send_to"]))
+			{
+				$presend = $_GET["send_to"];
+			}
+
 			?>
 			<div>
-				<input type="text" id="prob_id" placeholder="Problema"  value="" maxlength="5">
+				<input type="text" id="prob_id" placeholder="Problema" value="<?php echo $presend; ?>" maxlength="5">
 			</div>
 			<?php
 			return;
 		}
-
-		//$valid_problems deberia ser un array
-		//con problemas validos para enviar
-		$q = mysql_query( "SELECT * FROM Concurso WHERE CID = " . $contest_id . ";" ) or die ( mysql_error( ) ) ;
-		$row = mysql_fetch_array( $q ) or die ( mysql_error( ) );
-
-		$probs = explode(' ', $row["Problemas"]);
-
-		echo "<select id=\"prob_id\">";	
-		for ($i=0; $i< sizeof( $probs ); $i++)
+		else
 		{
-			echo "<option value=". $probs[$i] .">". $probs[$i] ."</option>"; 
+
+			//$valid_problems deberia ser un array
+			$q = mysql_query( "SELECT * FROM Concurso WHERE CID = " . $contest_id . ";" ) or die ( mysql_error( ) ) ;
+			$row = mysql_fetch_array( $q ) or die ( mysql_error( ) );
+			$probs = explode(' ', $row["Problemas"]);
+
+			echo "<select id=\"prob_id\">";	
+			for ($i=0; $i< sizeof( $probs ); $i++)
+			{
+				echo "<option value=". $probs[$i] .">". $probs[$i] ."</option>"; 
+			}
+			echo "</select>";
 		}
-		echo "</select>";
 	}
 
 	private static function print_flash_upload()
 	{
 		?>
-			<div   id="upload_0">
+			<div  style="display:none;" id="upload_0">
 				<input id="flash_upload_file" name="fileInput" type="file" />
 			</div>
-
-		<script>
-		$(document).ready(function() {
-		});
-			</script>
 		<?php
 		
 	}
@@ -92,10 +61,10 @@ class envios
 					
 				}
 			</script>
-			<div  style="display:none;" id="upload_2" aling=center>
+			<div  style="" id="upload_2" aling=center>
 				<textarea 
-					cols		=	40 
-					rows		=	15 
+					cols		=	80 
+					rows		=	25 
 					id			=	"plain_text_area" 
 					placeholder	=	'Pega el codigo fuente aqui' 
 					onkeyup		=	"checkForText(this.value)" 
@@ -139,7 +108,7 @@ class envios
 				execID			: null
 			};
 			
-			var forma_de_envio_method = 0;
+			var forma_de_envio_method = 2;
 
 			function change_upload_method()
 			{
@@ -163,18 +132,14 @@ class envios
 
 			function doneUploading( response )
 			{
+				console.log("im back");
 				$("#result_space").html("");
 				
 				$("#form_space").fadeOut('fast', function(){
-					if( !response.success ) {
-						showResult(false, response.reason);
-						
-					}else{
-						$("#waiting_space").fadeIn('fast', function(){
-							source_file.execID = response.execID;
-							check_for_results( );
-						});//fadeIn
-					}
+					$("#waiting_space").fadeIn('fast', function(){
+						source_file.execID = response.execID;
+						check_for_results( );
+					});//fadeIn
 				});//fadeOut
 			}
 
@@ -206,36 +171,24 @@ class envios
 					// - - - - - -- - - -- - - - - - -- - -
 					// Lo enviare en texto plano
 					case 2 :
-						$.ajax({ 
-								url: "ajax/enviar.php", 
-								type : "POST",	
-								data: {
+						Teddy.c_ejecucion.nuevo({
 									lang 		: $('#lang').val(),
 									id_problema	: $('#prob_id').val(),
 									plain_source: $("#plain_text_area").val(),
-									controller	: "c_ejecucion",
-									method		: "nuevo"
-									<?php if($es_concurso !== null) echo ", 'id_concurso': " . $es_concurso; ?>
+									<?php 
+										if($es_concurso !== null) {
+											echo ", 'id_concurso': " . $es_concurso; 
+										}
+									?>
 								},
-								success: function(data){
-								
-									try{
-										doneUploading( $.parseJSON(data) );	
-									}catch(e){
-										console.error(e);
-									}
-								},
-								failure: function (){
-									showResult(false, "Algo anda mal, intenta de nuevo.");
-									
-								}
-							});//ajax
+								doneUploading
+							);
 					break;
 					default:
 				}
 			}//function
 
-			function parse_the_result_from_teddy(json)
+			function parse_the_result_from_teddy(response)
 			{
 				/*
 					Concurso: "-1"
@@ -248,44 +201,42 @@ class envios
 					tiempo: "0"
 					userID: "alanboy"
 				*/
-				var comment = "";
+				var html = "<div class='resultado_final'>"
+					+ " " + response.status + " "
+					+ "<div class='subtext' style='font-size: 10px;'>";
 
-				switch(json.status)
+				switch(response.status)
 				{
 					case "NO_SALIDA": 
-						comment = "Ups, tu programa no creo un archivo data.out !";
+						html += "Ups, tu programa no creo un archivo data.out !";
 					break;
 					
 					case "ERROR": 
-						comment = "WHOA ! Teddy tiene problemas para evaluar tu codigo.";
+						html += "WHOA ! Teddy tiene problemas para evaluar tu codigo.";
 					break;
 					
 					
 					case "TIEMPO": 
-						comment = "Tu programa no termino de ejecutarse en menos del limite de tiempo y fue interrumpido.";
+						html += "Tu programa no termino de ejecutarse en menos del limite de tiempo y fue interrumpido.";
 					break;
 					
 					
 					case "COMPILACION": 
-						comment = "Tu programa no compilo !";
+						html += "Tu programa no compilo !";
 					break;
 					
 					
 					case "RUNTIME_ERROR": 
-						comment = "Tu programa arrojo una exception !";
+						html += "Tu programa arrojo una exception !";
 					break;
 					
 					
 					case "OK": 
-						comment = "Felicidades ! Tu programa paso todos los casos de prueba !";
+						html += "Felicidades ! Tu programa paso todos los casos de prueba !";
 					break;
 				}
 				
-				var html = "<div class='resultado_final'>"
-					+ " " + json.status + " "
-					+ "<div class='subtext' style='font-size: 10px;'>"
-					+ comment
-					+ "</div>"
+				html += "</div>" 
 					+ "</div>";
 				
 				return html;
@@ -293,26 +244,18 @@ class envios
 
 			function check_for_results()
 			{
-				$.ajax({ 
-					url: "ajax/run_status.php", 
-					data: {
-						execID : source_file.execID
-					},
-					success: function(data)
-					{
-						if( j.status == "WAITING" || j.status == "JUDGING" )
-						{
-							//volver a revisar el estado en uno o medio segundo
-							setTimeout("check_for_results()", 1000);
-						}else{
-							//parse the judinging result
-							showResult( true, parse_the_result_from_teddy(j) );
+				Teddy.c_ejecucion.status({
+							execID : source_file.execID
+						},
+						function(data) {
+							if( data.status == "WAITING" || data.status == "JUDGING" )
+							{
+								setTimeout("check_for_results()", 1000);
+							}else{
+								showResult( true, parse_the_result_from_teddy(data));
+							}
 						}
-					},
-					failure: function (){
-						showResult(false, "Error en Teddy !");
-					}
-				});
+					);
 			}
 		</script>
 		<div align=center>
@@ -342,9 +285,9 @@ class envios
 				<tr>
 					<td>
 					<?php
+						self::print_text_area();
 						self::print_flash_upload();
 						self::print_basic_upload();
-						self::print_text_area();
 					?>
 					</td>
 				</tr>
@@ -369,8 +312,6 @@ class envios
 			</table>
 		</div>
 		<?php
-
-		
 	}
 	
 }
