@@ -4,11 +4,13 @@
 
 	define("PAGE_TITLE", "Ver Problema");
 
-	require_once("includes/head.php");
+	require_once("head.php");
 
 	$prob = array( "probID" => $_GET["id"]);
-	?>
-	<div class="post">
+
+?>
+<div class="post">
+
 	<?php
 		$result = c_problema::problema($prob);
 
@@ -78,5 +80,6 @@
 	?>
 </div>
 
-	<?php include_once("includes/footer.php"); ?>
-
+<?php 
+	include_once("footer.php"); 
+?>

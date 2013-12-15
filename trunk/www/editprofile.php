@@ -4,10 +4,10 @@
 
 	define("PAGE_TITLE", "Editar perfil");
 
-	require_once("includes/head.php");
+	require_once("head.php");
 
 	// This page requires a logged user
-	require_once("includes/require_login.php");
+	require_once("require_login.php");
 
 	$respuesta = c_sesion::usuarioActual();
 	$datos = $respuesta["user"];
@@ -59,5 +59,5 @@
 	<input type="password" id="re_password" name="re_password" class="text" value=""/>
 -->
 
-	<?php include_once("includes/footer.php"); ?>
+	<?php include_once("footer.php"); ?>
 

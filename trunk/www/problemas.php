@@ -4,13 +4,13 @@
 
 	define("PAGE_TITLE", "Problemas");
 
-	require_once("includes/head.php");
+	require_once("head.php");
 
 ?>
-	<div class="post_blanco" >
-		<h2>Problem-Set</h2>
+<div class="post_blanco" align=center>
+	<h2>Problem-Set</h2>
 
-		<table>
+	<table>
 		<thead>
 		<tr>
 			<th width='5%'>ID</th>
@@ -46,8 +46,8 @@
 
 		?>
 		</tbody>
-		</table>
-		</div>
+	</table>
 	</div>
+</div>
 
-	<?php include_once("includes/footer.php"); ?>
+<?php include_once("footer.php"); ?>

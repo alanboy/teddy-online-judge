@@ -4,8 +4,7 @@
 
 	define("PAGE_TITLE", "Problemas");
 
-	require_once("includes/head.php");
-
+	require_once("head.php");
 ?>
 
 	<div class="post_blanco" >
@@ -157,5 +156,5 @@
 	}
 	?>
 
-	<?php include_once("includes/footer.php"); ?>
+	<?php include_once("footer.php"); ?>
 

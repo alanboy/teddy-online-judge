@@ -1,12 +1,15 @@
+<h2>enviar solucion</h2>
+
+
 <?php
-
-
 
 class envios
 {
 	private static function print_problem_chooser( $contest_id = null )
 	{
 		//cualquier problema es valido
+		$presend = "";
+
 		if($contest_id === null)
 		{
 			if (isset($_GET["send_to"]))
@@ -132,7 +135,6 @@ class envios
 
 			function doneUploading( response )
 			{
-				console.log("im back");
 				$("#result_space").html("");
 				
 				$("#form_space").fadeOut('fast', function(){
@@ -190,17 +192,6 @@ class envios
 
 			function parse_the_result_from_teddy(response)
 			{
-				/*
-					Concurso: "-1"
-					LANG: "JAVA"
-					execID: "7102718307"
-					fecha: "2011-08-17 19:43:59"
-					probID: "1"
-					remoteIP: "127.0.0.1"
-					status: "COMPILACION"
-					tiempo: "0"
-					userID: "alanboy"
-				*/
 				var html = "<div class='resultado_final'>"
 					+ " " + response.status + " "
 					+ "<div class='subtext' style='font-size: 10px;'>";
@@ -315,4 +306,44 @@ class envios
 	}
 	
 }
+
+envios::imprimir_forma_de_envio( );
+/*
+	
+	
+	envios::imprimir_forma_de_envio( $_REQUEST['cid'] );
+	
+	?>
+	<!--
+	<div align="center" >
+	<form action="contest_rank.php?cid=<?php echo $_REQUEST['cid']; ?>" method="POST" enctype="multipart/form-data">
+		<br>
+		<table border=0>
+			 <tr><td  style="text-align: right">Codigo fuente&nbsp;&nbsp;</td><td><input name="userfile" type="file"></td></tr>
+			
+			 <tr><td style="text-align: right">Problema&nbsp;&nbsp;</td><td>
+			 	<select name="prob">	
+				<?php
+
+				$probs = explode(' ', $row["Problemas"]);
+				for ($i=0; $i< sizeof( $probs ); $i++) {
+					echo "<option value=". $probs[$i] .">". $probs[$i] ."</option>"; //"<a href='verProblema.php?id=". $probs[$i]  ."'>". $probs[$i] ."</a>&nbsp;";
+				}
+
+				?>
+				</select>
+			 </td></tr>
+			
+			 <tr><td></td><td><input type="submit" value="Enviar Solucion"></td></tr>
+		</table>
+	    <input type="hidden" name="ENVIADO" value="SI">
+	    <input type="hidden" name="cid" value="<?php echo $_REQUEST['cid']; ?>">
+	    
+	</form> 
+	</div>
+	-->
+
+<?php
+
+*/
 

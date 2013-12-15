@@ -4,24 +4,20 @@
 
 	define("PAGE_TITLE", "Runs");
 
-	require_once("includes/head.php");
+	require_once("head.php");
 
 ?>
-	<div class="post_blanco">
+<div class="post_blanco">
 
 	<?php
 
 	if (isset($_GET["user"]))
 	{
-		include ("includes/profile.php");
-
+		include ("profile.php");
 		$envios = c_usuario::runs( $_GET );
 	}
 	else
 	{
-		?>
-			<h2>Ultimos envios</h2>
-		<?php
 		$envios = c_ejecucion::lista();
 	}
 
@@ -30,7 +26,7 @@
 
 	?>
 
-	</div>
+</div>
 
-	<?php include_once("includes/footer.php"); ?>
+<?php include_once("footer.php"); ?>
 

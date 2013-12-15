@@ -287,12 +287,14 @@ box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 2px 0px;
 color: rgb(90, 107, 119);
 }
 
-.post_blanco { background: white; padding:10px; margin-top: 10px;
-	 -moz-border-radius: 11px;
--webkit-border-radius: 11px;
--khtml-border-radius: 11px;
-border-radius: 11px;
-border:1px solid #bbb; 
+.post_blanco {
+	background: white; padding:10px;
+	margin-top: 10px;
+	-moz-border-radius: 11px;
+	-webkit-border-radius: 11px;
+	-khtml-border-radius: 11px;
+	border-radius: 11px;
+	border:1px solid #bbb; 
 }  
 
 .post p { margin:14px 0 14px 0; font-size: 14px; }

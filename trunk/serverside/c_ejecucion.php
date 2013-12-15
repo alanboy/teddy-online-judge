@@ -2,6 +2,86 @@
 
 class c_ejecucion extends c_controller
 {
+	public static function  details($request)
+	{
+		$sql = "SELECT *  FROM `Ejecucion` where execID = ? limit 1";
+
+		global $db;
+		$data = array( $request["execID"] );
+		$result = $db->Execute($sql, $data)->GetArray();
+
+		return array(
+				"result" => "ok", 
+				"run" => $result[0]
+			);
+	}
+
+	public static function canUserViewRun()
+	{
+		return true;
+		/*
+		global $enlace;
+		$asdf =  mysql_real_escape_string($_REQUEST["execID"]);
+		$consulta = "select * from Ejecucion where BINARY ( execID = '{$asdf}' )";
+		$resultado = mysql_query($consulta) or die('Algo anda mal: ' . mysql_error());
+	
+		if(mysql_num_rows($resultado) != 1){
+			echo "<b>Este codigo no existe</b>";
+			return;
+		}
+
+		$row = mysql_fetch_array($resultado);
+
+		if(!isset($_SESSION['userID'])){
+			?> <div align='center'> Inicia sesion con la barra de arriba para comprobar que este codigo es tuyo. </div> <?php
+			return;
+		}
+
+		if( ($row['userID'] == $_SESSION['userID']) || ($_SESSION['userMode'] == "OWNER") ){
+			//este codigo es tuyo o eres OWNER
+			mostrarCodigo($row['LANG'], $_REQUEST["execID"] , $row);
+	
+		}else{
+			
+			
+			//no puedes ver codigos que estan mal
+			if($row['status'] != "OK"){
+				?><div style="font-size: 16px;"> <img src="img/12.png">No puedes ver codigos que no estan aceptados aunque cumplas con los requisitos.</div><?php
+				return;
+			}
+			
+			//no puedes ver codigos que son parte de algun concurso
+			if($row['Concurso'] != "-1"){
+				?><div style="font-size: 16px;"> <img src="img/12.png">No puedes ver codigos que pertenecen a un concurso aunque cumplas con los requisitos.</div><?php
+				return;
+			}
+			
+			//este codigo no es tuyo, pero vamos a ver si ya lo resolviste con mejor tiempo y que no sea parte de un concurso
+			$consulta = "select * from Ejecucion where probID = '". $row['probID'] ."' AND userID = '". $_SESSION['userID'] ."' AND tiempo < " . $row['tiempo'] . " AND status = 'OK' ;";
+			$resultado2 = mysql_query($consulta) or die('Algo anda mal: ' . mysql_error());
+			$nr = mysql_num_rows($resultado2);
+			
+			if($nr >= 1){
+				//ok, te lo voy a mostrar...
+				?><div style="font-size: 16px;"> <img src="img/49.png">Este codigo no es tuyo, pero lo puedes ver porque ya lo resolviste con un mejor tiempo.</div><?php
+				mostrarCodigo($row['LANG'], $_REQUEST["execID"] , $row );
+			}else{
+				//no cumples con los requisitos
+				?> 	
+					<div align='center'> 
+						<h2>Holly molly</h2> 
+						<br>
+						<div style="font-size: 16px;"> <img src="img/12.png">Estas intentado ver un codigo que no es tuyo. Para poder verlo tienes que resolver este problema y tener un mejor tiempo que el codigo que quieres ver.</div>
+					</div> 
+				<?php
+			}
+			
+
+		}
+		*/
+
+	}
+
 	public static function  lista()
 	{
 		$sql = "SELECT `execID`, `userID`, `probID`, `status`, `tiempo`, `fecha`, `LANG`, `Concurso`  FROM `Ejecucion` order by fecha desc limit 100";

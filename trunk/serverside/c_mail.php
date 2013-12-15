@@ -1,6 +1,5 @@
 <?php
 
-//require_once "Mail.php";
 class c_mail
 {
 	function EnviarMail($cuerpo, $destinatario, $titulo) {

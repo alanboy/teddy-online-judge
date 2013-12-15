@@ -8,6 +8,11 @@ class c_sesion extends c_controller
 		return isset($_SESSION['userID']);
 	}
 
+	public static function isAdmin($request = null)
+	{
+		return false;
+	}
+
 	public static function usuarioActual()
 	{
 		$user = null;

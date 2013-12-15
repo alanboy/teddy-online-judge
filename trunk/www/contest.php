@@ -4,7 +4,7 @@
 
 	define("PAGE_TITLE", "Concursos");
 
-	require_once("includes/head.php");
+	require_once("head.php");
 
 ?>
 <table>
@@ -12,7 +12,7 @@
 	<td valign=top>
 	<div id="new_contest_form" class="post_blanco">
 		<h2>Crear un concurso</h2>
-		<?php include("includes/form.new-contest.php"); ?>
+		<?php include("form.new-contest.php"); ?>
 	</div>
 	</td>
 	<td>
@@ -56,5 +56,5 @@
 </tr>
 </table>
 
-<?php include_once("includes/footer.php"); ?>
+<?php include_once("footer.php"); ?>
 

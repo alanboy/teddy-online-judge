@@ -4,20 +4,36 @@
 
 	define("PAGE_TITLE", "Registro");
 
-	require_once("includes/head.php");
+	require_once("head.php");
 
 ?>
 <div class="post_blanco">
 	<form  >
-		<h2>Ingresa los datos necesarios para registrarte en el Juez Teddy.</h2>
+		<h2>Registro</h2>
 
-		<?php writeFormInput("Usuario:",			"nick"); ?>
-		<?php writeFormInput("Nombre completo",		"nombre"); ?>
-		<?php writeFormInput("Correo electronico:",	"email"); ?>
-		<?php writeFormInput("Password:",			"password"); ?>
-		<?php writeFormInput("Confirna password:",	"re_password"); ?>
 
-		<label>Ubicaci&oacute;n:</label>
+		<label>Usuario</label>
+		<input type='text' id="nick" name="nick"  value='' />
+
+
+		<label>Nombre completo</label>
+		<input type='text' id="nombre" name="nombre"  value='' />
+
+
+		<label>Correo electronico</label>
+		<input type='text' id="email" name="email"  value='' />
+
+
+		<label>Password</label>
+		<input type='password' id="password" name="password"  value='' />
+
+
+		<label>Confirna password</label>
+		<input type='password' id="re_password" name="re_password"  value='' />
+
+
+
+		<label>Ubicacion</label>
 		<select id="ubicacion" name="ubicacion" >
 			<script language="javascript">
 			for(var hi=0; hi<states.length; hi++)
@@ -27,7 +43,8 @@
 			</script>
 		</select>
 
-		<?php writeFormInput("Escuela de Procedencia :", "escuela"); ?>
+		<label>Escuela de Procedencia</label>
+		<input type='text' id="escuela" name="escuela"  value='' />
 
 		<input type="button" class="button" value="Registrar" onClick="RegistrarUsuario(this)" />
 	</form>
@@ -43,5 +60,5 @@
 			});
 	}
 	</script>
-	<?php include_once("includes/footer.php"); ?>
+	<?php include_once("footer.php"); ?>
 

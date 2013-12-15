@@ -3,7 +3,7 @@
 
 	define("PAGE_TITLE", "Problemas");
 
-	require_once("includes/head.php");
+	require_once("head.php");
 
 ?>
 <div class="post_blanco">
@@ -12,9 +12,9 @@
 		<th width='5%'>Rank</th> 
 		<th width='5%'>Usuario</th> 
 		<th width='15%'>Ubicacion</th> 
-		<th width='15%'><!--<a href="rank.php?order=escuela">-->Escuela<!--</a>--></th> 
-		<th width='5%'><!--<a href="rank.php?order=resueltos">-->Resueltos<!--</a>--></th> 
-		<th width='5%'><!--<a href="rank.php?order=envios">-->Envios<!--</a>--></th> 
+		<th width='15%'><a href="rank.php?order=escuela">Escuela</a></th> 
+		<th width='5%'><a href="rank.php?order=resueltos">Resueltos</a></th> 
+		<th width='5%'><a href="rank.php?order=envios">Envios</a></th> 
 		<th width='5%'>Radio</th> 
 		</tr> 
 	</thead> 

@@ -4,7 +4,7 @@
 
 	define("PAGE_TITLE", "Concurso");
 
-	require_once("includes/head.php");
+	require_once("head.php");
 
 //validar el concurso que voy a renderear
 if(!isset($_REQUEST["cid"]))

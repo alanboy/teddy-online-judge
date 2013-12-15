@@ -3,7 +3,7 @@
 
 	define("PAGE_TITLE", "Problemas");
 
-	require_once("includes/head.php");
+	require_once("head.php");
 
 ?>
 
@@ -185,7 +185,7 @@ while (<FILE>) {
 close FILE_OUT;
 close FILE;
 </textarea>
-	</div>
+</div>
 
-	<?php include_once("includes/footer.php"); ?>
+<?php include_once("footer.php"); ?>
 

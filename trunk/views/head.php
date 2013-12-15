@@ -23,9 +23,9 @@
 	
 <body>
 <div class="wrapper">
-	<?php
-		include_once("includes/header.php");
-		include_once("includes/menu.php");
-		include_once("includes/session_mananger.php");
-	?>
 
+	<?php
+		include_once("header.php");
+		include_once("menu.php");
+		include_once("session_mananger.php");
+	?>

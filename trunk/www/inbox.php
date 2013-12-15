@@ -3,19 +3,13 @@
 
 	define("PAGE_TITLE", "Problemas");
 
-	require_once("includes/head.php");
+	require_once("head.php");
 
 	// This page requires a logged user
-	require_once("includes/require_login.php")
+	require_once("require_login.php")
 
 ?>
-	<div class="post_blanco">
-<table>
-<?php
-	$order = array("\r\n", "\n", "\r");
-	// Processes \r\n's first so they aren't converted twice.
-	//$newstr = str_replace($order, $replace, $str);
-?>
+<div class="post_blanco">
 	<table border=0>
 		<form class="form-big" method=POST >
 			<tr><td>Enviar Mensaje</td></tr>
@@ -24,7 +18,7 @@
 			<input type=hidden name="enviado" value="si" >
 		</form>
 	</table>
-	</div>
+</div>
 
-	<?php include_once("includes/footer.php"); ?>
+<?php include_once("footer.php"); ?>
 
