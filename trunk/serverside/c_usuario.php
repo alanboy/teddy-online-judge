@@ -85,7 +85,7 @@ class c_usuario extends c_controller
 
 	public static function rank($request = null)
 	{
-		$sql = "select * from Usuario order by nombre;";
+		$sql = "select * from Usuario order by solved DESC, tried ASC ;";
 		$inputarray = array();
 
 		global $db;

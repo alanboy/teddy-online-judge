@@ -25,7 +25,15 @@
 		for ($n = 0; $n < sizeof($rank); $n++)
 		{
 			$user = $rank[$n];
-			echo "<TR >";
+
+			if ($n %2 ==0)
+			{
+				echo "<TR style='background:#e7e7e7;' align=center>";
+			}
+			else
+			{
+				echo "<TR align=center>";
+			}
 			echo "<TD align='center' >". $n ."</TD>";
 			echo "<TD >". $user["userID"] ."</TD>";
 			echo "<TD >". $user["ubicacion"] ."</TD>";
@@ -33,7 +41,7 @@
 			echo "<TD >". $user["solved"] ."</TD>";
 			echo "<TD >". $user["tried"] ."</TD>";
 
-			$ratio = substr( ($user['solved'] / ($user['tried']+1))*100 , 0, 5);
+			$ratio =  ($user['solved'] / ($user['tried']+1))*100 ;
 			printf("<TD align='center' > %2.2f%% </TD>", $ratio);
 			echo "</tr>";
 		}
@@ -42,5 +50,5 @@
 	</table>
 </div>
 
-<?php include_once("includes/footer.php"); ?>
+<?php include_once("footer.php"); ?>
 

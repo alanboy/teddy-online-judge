@@ -33,7 +33,16 @@
 			for ($i = 0; $i < sizeof($problemas); $i++)
 			{
 				$prob = $problemas[$i];
-				echo "<TR style='background:#e7e7e7;'>";
+
+				if ($i %2 ==0)
+				{
+					echo "<TR style='background:#e7e7e7;' align=center>";
+				}
+				else
+				{
+					echo "<TR align=center>";
+				}
+				
 				echo "<TD align='center' >". $prob['probID'] ."</TD>";
 				echo "<TD align='left' ><a href='verProblema.php?id=". $prob['probID']  ."'>". $prob['titulo']   ."</a> </TD>";
 				echo "<TD align='center' >". $prob['vistas']   ." </TD>";

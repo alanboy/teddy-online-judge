@@ -1,0 +1,6 @@
+User-agent:*
+Disallow:/img/
+Disallow:/flash/
+Disallow:/admin/
+Disallow:/css/
+Disallow:/js/

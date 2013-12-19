@@ -2,28 +2,40 @@
 
 	require_once("../serverside/bootstrap.php");
 
-	$controller = $_REQUEST["controller"];
-	$method = $_REQUEST["method"];
-
-	$res = $controller::$method($_REQUEST);
-
-	header('Content-type: application/json');
-
-	if (SUCCESS($res))
+	if (!isset($_REQUEST["controller"]) || !isset($_REQUEST["method"]))
 	{
-		echo json_encode($res);
+		echo json_encode(array(
+				"result" => "error",
+				"reason" => "Faltan parametros."
+			));
 	}
 	else
 	{
-		$reason = "Error interno en Teddy.";
+		$controller = $_REQUEST["controller"];
+		$method = $_REQUEST["method"];
 
-		if (isset($res["reason"]))
+		$res = $controller::$method($_REQUEST);
+
+		header('Content-type: application/json');
+
+		if (SUCCESS($res))
 		{
-			$reason = $res["reason"];
+			echo json_encode($res);
 		}
+		else
+		{
+			$reason = "Error interno en Teddy.";
 
-		echo json_encode(array(
-				"result" => "error",
-				"reason" => $reason
-			));
+			if (isset($res["reason"]))
+			{
+				$reason = $res["reason"];
+			}
+
+			echo json_encode(array(
+					"result" => "error",
+					"reason" => $reason
+				));
+		}
 	}
+
+

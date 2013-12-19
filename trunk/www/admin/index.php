@@ -4,12 +4,9 @@
 
 	define("PAGE_TITLE", "Editar perfil");
 
-	require_once("../includes/head.php");
+	require_once("head.php");
 
-	// This page requires a logged user
-	require_once("includes/require_login.php")
+	require_once("require_admin.php")
 
-?>
-
-	<?php include_once("../includes/footer.php"); ?>
+	include_once("footer.php");
 

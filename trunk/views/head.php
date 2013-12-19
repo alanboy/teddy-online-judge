@@ -1,4 +1,4 @@
-<html>
+<html doctype>
 	<head>
 		<link rel="stylesheet" type="text/css" href="/teddy/css/teddy_style.css" />
 		<link rel="stylesheet" type="text/css" href="/teddy/uploadify/uploadify.css" />
@@ -18,7 +18,9 @@
 
 		<script language="javascript" src="/teddy/js/teddy.js"></script>
 
-		<title>Teddy Online Judge - <?php echo PAGE_TITLE; ?></title>
+		<title><?php echo PAGE_TITLE; ?> - Teddy Online Judge</title>
+
+		<meta name="description" content="">
 	</head>
 	
 <body>

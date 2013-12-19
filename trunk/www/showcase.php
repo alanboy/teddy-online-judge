@@ -184,5 +184,5 @@ if( time() < strtotime($row["Inicio"]) )
 	?>
 	
 	
-	<?php include_once("includes/footer.php"); ?>
+	<?php include_once("footer.php"); ?>
 
