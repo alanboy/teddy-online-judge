@@ -12,9 +12,8 @@
 		<form id="login-form" method="POST" >
 			
 			<input type='password' id="pass" name="pass"  value='' />
-			<?php writeFormInput("Usuario/email:",			"user"); ?>
-
-			<?php writeFormInput("Contrase&ntilde;a",		"pass"); ?>
+			<?php //writeFormInput("Usuario/email:",			"user"); ?>
+			<?php //writeFormInput("Contrase&ntilde;a",		"pass"); ?>
 			<input type='password' id="pass" name="pass"  value='' />
 
 			<input type="submit" class="button" value="Iniciar sesion"  />
@@ -26,10 +25,10 @@
 	function IniciarSesion()
 	{
 		Util.SerializeAndCallApi( 
-			$("#login-form"), 
+			$("#login-form"),
 			Teddy.c_sesion.iniciar,
 			function(result) {
-				window.location = "runs.php?user=" + result.user.userID;
+				window.location = "runs.php?welcome=1&user=" + result.user.userID;
 			});
 		return false;
 	}

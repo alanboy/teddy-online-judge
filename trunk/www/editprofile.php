@@ -6,7 +6,6 @@
 
 	require_once("head.php");
 
-	// This page requires a logged user
 	require_once("require_login.php");
 
 	$respuesta = c_sesion::usuarioActual();
@@ -16,16 +15,16 @@
 	<div class="post" >
 		<form action="" method="post" onsubmit="return validate()" class="datos">
 			<p>
-				Aqui puedes cambiar los datos de tu perfil. Todo menos tu nick.
+				Aqui puedes cambiar los datos de tu perfil. 
 			</p>
 
 			<label for="nick">
-				Nick :
+				Usuario:
 			</label>
 			<input type="text" id="nick" name="nick" class="text" value="<?php echo $datos['userID']; ?>" DISABLED/>
 
 			<label for="nombre" class="datos">
-				Nombre Completo :
+				Nombre completo :
 			</label>
 			<input type="text" id="nombre" name="nombre" class="text datos" value="<?php echo $datos['nombre']; ?>"/>
 
@@ -40,12 +39,24 @@
 			<input type="text" id="twitter" name="twitter" class="text" value="<?php echo $datos['twitter']; ?>"/>
 
 			<label>
-				Escuela de Procedencia :
+				Escuela o empresa :
 			</label>
 			<input type="text" id="escuela" name="escuela" class="text" value="<?php echo $datos['escuela']; ?>"/>
-			<input type="submit" class="button" value="Actualizar mis datos" />
-			<input type="hidden" id="form" name="form" value="false" />
+			<!-- <input type="submit" class="button" value="Actualizar mis datos" /> -->
+			<input type="hidden" name="nick" value="<?php echo $datos['userID']; ?>" />
+			<input type="button" class="button" value="Actualizar" onClick="EditarUsuario(this)" />
 		</form>
+		<script>
+		function EditarUsuario(form)
+		{
+			Util.SerializeAndCallApi( 
+				$(form).parent(),
+				Teddy.c_usuario.editar,
+				function(result) {
+					window.location = "runs.php?user=" + $("#nick").val();
+				});
+		}
+		</script>
 	</div>
 
 <!--

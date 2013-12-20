@@ -33,20 +33,20 @@ if (SUCCESS($response))
 				<b> - </b>
 				<?php echo $user["escuela"]; ?>
 			</td>
-			<td>
-				<table>
-					<tr>
-						<td width='100px'><b>Enviados</b></td>
-						<td width='100px'><b>Resueltos</b></td>
-						<td width='100px'><b>Radio</b></td>
-						<td><b>Concursos</b>&nbsp;&nbsp;</td>
+			<td >
+				<table border=0 >
+					<tr align=center>
+						<td ><b>Enviados</b></td>
+						<td ><b>Resueltos</b></td>
+						<td ><b>Radio</b></td>
+						<!-- <td><b>Concursos</b>&nbsp;&nbsp;</td> -->
 						<td><b>Twitter</b></td>
 					</tr>
 					<tr>
 						<td><?php echo $user["tried"]; ?></td>
 						<td><b><?php echo $user["solved"]; ?></b></td>
 						<td><?php echo $user["ratio"]; ?></td>
-						<td><!-- <?php echo $user["n_concursos"]; ?>--></td>
+						<!--<td> <?php //echo $user["n_concursos"]; ?></td>-->
 						<td><?php echo $user["twitter"]; ?></td>
 					</tr>
 				</table>
@@ -61,6 +61,7 @@ if (SUCCESS($response))
 			//echo " <a title='{$probset[$row['probID'] ]}' href=\"verProblema.php?id={$row['probID']}\">{$row['probID']}</a> &nbsp;";
 		?>
 		-->
+		<br>
 		<?php
 	}
 }

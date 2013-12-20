@@ -63,6 +63,7 @@ class c_sesion extends c_controller
 			}
 		}
 
+		error_log("TEDDY: Credenciales invalidas para usuario " . $request["user"] );
 		return array(
 			"result" => "error",
 			"reason" => "Credenciales invalidas." );

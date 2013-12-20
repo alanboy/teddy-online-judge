@@ -59,9 +59,9 @@ width: 48px;
 		.post>form{
 			width:400px;
 			margin:auto;
-			margin-top:30px;
-			padding:30px;
-			border:1px solid #bbb;
+			/*margin-top:30px;
+			padding:30px;*/
+			/*border:1px solid #bbb; */
 			-moz-border-radius:11px;
 		}
 
@@ -76,7 +76,9 @@ width: 48px;
 			text-align:justify;
 			margin-bottom:20px;
 		}
-		.post>form input.text{
+		.post>form input.text, 
+		form input{
+			/*
 			background:#FBFBFB none repeat scroll 0 0;
 			border:1px solid #E5E5E5;
 			font-size:24px;
@@ -85,7 +87,22 @@ width: 48px;
 			margin-top:2px;
 			padding:3px;
 			width:97%;
+			 */
+			/* width: 90%; */
+			padding: 8px;
+			border-radius: 4px;
+			-moz-border-radius: 4px;
+			-webkit-border-radius: 4px;
+			font-size: 1.2em;
+			color: #222;
+			background: #F7F7F7;
+			outline: none;
+			border-top: 1px solid #CCC;
+			border-left: 1px solid #CCC;
+			border-right: 1px solid #E7E6E6;
+			border-bottom: 1px solid #E7E6E6;
 		}
+
 		.post>form select{
 			background:#FBFBFB none repeat scroll 0 0;
 			border:1px solid #E5E5E5;
@@ -162,24 +179,10 @@ width: 48px;
 		.right{
 			text-align:right;
 		}
-			.form-big {
-				width:400px;
-				margin:auto;
-				margin-top:30px;
-				padding:30px;
-				border:1px solid #bbb;
-				-moz-border-radius:11px;
-			}
 			form label{
 				display:block;
 				color:#777777;
 				font-size:13px;
-			}
-			form p{
-				color:#777777;
-				font-size:14px;
-				text-align:justify;
-				margin-bottom:20px;
 			}
 			form input.text{
 				background:#FBFBFB none repeat scroll 0 0;
@@ -249,42 +252,41 @@ img a { text-decoration: none !important; background: #fff !important; margin: 0
 	background: #f2f0f0; 
 	padding:10px;
 	margin-top: 10px; 
+	-moz-border-radius: 11px;
+	-webkit-border-radius: 11px;
+	-khtml-border-radius: 11px;
+	border-radius: 11px;
 
--moz-border-radius: 11px;
--webkit-border-radius: 11px;
--khtml-border-radius: 11px;
-border-radius: 11px;
+	-webkit-background-size: 48px 48px;
+	-webkit-box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 2px 0px;
+	background-position: 50% 0%;
+	background-repeat: no-repeat;
+	background-size: 48px 48px;
+	border-bottom-color: rgb(176, 184, 191);
 
--webkit-background-size: 48px 48px;
--webkit-box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 2px 0px;
-background-position: 50% 0%;
-background-repeat: no-repeat;
-background-size: 48px 48px;
-border-bottom-color: rgb(176, 184, 191);
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
 
-border-bottom-left-radius: 10px;
-border-bottom-right-radius: 10px;
-border-top-left-radius: 10px;
-border-top-right-radius: 10px;
-
-border-bottom-style: solid;
-border-bottom-width: 1px;
-border-image-outset: 0px;
-border-image-repeat: stretch;
-border-image-slice: 100%;
-border-image-source: none;
-border-image-width: 1;
-border-left-color: rgb(176, 184, 191);
-border-left-style: solid;
-border-left-width: 1px;
-border-right-color: rgb(176, 184, 191);
-border-right-style: solid;
-border-right-width: 1px;
-border-top-color: rgb(176, 184, 191);
-border-top-style: solid;
-border-top-width: 1px;
-box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 2px 0px;
-color: rgb(90, 107, 119);
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+	border-image-outset: 0px;
+	border-image-repeat: stretch;
+	border-image-slice: 100%;
+	border-image-source: none;
+	border-image-width: 1;
+	border-left-color: rgb(176, 184, 191);
+	border-left-style: solid;
+	border-left-width: 1px;
+	border-right-color: rgb(176, 184, 191);
+	border-right-style: solid;
+	border-right-width: 1px;
+	border-top-color: rgb(176, 184, 191);
+	border-top-style: solid;
+	border-top-width: 1px;
+	box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 2px 0px;
+	/*color: rgb(90, 107, 119);*/
 }
 
 .post_blanco {

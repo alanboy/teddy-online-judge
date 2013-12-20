@@ -57,6 +57,5 @@
 		</tbody>
 	</table>
 	</div>
-</div>
 
 <?php include_once("footer.php"); ?>

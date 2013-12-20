@@ -110,8 +110,8 @@ class c_usuario extends c_controller
 	 * */
 	public static function nuevo($request)
 	{
-		// Validate logic
-		if(self::getByNickOrEmail($request))
+		$result = self::getByNickOrEmail($request);
+		if (!is_null($result["user"]))
 		{
 			return array( "result" => "error", "reason" => "Este usuario/email ya estan registrados." );
 		}
@@ -121,11 +121,11 @@ class c_usuario extends c_controller
 		$inputarray = array(
 			$request["nick"],
 			$request["nombre"],
-			$request["password"],
+			crypt($request["password"]),
 			$request["ubicacion"],
 			$request["escuela"],
 			$request["email"],
-			"foo"
+			""
 		);
 
 		global $db;
@@ -136,25 +136,58 @@ class c_usuario extends c_controller
 			error_log("TEDDY:" . $db->ErrorNo() ." " . $db->ErrorMsg() );
 			return array( "result" => "error", "reason" => "Error interno." );
 		}
+
+		$request["user"] = $request["nick"];
+		$request["pass"] =	$request["password"];
+
+		$result = c_sesion::login($request);
+		if (!SUCCESS($result))
+		{
+			error_log("TEDDY: Error al iniciar sesion despues de registar usuario" );
+			return array( "result" => "error", "reason" => "Error interno." );
+		}
+
 		return array( "result" => "ok" );
 	}
 
-	public static function editar()
+	public static function resetpass($request)
 	{
+	
+		return array( "result" => "ok" );
+	}
 
-		$nombre = addslashes($_REQUEST["nombre"]);
-		$email = addslashes($_REQUEST["email"]);
-	//	$ubicacion = addslashes($_REQUEST["ubicacion"]);
-		$escuela = addslashes($_REQUEST["escuela"]);
-		$form = addslashes($_REQUEST["form"]);
 
-		$twitter = addslashes($_REQUEST["twitter"]);
+	public static function editar($request)
+	{
+		$request["user"] = $request["nick"];
 
-		$query = "update  `Usuario` 
-			SET  nombre = '{$nombre}', escuela = '{$escuela}', mail = '{$email}', `twitter` =  '{$twitter}' 
-			WHERE  `Usuario`.`userID` =  '{$_SESSION['userID']}' LIMIT 1 ;";
+		$result = self::getByNickOrEmail($request);
+		if (is_null($result["user"]))
+		{
+			return array( "result" => "error", "reason" => "Este usuario no existe." );
+		}
 
-		$rs = mysql_query($query) or die(mysql_error());
+		$sql = "update  `Usuario`  SET  nombre = ?, escuela = ?, mail = ?, `twitter` =  ? 
+									WHERE  `Usuario`.`userID` =  ? LIMIT 1 ;";
+
+		$inputarray = array(
+			$request["nombre"],
+			$request["escuela"],
+			$request["email"],
+			$request["twitter"],
+			$request["nick"]
+		);
+
+		global $db;
+		$res = $db->Execute($sql, $inputarray);
+
+		if($res===false)
+		{
+			error_log("TEDDY:" . $db->ErrorNo() ." " . $db->ErrorMsg() );
+			return array( "result" => "error", "reason" => "Error interno." );
+		}
+
+		return array( "result" => "ok" );
 	}
 }
 

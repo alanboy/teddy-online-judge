@@ -56,10 +56,10 @@ if (c_sesion::isLoggedIn()) {
 			<div id="login_area" class="navcenter">
 				
 				<form id="login-form-top-nav" method="POST" >
-					<img  src="img/37.png"> <input type='text' id="user" name="user"  value='' />
-					<img  src="img/55.png"> <input type='password' id="pass" name="pass"  value='' />
+					<img  src="img/37.png"> <input type='text' id="user" name="user"  placeholder="Usuario o Email" />
+					<img  src="img/55.png"> <input type='password' id="pass" name="pass" placeholder="Contrase&ntilde;a" />
 					<input type="submit" class="button" value="Iniciar sesion"  />
-					<input type="button" class="button" value="Olvide mi contrase&ntilde;a" onClick="OlvideMiContrasena(this)" />
+					<input type="button" class="button" value="Olvide mi contrase&ntilde;a" onClick="ResetPass(this)" />
 				</form>
 			</div>
 
@@ -71,6 +71,22 @@ if (c_sesion::isLoggedIn()) {
 			</div>
 		</div>
 		<script>
+
+		function ResetPass(form)
+		{
+			if ($("#user").val().length < 4)
+			{
+				return Teddy.error("Escribe tu usuario o correo");
+			}
+
+			Util.SerializeAndCallApi( 
+				$(form).parent(),
+				Teddy.c_usuario.ResetPass,
+				function(result) {
+					Teddy.msg("Revisa tu correo electronico");
+				});
+		}
+	
 		function IniciarSesionTopNav()
 		{
 			Util.SerializeAndCallApi( 

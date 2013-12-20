@@ -7,34 +7,27 @@
 	require_once("head.php");
 
 ?>
-<div class="post_blanco">
-	<form  >
+<div class="post">
+	<form class="datos"  >
 		<h2>Registro</h2>
 
-
-		<label>Usuario</label>
-		<input type='text' id="nick" name="nick"  value='' />
-
+		<label for="nick">Usuario</label>
+		<input class="text" type='text' id="nick" name="nick" placeholder="Asi te veran otros programdores en teddy" required autofocus/>
 
 		<label>Nombre completo</label>
-		<input type='text' id="nombre" name="nombre"  value='' />
-
+		<input class="text" type='text' id="nombre" name="nombre"  required/>
 
 		<label>Correo electronico</label>
-		<input type='text' id="email" name="email"  value='' />
+		<input class="text" value type="email" id="email" name="email"  required/>
 
+		<label>Contrase&ntilde;a</label>
+		<input class="text" type='password' id="password" name="password"  required/>
 
-		<label>Password</label>
-		<input type='password' id="password" name="password"  value='' />
+		<label>Repetir contrase&ntilde;a</label>
+		<input class="text" type='password' id="re_password" name="re_password"  required/>
 
-
-		<label>Confirna password</label>
-		<input type='password' id="re_password" name="re_password"  value='' />
-
-
-
-		<label>Ubicacion</label>
-		<select id="ubicacion" name="ubicacion" >
+		<label>Pa&iacute;s</label>
+		<select class="text" id="ubicacion" name="ubicacion" >
 			<script language="javascript">
 			for(var hi=0; hi<states.length; hi++)
 			{
@@ -43,8 +36,8 @@
 			</script>
 		</select>
 
-		<label>Escuela de Procedencia</label>
-		<input type='text' id="escuela" name="escuela"  value='' />
+		<label>Escuela o empresa</label>
+		<input class="text" type='text' id="escuela" name="escuela"   />
 
 		<input type="button" class="button" value="Registrar" onClick="RegistrarUsuario(this)" />
 	</form>
@@ -52,11 +45,28 @@
 	<script>
 	function RegistrarUsuario(form)
 	{
+		if ($("#nick").val().length < 4)
+		{
+			return Teddy.error("Intenta con un nombre de usuario de mas de 4 caracteres.");
+		}
+
+		// test weird chars in nick
+
+		if ($("#password").val() != $("#re_password").val())
+		{
+			return Teddy.error("Las contrase&ntilde;as no coinciden.");
+		}
+
+		if ($("#password").val().length  < 5 )
+		{
+			return Teddy.error("Intenta con una contrase&ntilde;as de mas de 5 caracteres.");
+		}
+
 		Util.SerializeAndCallApi( 
-			$(form).parent(), 
+			$(form).parent(),
 			Teddy.c_usuario.nuevo,
 			function(result) {
-				window.location = "login.php?registered=1";
+				window.location = "runs.php?user=" + $("#nick").val();
 			});
 	}
 	</script>

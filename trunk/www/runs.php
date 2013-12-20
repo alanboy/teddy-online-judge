@@ -6,6 +6,10 @@
 
 	require_once("head.php");
 
+	if (isset($_GET["welcome"]))
+	{
+		include ("bienvenido.php");
+	}
 ?>
 <div class="post_blanco">
 

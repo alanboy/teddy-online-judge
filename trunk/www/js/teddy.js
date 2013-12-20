@@ -1,6 +1,18 @@
 
 var Teddy =
 {
+
+	msg : function (msg)
+	{
+		$("#notif_area").html(msg).show();
+	},
+	//
+	// error() 
+	//
+	error : function (msg)
+	{
+		$("#notif_area").html(msg).show();
+	},
 	//
 	// API namespace
 	//
@@ -51,6 +63,32 @@ var Teddy =
 					"POST",
 					"c_usuario",
 					"nuevo",
+					args,
+					cb);
+		},
+
+		//
+		// editar() 
+		//
+		editar : function(args, cb)
+		{
+			Teddy.api.ajax(
+					"POST",
+					"c_usuario",
+					"editar",
+					args,
+					cb);
+		},
+
+		//
+		// OlvideMiContrasena() 
+		//
+		ResetPass : function (args, cb)
+		{
+			Teddy.api.ajax(
+					"POST",
+					"c_usuario",
+					"resetpass",
 					args,
 					cb);
 		}
@@ -108,6 +146,8 @@ var Teddy =
 }// Teddy
 
 
+
+
 Util =
 {
 	SerializeAndCallApi : function(form_with_data, api_to_call, callback)
@@ -116,7 +156,6 @@ Util =
 		$($(form_with_data).serializeArray()).each(function(i, input){
 					data[ input.name  ] = input.value;
 				});
-		//console.log(data);
 		api_to_call.call(null, data, callback);
 	}
 }

@@ -4,13 +4,15 @@
 	<img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub">
 </a>
 
-<div class="header">
+<div class="header" align=center>
 		<table>
 			<tr>
 				<td rowspan=2>
+<!--
 					<span class="rounded_image" style="background-image:url(img/teddy.jpg);">
 						<img src="img/teddy.jpg" style="opacity:0;">
 					</span>
+-->
 				</td>
 				<td><h1>teddy online judge</h1></td>
 				<td rowspan=2 valign=top>
@@ -20,7 +22,7 @@
 						data-href="https://www.facebook.com/pages/Teddy-Online-Judge/124087854360498" 
 						data-send="true" 
 						data-layout="button_count" 
-						data-width="150" 
+						data-width="150"
 						data-show-faces="false">
 					</div>
 					<div style="margin-top:5px; margin-left: 5px; width: 170px; margin-right: 0px;">
