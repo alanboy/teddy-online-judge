@@ -21,7 +21,7 @@ class gui
 	public static function listaDeRuns($runs)
 	{
 		?>
-		<table>
+		<table width="100%">
 		<thead>
 		<tr >
 			<th width='12%'>Ejecucion</th> 

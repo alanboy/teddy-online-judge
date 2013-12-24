@@ -15,7 +15,7 @@
 
 	if (!c_usuario::IsResetPassTokenValid($_GET))
 	{
-		?>este token no es valido<?php
+		?><p>Este token no es valido</p><?php
 	}
 	else
 	{
@@ -36,8 +36,6 @@
 	 <?php
 	}
 
-	//$validtoken = c_usuario::resetpass( $_GET );
-
 	?>
 	<script>
 	function ResetPasswordWithToken(form)
@@ -56,8 +54,7 @@
 			$(form).parent(),
 			Teddy.c_usuario.ResetPasswordWithToken,
 			function(result) {
-				//window.location = "runs.php?user=" + $("#nick").val();
-				console.log(result);
+				window.location = "index.php?";
 			});
 	}
 	</script>

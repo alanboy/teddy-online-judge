@@ -94,7 +94,7 @@ var Teddy =
 		},
 
 		//
-		// ResetPassword() 
+		// ResetPasswordWithToken() 
 		//
 		ResetPasswordWithToken : function (args, cb)
 		{
@@ -102,6 +102,19 @@ var Teddy =
 					"POST",
 					"c_usuario",
 					"ResetPasswordWithToken",
+					args,
+					cb);
+		},
+
+		//
+		// ResetPassword() 
+		//
+		ResetPassword: function (args, cb)
+		{
+			Teddy.api.ajax(
+					"POST",
+					"c_usuario",
+					"ResetPassword",
 					args,
 					cb);
 		}

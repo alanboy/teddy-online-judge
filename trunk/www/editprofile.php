@@ -57,8 +57,43 @@
 				});
 		}
 		</script>
-	</div>
 
+<br>
+		<form class="datos"  >
+			<p>Editar password</p>
+
+			<label>Contrase&ntilde;a</label>
+			<input class="text" type='password' id="password" name="password"  required/>
+
+			<label>Repetir contrase&ntilde;a</label>
+			<input class="text" type='password' id="re_password" name="re_password"  required/>
+
+
+			<input type="button" class="button" value="Editar password" onClick="ResetPassword(this)" />
+		</form>
+	<script>
+	function ResetPassword(form)
+	{
+		if ($("#password").val() != $("#re_password").val())
+		{
+			return Teddy.error("Las contrase&ntilde;as no coinciden.");
+		}
+
+		if ($("#password").val().length  < 5 )
+		{
+			return Teddy.error("Intenta con una contrase&ntilde;as de mas de 5 caracteres.");
+		}
+
+		Util.SerializeAndCallApi( 
+			$(form).parent(),
+			Teddy.c_usuario.ResetPassword,
+			function(result) {
+				//window.location = "runs.php?user=" + $("#nick").val();
+			});
+	}
+</script>
+	
+	</div>
 <!--
 	<label for="password">
 		Password:

@@ -233,7 +233,7 @@ h1{
 line-height:56px; font-size:56px; font-weight:500; letter-spacing:-2px; text-transform:uppercase; text-align:center;
 }
 h2 { color:#666; font-weight: normal; margin-bottom:2px; font-size:30px; line-height:32px; }
-h3 { color:#666; font-weight: normal; margin-top:10px; }
+h3 { color:#666; font-weight: normal; margin-top:10px; font-size: 15px}
 h4 { color:#666; font-weight: normal;  }
 img_border { background: #fff !important; border: 1px solid #999;  margin: 10px; }
 img a { text-decoration: none !important; background: #fff !important; margin: 0px; }

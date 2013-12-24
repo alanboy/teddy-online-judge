@@ -169,6 +169,15 @@ class c_usuario extends c_controller
 
 	public static function ResetPassword($request)
 	{
+
+		$user = c_sesion::usuarioActual();
+
+		if (SUCCESS($user) && !is_null($user["user"]))
+		{
+			$request["user"] = $user["user"]["userID"];
+		}
+		
+	
 		$sql = "update Usuario set pswd = ? where userID = ?";
 
 		$inputarray = array(
@@ -245,7 +254,8 @@ class c_usuario extends c_controller
 		$res = $db->Execute($sql, $inputarray);
 		$resetid = $db->Insert_ID();
 
-		//c_mail::EnviarMail( "this is body, howdy", "alan.gohe@gmail.com" /*$user["mail"]*/, "Teddy Online Judge");
+		$content = "Hola,\n\nSigue este enlace para resetear tu password en Teddy: https://teddy.itc.mx/reset.php?token=" . $token;
+		$result = c_mail::EnviarMail( $content, $user["mail"], "Teddy Online Judge");
 
 		$sql = "update LostPassword set mailSent = 1 where id = ?";
 
