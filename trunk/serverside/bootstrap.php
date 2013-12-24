@@ -30,7 +30,7 @@ require_once("c_backup.php");
 require_once("gui.php");
 require_once("lib/adodb_lite/adodb.inc.php");
 require_once("utils.php");
-//require_once "Mail.php";
+require_once "Mail.php";
 
 
 // Connect to DB

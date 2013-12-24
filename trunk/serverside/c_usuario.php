@@ -150,9 +150,109 @@ class c_usuario extends c_controller
 		return array( "result" => "ok" );
 	}
 
-	public static function resetpass($request)
+	public static function IsResetPassTokenValid($request)
 	{
-	
+		if (!isset($request["token"]))
+		{
+			return false;
+		}
+
+		$sql = "select userID from LostPassword where Token = ?;" ;
+
+		$inputarray = array( $request["token"] );
+
+		global $db;
+		$res = $db->Execute($sql, $inputarray)->GetArray();
+
+		return (sizeof($res) == 1);
+	}
+
+	public static function ResetPassword($request)
+	{
+		$sql = "update Usuario set pswd = ? where userID = ?";
+
+		$inputarray = array(
+					crypt($request["password"]),
+					$request["user"] );
+
+		global $db;
+		$res = $db->Execute($sql, $inputarray);
+
+		return array("result" => "ok");
+	}
+
+	public static function ResetPasswordWithToken($request)
+	{
+		if (!isset($request["token"]))
+		{
+			return array("result" => "error", "reason" => "Token de reset invalido.");
+		}
+
+		if (!self::IsResetPassTokenValid($request))
+		{
+			//error_log
+			return array("result" => "error", "reason" => "Token de reset invalido.");
+		}
+
+		$sql = "select userID, id from LostPassword where Token = ?;" ;
+		$inputarray = array( $request["token"] );
+
+		global $db;
+		$res = $db->Execute($sql, $inputarray)->GetArray();
+
+		$request["user"] = $res[0]["userID"];
+
+		$result = self::ResetPassword( $request );
+
+		if (SUCCESS($result))
+		{
+			$sql = "DELETE FROM `LostPassword` WHERE `LostPassword`.`ID` = ?;" ;
+			$inputarray = array( $res[0]["id"] );
+			$res = $db->Execute($sql, $inputarray);
+		}
+
+		// Cambiar el password
+		return array("result" => "ok");
+	}
+
+	public static function RequestResetPass($request)
+	{
+		$result = self::getByNickOrEmail($request);
+		if (is_null($result["user"]))
+		{
+			return array( "result" => "error", "reason" => "Este usuario no existe." );
+		}
+
+		$user = $result["user"];
+
+		$foo = 55;
+		$bar = "";
+		while($foo-- > 0){
+			$bar .= rand( 5, 123 );
+		}
+
+		$token = md5($bar);
+
+		$sql = "INSERT INTO LostPassword (`userID` , `IP` , `Token` ) VALUES (?,?,?);" ;
+
+		$inputarray = array(
+			$user["userID"],
+			"127.0.0.1",
+			$token
+		);
+
+		global $db;
+		$res = $db->Execute($sql, $inputarray);
+		$resetid = $db->Insert_ID();
+
+		//c_mail::EnviarMail( "this is body, howdy", "alan.gohe@gmail.com" /*$user["mail"]*/, "Teddy Online Judge");
+
+		$sql = "update LostPassword set mailSent = 1 where id = ?";
+
+		$inputarray = array( $resetid );
+
+		$res = $db->Execute($sql, $inputarray);
+
 		return array( "result" => "ok" );
 	}
 

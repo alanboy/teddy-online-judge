@@ -2,7 +2,7 @@
 
 class c_mail
 {
-	function EnviarMail($cuerpo, $destinatario, $titulo) {
+	public static function EnviarMail($cuerpo, $destinatario, $titulo) {
 
 		$headers = array(
 			'From' => MAIL_FROM,
@@ -21,10 +21,8 @@ class c_mail
 		$mail = $smtp->send($destinatario, $headers, $cuerpo);
 
 		if (PEAR::isError($mail)) {
-			//Logger::error($mail->getMessage());
 			throw new Exception($mail->getMessage());
 		}
 	}
 
 }
-//EnviarMail( "this is body, hody", "alan@caffeina.mx", "titulo");

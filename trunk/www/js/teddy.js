@@ -81,14 +81,27 @@ var Teddy =
 		},
 
 		//
-		// OlvideMiContrasena() 
+		// RequestResetPass() 
 		//
-		ResetPass : function (args, cb)
+		RequestResetPass : function (args, cb)
 		{
 			Teddy.api.ajax(
 					"POST",
 					"c_usuario",
-					"resetpass",
+					"RequestResetPass",
+					args,
+					cb);
+		},
+
+		//
+		// ResetPassword() 
+		//
+		ResetPasswordWithToken : function (args, cb)
+		{
+			Teddy.api.ajax(
+					"POST",
+					"c_usuario",
+					"ResetPasswordWithToken",
 					args,
 					cb);
 		}

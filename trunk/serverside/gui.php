@@ -25,7 +25,13 @@ class gui
 		<thead>
 		<tr >
 			<th width='12%'>Ejecucion</th> 
-			<th width='12%'>Problema</th> 
+			<?php
+				if (isset($row["probID"]))
+				{
+					echo "<th width='12%'>Problema</th>";
+				}
+			?>
+			 
 			<th width='12%'>Usuario</th> 
 			<th width='12%'>Lenguaje</th> 
 			<th width='12%'>Resultado</th> 
@@ -47,7 +53,10 @@ class gui
 					echo "<TR align=center>";
 				}
 				echo "<TD align='center' ><a href='verCodigo.php?execID={$row['execID']}'>". $row['execID'] ."</a></TD>";
-				echo "<TD align='center' ><a href='verProblema.php?pid=". $row['probID']  ."'>". $row["probID"]   ."</a> </TD>";
+				if (isset($row["probID"]))
+				{
+					echo "<TD align='center' ><a href='verProblema.php?pid=". $row['probID']  ."'>". $row["probID"]   ."</a> </TD>";
+				}
 				echo "<TD align='center' ><a href='runs.php?user=". $row['userID']  ."'>". $row["userID"]   ."</a> </TD>";
 				echo "<TD align='center' >". $row['LANG']   ."</TD>";
 				echo "<TD align='center' >".  $row['status'] ."</TD>";
