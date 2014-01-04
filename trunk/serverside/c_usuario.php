@@ -253,8 +253,8 @@ class c_usuario extends c_controller
 		global $db;
 		$res = $db->Execute($sql, $inputarray);
 		$resetid = $db->Insert_ID();
+		$content = "Hola,\n\nSigue este enlace para resetear tu password en Teddy: https://" . $_SERVER['SERVER_NAME'] . "/reset.php?token=" . $token;
 
-		$content = "Hola,\n\nSigue este enlace para resetear tu password en Teddy: https://teddy.itc.mx/reset.php?token=" . $token;
 		$result = c_mail::EnviarMail( $content, $user["mail"], "Teddy Online Judge");
 
 		$sql = "update LostPassword set mailSent = 1 where id = ?";
