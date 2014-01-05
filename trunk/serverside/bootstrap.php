@@ -15,14 +15,14 @@ define("PATH_TO_BACKUPS", __DIR__ . "/../backups/");
 require_once("config.php");
 
 // Inlclude controllers
-require_once("c_controller.php");
-require_once("c_usuario.php");
-require_once("c_problema.php");
-require_once("c_sesion.php");
-require_once("c_concurso.php");
-require_once("c_ejecucion.php");
-require_once("c_mail.php");
-require_once("c_backup.php");
+require_once("controllers/c_controller.php");
+require_once("controllers/c_usuario.php");
+require_once("controllers/c_problema.php");
+require_once("controllers/c_sesion.php");
+require_once("controllers/c_concurso.php");
+require_once("controllers/c_ejecucion.php");
+require_once("controllers/c_mail.php");
+require_once("controllers/c_backup.php");
 
 // Inlclude libs
 require_once("gui.php");
