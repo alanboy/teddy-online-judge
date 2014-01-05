@@ -133,7 +133,7 @@ class c_usuario extends c_controller
 
 		if($res===false)
 		{
-			error_log("TEDDY:" . $db->ErrorNo() ." " . $db->ErrorMsg() );
+			Logger::error("TEDDY:" . $db->ErrorNo() ." " . $db->ErrorMsg() );
 			return array( "result" => "error", "reason" => "Error interno." );
 		}
 
@@ -143,7 +143,7 @@ class c_usuario extends c_controller
 		$result = c_sesion::login($request);
 		if (!SUCCESS($result))
 		{
-			error_log("TEDDY: Error al iniciar sesion despues de registar usuario" );
+			Logger::error("TEDDY: Error al iniciar sesion despues de registar usuario" );
 			return array( "result" => "error", "reason" => "Error interno." );
 		}
 
@@ -199,7 +199,7 @@ class c_usuario extends c_controller
 
 		if (!self::IsResetPassTokenValid($request))
 		{
-			//error_log
+			//Logger::error
 			return array("result" => "error", "reason" => "Token de reset invalido.");
 		}
 
@@ -293,7 +293,7 @@ class c_usuario extends c_controller
 
 		if($res===false)
 		{
-			error_log("TEDDY:" . $db->ErrorNo() ." " . $db->ErrorMsg() );
+			Logger::error("TEDDY:" . $db->ErrorNo() ." " . $db->ErrorMsg() );
 			return array( "result" => "error", "reason" => "Error interno." );
 		}
 
