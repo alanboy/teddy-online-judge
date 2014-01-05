@@ -32,15 +32,18 @@ class c_mensaje extends c_controller
 		 */
 	}
 	
-	public static function lista()
+	public static function lista($request)
 	{
 		$sql = "SELECT * FROM Mensaje WHERE de = ? OR para = ? ORDER BY fecha DESC";
-	
+		$inputarray = array(  $request["userID"], $request["userID"] );
+
+		global $db;
+		$result = $db->Execute($sql, $inputarray);
+
+		return array(
+				"result" => "ok", 
+				"mensajes" => $result->GetArray()
+			);
 	}
 
-	public static function nuevo()
-	{}
-
-	public static function nuevo()
-	{}
 }

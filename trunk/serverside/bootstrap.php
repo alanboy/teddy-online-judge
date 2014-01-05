@@ -23,9 +23,11 @@ require_once("controllers/c_concurso.php");
 require_once("controllers/c_ejecucion.php");
 require_once("controllers/c_mail.php");
 require_once("controllers/c_backup.php");
+require_once("controllers/c_mensaje.php");
 
 // Inlclude libs
 require_once("gui.php");
+require_once("lib/adodb_lite/adodb-exceptions.inc.php");
 require_once("lib/adodb_lite/adodb.inc.php");
 require_once("utils.php");
 require_once("lib/Logger.php");

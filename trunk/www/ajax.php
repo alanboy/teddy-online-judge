@@ -16,6 +16,7 @@
 
 		$res = $controller::$method($_REQUEST);
 
+		Logger::info("API CALL: " . $controller . "::" . $method . "()    \tRESULT:" . $res["result"] );
 		header('Content-type: application/json');
 
 		if (SUCCESS($res))

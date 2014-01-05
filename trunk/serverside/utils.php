@@ -2,6 +2,9 @@
 
 function SUCCESS($res)
 {
+	if ($res["result"] != "ok") {
+		// Log?
+	}
 	return $res["result"] === "ok";
 }
 

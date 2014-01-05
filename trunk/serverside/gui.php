@@ -62,7 +62,7 @@ class gui
 
 				echo "<TD align='center' ><a href='runs.php?user=". $row['userID']  ."'>". $row["userID"]   ."</a> </TD>";
 				echo "<TD align='center' >". $row['LANG']   ."</TD>";
-				echo "<TD align='center' >".  $row['status'] ."</TD>";
+				echo "<TD align='center' >".  utils::color_result( $row['status'] ) ."</TD>";
 				printf("<TD align='center' > %2.4fs </TD>", $row["tiempo"] / 1000);
 				echo "<TD align='center' >". $row["fecha"]   ." </TD>";
 				echo "</TR>";

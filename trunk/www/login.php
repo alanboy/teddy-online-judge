@@ -12,8 +12,6 @@
 		<form id="login-form" method="POST" >
 			
 			<input type='password' id="pass" name="pass"  value='' />
-			<?php //writeFormInput("Usuario/email:",			"user"); ?>
-			<?php //writeFormInput("Contrase&ntilde;a",		"pass"); ?>
 			<input type='password' id="pass" name="pass"  value='' />
 
 			<input type="submit" class="button" value="Iniciar sesion"  />

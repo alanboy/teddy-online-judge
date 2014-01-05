@@ -2,10 +2,7 @@
 
 	require_once("../serverside/bootstrap.php");
 
-	define("PAGE_TITLE", "Problemas");
-
 	require_once("head.php");
-
 
 	// Move this to some controller 
 	$sql = "SELECT table_name, TABLE_ROWS FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = ?;";

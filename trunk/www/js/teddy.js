@@ -538,7 +538,6 @@ function logout()
 			'method' : "logout"
 		}
 	}).always(function (response){
-		// Probar response con errores
 		window.location.reload( false );
 	});//always
 }

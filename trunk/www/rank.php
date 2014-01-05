@@ -26,16 +26,13 @@
 		{
 			$user = $rank[$n];
 
-			if ($n %2 ==0)
-			{
+			if ($n %2 ==0) {
 				echo "<TR style='background:#e7e7e7;' align=center>";
-			}
-			else
-			{
+			} else {
 				echo "<TR align=center>";
 			}
 			echo "<TD align='center' >". $n ."</TD>";
-			echo "<TD >". $user["userID"] ."</TD>";
+			echo "<TD ><a href=\"runs.php?user=". $user["userID"]."\">". $user["userID"] ."</TD>";
 			echo "<TD >". $user["ubicacion"] ."</TD>";
 			echo "<TD >". $user["escuela"] ."</TD>";
 			echo "<TD >". $user["solved"] ."</TD>";

@@ -4,11 +4,37 @@ class c_problema extends c_controller
 {
 	public static function lista($request = null)
 	{
-		$sql = "select probID, titulo, vistas, aceptados, intentos from Problema WHERE publico = ?; ";
+		$sql = "select probID, titulo, vistas, aceptados, intentos from Problema WHERE publico = ? ";
 		$inputarray = array($request["public"]);
 
+		/*
+		 *  Why the fuck does this not work?
+		 *
+		 *
+				if (array_key_exists("orden", $request)) {
+					$sql .= " order by ? ";
+					array_push($inputarray, $request["orden"]);
+				}
+		 */
+
+		if (array_key_exists("orden", $request)) {
+			$sql .= " order by ". $request["orden"];
+		}
+
+		$sql .= ";";
+
 		global $db;
-		$result = $db->Execute($sql, $inputarray);
+		try {
+			$result = $db->Execute($sql, $inputarray);
+
+		} catch(Exception  $e) {
+			Logger::error($e);
+		}
+
+		if (!$result) {
+			Logger::error("Imposible obtener lista de problemas" );
+			return array( "result" => "error" );
+		}
 
 		return array(
 				"result" => "ok",

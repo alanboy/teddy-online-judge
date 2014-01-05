@@ -6,17 +6,14 @@
 
 	require_once("head.php");
 
-	// This page requires a logged user
 	require_once("require_login.php");
 
 ?>
 <div class="post_blanco">
-	<h2>Revisar un codigo fuente</h2>
 	<?php
-
 		$result = c_ejecucion::canUserViewRun();
-		if($result)
-		{
+
+		if($result) {
 			include ("showsourcecode.php");	
 		}
 		

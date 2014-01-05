@@ -53,15 +53,6 @@ if (SUCCESS($response))
 			</td>
 		</tr>
 		</table>
-		<!--
-		<div align=center><br><h3>Problemas resueltos</h3>
-		<br>
-		<?php
-			//echo "<b></b> no ha resuelto ningun problema hasta ahora.";
-			//echo " <a title='{$probset[$row['probID'] ]}' href=\"verProblema.php?id={$row['probID']}\">{$row['probID']}</a> &nbsp;";
-		?>
-		-->
-		<br>
 		<?php
 	}
 }

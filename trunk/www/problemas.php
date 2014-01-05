@@ -25,6 +25,10 @@
 		<?php
 		
 		$params = array("public" => "SI");
+		if (isset($_GET["orden"])) {
+			$params["orden"] = $_GET["orden"];
+		}
+
 		$result = c_problema::lista($params);
 		
 		if (SUCCESS($result))
@@ -34,21 +38,24 @@
 			{
 				$prob = $problemas[$i];
 
-				if ($i %2 ==0)
-				{
+				if ($i %2 ==0) {
 					echo "<TR style='background:#e7e7e7;' align=center>";
-				}
-				else
-				{
+				}else{
 					echo "<TR align=center>";
 				}
-				
+
 				echo "<TD align='center' >". $prob['probID'] ."</TD>";
 				echo "<TD align='left' ><a href='verProblema.php?id=". $prob['probID']  ."'>". $prob['titulo']   ."</a> </TD>";
 				echo "<TD align='center' >". $prob['vistas']   ." </TD>";
 				echo "<TD align='center' >". $prob['aceptados']   ." </TD>";
 				echo "<TD align='center' >". $prob['intentos']   ." </TD>";
-				printf("<TD align='center' >%2.2f%%</TD>", 0);
+
+				if ( $prob['intentos'] != 0 ) {
+					printf("<TD align='center' >%2.2f%%</TD>",  ($prob['aceptados'] / $prob['intentos']) *100);
+				}else{
+					printf("<TD align='center' >%2.2f%%</TD>", 0);
+				}
+
 				echo "</TR>";
 			}
 		}
@@ -59,3 +66,4 @@
 	</div>
 
 <?php include_once("footer.php"); ?>
+

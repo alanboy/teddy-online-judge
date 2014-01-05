@@ -18,7 +18,12 @@
 
 		<script language="javascript" src="/teddy/js/teddy.js"></script>
 
-		<title><?php echo PAGE_TITLE; ?> - Teddy Online Judge</title>
+		<title>
+		<?php
+			if (defined("PAGE_TITLE")) {
+				echo PAGE_TITLE . " - "; 
+			}
+		?>Teddy Online Judge</title>
 
 		<meta name="description" content="">
 	</head>

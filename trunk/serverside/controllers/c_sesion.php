@@ -69,14 +69,10 @@ class c_sesion extends c_controller
 			"reason" => "Credenciales invalidas." );
 	}
 
-	/**
-	 *
-	 * @param userID Si quieres cerrar la sesion de alguien mas. Si quieres cerrar la tuya no mandes nada.
-	 *
-	 * */
 	public static function logout($request = null)
 	{
 		unset($_SESSION['userID']);
+		return array( "status" => "ok" );
 	}
 }
 
