@@ -1,12 +1,8 @@
 package mx.itc.teddy;
+
 import java.sql.*;
 import java.io.*;
 
-/**
-* 
-* 
-* 
-**/
 public class Teddy {
 
 	static private Conexion con;
@@ -14,11 +10,12 @@ public class Teddy {
 	private static boolean FULL_DEBUG ;
 	static String LANG;
 
+	public static void main( String [] args ) throws IOException {
 
-	public static void main( String [] args ){
-		
-		for(String foobar : args)
-			if( foobar.equals("-h") ){
+		TeddyLog.logger.info("Iniciando Teddy");
+
+		for(String iarg : args)
+			if( iarg.equals("-h") ){
 				System.out.println("-------------------------");
 				System.out.println("| Teddy Online Judge !   |");
 				System.out.println("-------------------------");
@@ -32,16 +29,15 @@ public class Teddy {
 		DEBUG		= false;
 		FULL_DEBUG 	= false;
 
-
-		for(String foobar : args){
-			if( foobar.equals("-d") )
+		for (String iarg : args) {
+			if( iarg.equals("-d") )
 				DEBUG = true;
 
-			if( foobar.equals("-df") )
+			if( iarg.equals("-df") )
 				FULL_DEBUG = true;
 		}
 
-		System.out.println("-- Teddy Online Judge --");
+		TeddyLog.logger.info("-- Teddy Online Judge --");
 
 		while(true){
 			try{
@@ -49,15 +45,14 @@ public class Teddy {
 				Thread.sleep(3000);
 
 			}catch(Exception e){
+				TeddyLog.logger.error(e);
 
-				System.out.println(e);
 			}
 		}
 	}
 
 
 	public static void run(  ){
-		
 		String execID;
 		String userID;
 		String probID;
@@ -65,36 +60,28 @@ public class Teddy {
 
 		//crear conexion con base
 		try{
-			if(FULL_DEBUG) System.out.println("Conectandose a la base de datos.");
+			TeddyLog.logger.debug("Conectandose a la base de datos.");
 			con = new Conexion();
 
 		}catch(Exception e){
-			System.out.println("Error al iniciar:");
-			System.out.println(e);
+			TeddyLog.logger.error("Error al iniciar:");
+			TeddyLog.logger.error(e);
 			return;
 		}
 
-
-
-
 		//leer la base de datos y revisar si hay runs en waiting...
 		ResultSet rs = con.query( "SELECT * FROM Ejecucion WHERE status = 'WAITING' LIMIT 1;" );
-		if(FULL_DEBUG) System.out.println("SELECT * FROM Ejecucion WHERE status = 'WAITING' LIMIT 1;");
-		/*
-		if(FULL_DEBUG) System.out.println("");
-		if(FULL_DEBUG) System.out.println("");
-		if(FULL_DEBUG) System.out.println("");
-		if(FULL_DEBUG) System.out.println("");
-		*/
+		TeddyLog.logger.debug("SELECT * FROM Ejecucion WHERE status = 'WAITING' LIMIT 1;");
+
 		try{
 			if(!rs.next()) {
-				if(FULL_DEBUG) System.out.println("No runs on wait...");
+				TeddyLog.logger.debug("No runs on wait...");
 				return;
 			}
 
-			System.out.println( "-------------------------- RUN --------------------------------------");
-			System.out.println( "Total memoria de la maquina virutal : " +  (Runtime.getRuntime().totalMemory() / 1024) + "kb");
-			System.out.println( "There is a run on wait : " + rs.getString("execID") );
+			TeddyLog.logger.info( "-------------------------- RUN --------------------------------------");
+			TeddyLog.logger.info( "Total memoria de la maquina virutal : " +  (Runtime.getRuntime().totalMemory() / 1024) + "kb");
+			TeddyLog.logger.info( "There is a run on wait : " + rs.getString("execID") );
 
 			execID   = 	rs.getString("execID");
 			LANG     = 	rs.getString("LANG");
@@ -104,7 +91,7 @@ public class Teddy {
 
 		}catch(SQLException sqle){
 
-			System.out.println("Error al contactar la BD.");
+			TeddyLog.logger.info("Error al contactar la BD.");
 			return;
 		}
 
@@ -145,17 +132,11 @@ public class Teddy {
 		//es un concurso ?
 		boolean concurso = !concursoID.equals("-1");
 
-
-		if(DEBUG) {
-			System.out.println("execID     : " + execID);
-			System.out.println("concursoID : " + concursoID);
-			System.out.println("probID : " + probID);
-			System.out.println("lenguage : " + LANG);
-			System.out.println("userID : " + userID);
-		}
-
-
-
+		TeddyLog.logger.debug("execID     : " + execID);
+		TeddyLog.logger.debug("concursoID : " + concursoID);
+		TeddyLog.logger.debug("probID : " + probID);
+		TeddyLog.logger.debug("lenguage : " + LANG);
+		TeddyLog.logger.debug("userID : " + userID);
 
 		//crear un directorio para trabajar con ese codigo
 		File directorio = new File("../work_zone/" + execID);
@@ -173,8 +154,8 @@ public class Teddy {
 		try{
 			cfNuevo.createNewFile();
 		}catch(IOException ioe){
-			System.out.println("Error al escribir en el disco duro archivo " + cfNuevo);
-			System.out.println(ioe);
+			TeddyLog.logger.fatal("Error al escribir en el disco duro archivo " + cfNuevo);
+			TeddyLog.logger.fatal(ioe);
 			return;
 		}
 
@@ -195,13 +176,13 @@ public class Teddy {
 			pw.close();
 
 		}catch(FileNotFoundException fnfe){
-			System.out.println("No se ha podido leer el archivo de codigo fuente." );
-			System.out.println(fnfe);
+			TeddyLog.logger.fatal("No se ha podido leer el archivo de codigo fuente." );
+			TeddyLog.logger.fatal(fnfe);
 			con.update("UPDATE Ejecucion SET status = 'ERROR' WHERE execID = "+ execID +" LIMIT 1 ;");
 			return;
 			
 		}catch(IOException ioe){
-			System.out.println("Error al transcribir el codigo fuente." + ioe);
+			TeddyLog.logger.info("Error al transcribir el codigo fuente." + ioe);
 			con.update("UPDATE Ejecucion SET status = 'ERROR' WHERE execID = "+ execID +" LIMIT 1 ;");
 			return;
 		}
@@ -229,7 +210,7 @@ public class Teddy {
 
 		//verificar si compilo bien o no
 		if( ! c.compilar() ){
-			System.out.println("COMPILACION FALLIDA");
+			TeddyLog.logger.info("COMPILACION FALLIDA");
 
 			//no compilo, actualizar la base de datos
 			con.update("UPDATE Ejecucion SET status = 'COMPILACION' WHERE execID = "+ execID +" LIMIT 1 ;");
@@ -255,18 +236,16 @@ public class Teddy {
 
 		}catch(SQLException sqle){
 
-			System.out.println("Error al contactar la BD.");
+			TeddyLog.logger.fatal("Error al contactar la BD.");
 			return;
 		}
-
-		
 
 		//generar el archivo de entrada para el programa
 		File archivoEntrada = new File(directorio, "data.in");
 		try{
 			archivoEntrada.createNewFile();
 		}catch(IOException ioe){
-			System.out.println("Error al escribir el archivo de entrada." + ioe);
+			TeddyLog.logger.fatal("Error al escribir el archivo de entrada." + ioe);
 			con.update("UPDATE Ejecucion SET status = 'ERROR' WHERE execID = "+ execID +" LIMIT 1 ;");
 			return;
 		}
@@ -285,8 +264,8 @@ public class Teddy {
 			pw.close();
 
 		}catch(IOException ioe){
-			System.out.println("Error al transcribir el archivo de entrada." );
-			System.out.println( ioe );			
+			TeddyLog.logger.fatal("Error al transcribir el archivo de entrada." );
+			TeddyLog.logger.fatal( ioe );			
 			con.update("UPDATE Ejecucion SET status = 'ERROR' WHERE execID = "+ execID +" LIMIT 1 ;");
 			return;
 		}
@@ -296,8 +275,7 @@ public class Teddy {
 
 		//--------------ejecutar lo que salga de la compilacion -----------------------------------//
 		// 
-
-		if(DEBUG) System.out.println("ejecutando...");
+		TeddyLog.logger.info("ejecutando...");
 
 		//aqui esta lo bueno, ejecutar el codigo... sniff
 		// por el momento al la clase ejecutar solo le pasaremos
@@ -324,7 +302,7 @@ public class Teddy {
 			}catch(InterruptedException ie){
 				//ni idea... :s
 				con.update("UPDATE Ejecucion SET status = 'ERROR' WHERE execID = "+ execID +" LIMIT 1 ;");
-				System.out.println("thread interrumpido");
+				TeddyLog.logger.warn("thread interrumpido");
 			}
 
 			//al regresar, si el otro hilo sigue vivo entonces detenerlo
@@ -344,13 +322,13 @@ public class Teddy {
 		//	JUEZ_ERROR 	si surgio un error interno del juez
 		//	EXCEPTION 	si el programa evaluado arrojo una exception
 
-		if(DEBUG) System.out.println("resultado: "+ e.status);
+		TeddyLog.logger.debug("resultado: "+ e.status);
 
 		//revisar distintos casos despues de ejecutar el programa
 		if( e.status.equals("TIME") ){
 			//no cumplio en el tiempO
-			System.out.println("TIEMPO");
-			System.out.println("Tu programa fue detenido a los "+tiempoTotal+"ms");
+			TeddyLog.logger.info("TIEMPO");
+			TeddyLog.logger.info("Tu programa fue detenido a los "+tiempoTotal+"ms");
 
 			//guardar el resultado
 			con.update("UPDATE Ejecucion SET status = 'TIEMPO', tiempo = "+ tiempoTotal +"  WHERE execID = "+ execID +" LIMIT 1 ;");
@@ -366,8 +344,7 @@ public class Teddy {
 
 		if( e.status.equals("EXCEPTION") ){
 			//arrojo una exception
-			System.out.println("RUN-TIME ERROR");
-			System.out.println("Tu programa ha arrojado una exception.");
+			TeddyLog.logger.info("RUN-TIME ERROR");
 
 			//guardar el resultado
 			con.update("UPDATE Ejecucion SET status = 'RUNTIME_ERROR' WHERE execID = "+ execID +" LIMIT 1 ;");
@@ -383,7 +360,7 @@ public class Teddy {
 
 		if( e.status.equals("JUEZ_ERROR") ){
 			//arrojo una exception
-			System.out.println("ERROR INTERNO EN EL JUEZ");
+			TeddyLog.logger.error("ERROR INTERNO EN EL JUEZ");
 
 			//guardar el resultado
 			con.update("UPDATE Ejecucion SET status = 'ERROR' WHERE execID = "+ execID +" LIMIT 1 ;");
@@ -396,7 +373,7 @@ public class Teddy {
 			return;
 		}
 
-		if(DEBUG) System.out.println("comprobando salida...");
+		TeddyLog.logger.debug("comprobando salida...");
 		// ---------------------------------------------------------------------------- COMPROBAR SALIDA
 		//si seguimos hasta aca, entonces ya solo resta compara el resultado
 		//del programa con la variable salida
@@ -416,32 +393,31 @@ public class Teddy {
 			while(((foo = salidaCorrecta.readLine()) != null) ){
 				if((bar = salidaDePrograma.readLine()) == null) {
 					erroneo = true;
-					if(DEBUG) System.out.println("Se esperaban mas lineas de respuesta!!!") ;
+					TeddyLog.logger.debug("Se esperaban mas lineas de respuesta!!!") ;
 					break;
 				}
 
-
-				if(DEBUG) System.out.println("ESPERADO : >" + foo + "<") ;
-				if(DEBUG) System.out.println("RESPUESTA: >" + bar + "<") ;
+				TeddyLog.logger.debug("ESPERADO : >" + foo + "<") ;
+				TeddyLog.logger.debug("RESPUESTA: >" + bar + "<") ;
 
 				if(!foo.equals(bar)) {
 					erroneo = true;
-					if(DEBUG) System.out.println("^------ DIFF ------^") ;
+					TeddyLog.logger.debug("^------ DIFF ------^") ;
 				}
 			}
 
 			if((bar = salidaDePrograma.readLine()) != null) {
 				if(! bar.trim().equals("")){
 					erroneo = true;
-					if(DEBUG) System.out.println("Ya acabde de leer la correcta pero tu programa tiene mas lineas") ;
-					if(DEBUG) System.out.println("->"+bar) ;
+					TeddyLog.logger.debug("Ya acabde de leer la correcta pero tu programa tiene mas lineas") ;
+					TeddyLog.logger.debug("->"+bar) ;
 				}
 			}
 
 		}catch(IOException ioe){
 			
-			System.out.println("NO SALIDA");
-			System.out.println(ioe);
+			TeddyLog.logger.info("NO SALIDA");
+			TeddyLog.logger.warn(ioe);
 
 			con.update("UPDATE Ejecucion SET status = 'NO_SALIDA', tiempo = "+ tiempoTotal +"  WHERE execID = "+ execID +" LIMIT 1 ;");
 			//cerra base de datos
@@ -452,12 +428,12 @@ public class Teddy {
 			return;						
 		}
 
-		if(DEBUG) System.out.println("erroneo : "+erroneo);
+		TeddyLog.logger.debug("erroneo : "+erroneo);
 
 		if( !erroneo ){
 			//programa correcto !
-			System.out.println("OK");
-			System.out.println("El tiempo fue de "+ tiempoTotal +"ms");
+			TeddyLog.logger.info("OK");
+			TeddyLog.logger.info("El tiempo fue de "+ tiempoTotal +"ms");
 
 			//guardar el resultado de ejecucion
 			con.update("UPDATE Ejecucion SET status = 'OK', tiempo = "+ tiempoTotal +"  WHERE execID = "+ execID +" LIMIT 1 ;");
@@ -468,31 +444,28 @@ public class Teddy {
 			int aciertos = 0;
 			int intentos = 0;
 
-			
-
 			try{
 				while(rs.next()){
 					intentos++;
-//					System.out.println("("+ intentos +")->"+rs.getString("status"));
+					// TeddyLog.logger.info("("+ intentos +")->"+rs.getString("status"));
 
 					if( rs.getString("status").equals("OK") )
 						aciertos++;
-
 				}
-			}catch(SQLException sqle){
 
-				System.out.println("Error al contactar la BD.");
+			}catch(SQLException sqle){
+				TeddyLog.logger.fatal("Error al contactar la BD.");
 				return;
 			}
 
-//			System.out.println(intentos+ " "+ aciertos);
-			//si no es asi, entonces sumarle uno
+			// TeddyLog.logger.info(intentos+ " "+ aciertos);
+			// si no es asi, entonces sumarle uno
 
 			if( aciertos == 1 ){
 				con.update("UPDATE Usuario SET solved = solved + 1  WHERE userID = '"+ userID +"' LIMIT 1 ;");
 
 			}else{
-				System.out.println("Ya tenias resuelto este problema. Ya haz enviado "+ intentos +" soluciones para este problema. Y "+aciertos+" han sido correctas.");
+				TeddyLog.logger.info("Ya tenias resuelto este problema. Ya haz enviado "+ intentos +" soluciones para este problema. Y "+aciertos+" han sido correctas.");
 			}
 
 
@@ -500,12 +473,11 @@ public class Teddy {
 			con.update("UPDATE Problema SET aceptados = (aceptados + 1) WHERE probID = "+ probID +" LIMIT 1 ");
 		}else{
 			//salida erronea
-			System.out.println(" - WRONG - ");			
-			System.out.println("El programa termino en "+tiempoTotal+"ms. Pero no produjo la respuesta correcta.");
+			TeddyLog.logger.info(" - WRONG - ");			
+			TeddyLog.logger.info("El programa termino en "+tiempoTotal+"ms. Pero no produjo la respuesta correcta.");
 
 			//guardar el resultado
 			con.update("UPDATE Ejecucion SET status = 'INCORRECTO', tiempo = "+ tiempoTotal +"  WHERE execID = "+ execID +" LIMIT 1 ;");
-
 		}
 
 
@@ -514,17 +486,12 @@ public class Teddy {
 		vaciarCarpeta( execID );
 	}
 
-
 	static void vaciarCarpeta(String execID){
-
 		//vaciar el contenido de la carpeta
 		for( String file :  new File("../work_zone/"+execID).list() ){
 			new File( "../work_zone/"+execID+"/"+file ).delete();
 		}
-
-
 	}
-
 
 	//terminar la conexion con la base de datos
 	private static void terminarConexion(){
@@ -532,7 +499,7 @@ public class Teddy {
 		try{
 			con.cerrar();
 		}catch(Exception e){
-			System.out.println("Error al cerrar la conexion con la base de datos.");
+			TeddyLog.logger.fatal("Error al cerrar la conexion con la base de datos.");
 			return;
 		}
 	}

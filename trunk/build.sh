@@ -5,13 +5,13 @@ rm file.list
 find src -name \*.java -print > file.list
 
 #compile those
-javac -d bin -cp src:lib/mysql-connector-java-5.0.5-bin.jar @file.list || exit;
+javac -d bin -cp src:lib/log4j-1.2.17.jar:lib/mysql-connector-java-5.0.5-bin.jar @file.list || exit;
 
 rm file.list
 
 #create manifest file
 echo "Main-Class: mx.itc.teddy.Teddy
-Class-Path: ../lib/mysql-connector-java-5.0.5-bin.jar" > manifest
+Class-Path: ../lib/log4j-1.2.17.jar ../lib/mysql-connector-java-5.0.5-bin.jar" > manifest
 
 cd bin
 
