@@ -82,12 +82,21 @@ class c_ejecucion extends c_controller
 
 	}
 
-	public static function  lista()
+	public static function  lista($request = null)
 	{
-		$sql = "SELECT `execID`, `userID`, `probID`, `status`, `tiempo`, `fecha`, `LANG`, `Concurso`  FROM `Ejecucion` order by fecha desc limit 100";
+		$inputarray = array();
+
+		if(!is_null($request) && array_key_exists("cid", $request)) {
+			$sql = "SELECT `execID`, `userID`, `probID`, `status`, `tiempo`, `fecha`, `LANG`, `Concurso`  FROM `Ejecucion` where `Concurso` = ? order by fecha desc limit 100";
+			$inputarray [0] = $request["cid"];
+
+		}else {
+			$sql = "SELECT `execID`, `userID`, `probID`, `status`, `tiempo`, `fecha`, `LANG`, `Concurso`  FROM `Ejecucion` order by fecha desc limit 100";
+		}
+		
 
 		global $db;
-		$result = $db->Execute($sql);
+		$result = $db->Execute($sql, $inputarray);
 
 		return array(
 				"result" => "ok", 

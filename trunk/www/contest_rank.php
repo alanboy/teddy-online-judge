@@ -51,12 +51,12 @@
 					}
 					else
 					{
-?>
+						?>
 						<b><span id='time_left'><?php echo $interval->format('%H:%I:%S'); ?></span></b>.
 						<script>
 						setInterval("updateTime()", 1000);
 						</script>
-<?php
+						<?php
 					}
 					break;
 
@@ -83,12 +83,10 @@
 		</div>
 	</div>
 	<?php
-	if (!is_null($concurso))
-	{
+	if (!is_null($concurso)) {
 		$STATUS = $concurso["status"];
-		if ( $STATUS == "NOW" || $STATUS  == "PAST" )
-		{
-?>
+		if ( $STATUS == "NOW" || $STATUS  == "PAST" ) {
+		?>
 		<!--
 			RANK
 		-->
@@ -149,7 +147,8 @@
 				</table>
 			</div>
 			<script>
-				askforruns(<?php echo $_REQUEST['cid']; ?>);
+				CurrentProblems = [<?php foreach($PROBLEMAS as $p){ echo $p . ","; } ?>];
+				RenderContest(<?php echo $_REQUEST['cid']; ?>);
 			</script>
 		</div>
 		<?php

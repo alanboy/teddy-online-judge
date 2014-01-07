@@ -30,12 +30,11 @@ var Teddy =
 				context: document.body,
 				url: "ajax.php",
 				dataType: "json",
-				type : httpmethod ,
+				type : httpmethod,
 				data: $.extend({}, params)
 			})
 			.always(function (response){
 					if (response.result == "error" ){
-						//@todo test for reason
 						if(response.reason !== undefined) {
 							$("#notif_area").html(response.reason).show();
 						}else{
@@ -50,7 +49,7 @@ var Teddy =
 	},
 
 	//
-	// c_usuario namespace
+	// c_usuario
 	//
 	c_usuario :
 	{
@@ -137,6 +136,41 @@ var Teddy =
 					args,
 					cb);
 		}
+		/*
+		function logout()
+		{
+			$.ajax({
+				url: "ajax.php",
+				dataType: "json",
+				type : "POST",
+				data: {
+					'controller' : "c_sesion",
+					'method' : "logout"
+				}
+			}).always(function (response){
+				window.location.reload( false );
+			});//always
+		}
+		*/
+	},
+
+	//
+	// c_concurso
+	//
+	c_concurso :
+	{
+		//
+		// rank()
+		//
+		rank : function(args, cb)
+		{
+			Teddy.api.ajax(
+					"GET",
+					"c_concurso",
+					"rank",
+					args,
+					cb);
+		}
 	},
 
 	//
@@ -167,7 +201,19 @@ var Teddy =
 					"status",
 					args,
 					cb);
-		}		
+		},
+		//
+		// lista()
+		//
+		lista : function(args, cb)
+		{
+			Teddy.api.ajax(
+					"GET",
+					"c_ejecucion",
+					"lista",
+					args,
+					cb);
+		}	
 	}
 }// Teddy
 
@@ -198,8 +244,6 @@ Util =
 
 
 // To be refactored:
-var CurrentRuns = null;
-var CurrentRank = null;
 
 //$(document).ready(function() { });
 window.onload = function ()
@@ -354,17 +398,40 @@ function updateTime()
 }
 
 
+var CurrentRuns = null;
+var CurrentRank = null;
+var CurrentProblems = null;
 
-function showRuns()
-{
-	//los runs han cambiado, entonces mostrar el rank
-	askforrank();
+function RenderContest (cid) {
+	Teddy.c_ejecucion.lista({
+			cid : cid
+		},
+		function(data){
 
+			if ((CurrentRuns != null)
+			   && (CurrentRuns.runs.length == data.runs.length)) {
+				return;
+			}
+
+			CurrentRuns = data.runs;
+			showRuns();
+
+			Teddy.c_concurso.rank({
+					cid : cid
+				},
+				function(data){
+					console.log("rank",data)
+					CurrentRank = data.rank;
+					showRank();
+				});
+		});
+}
+
+function showRuns() {
 	$("#runs_div").fadeOut("fast", function (){
 		html = "";
 
-		for( a = 0; a < CurrentRuns.length; a++ )
-		{	
+		for ( a = 0; a < CurrentRuns.length; a++ ) {
 
 			if(a%2 ==0){
 				html += "<TR style=\"background:#e7e7e7;\">";
@@ -372,33 +439,31 @@ function showRuns()
 				html += "<TR style=\"background:white;\">";
 			}
 
-			//color them statusessss
-			switch(CurrentRuns[a].status)
-			{
+			switch(CurrentRuns[a].status) {
 				case "COMPILACION":
 					CurrentRuns[a].status = "<span style='color:red;'>" + CurrentRuns[a].status + "</span>";
-				break;
+					break;
 
 				case "TIEMPO":
 					CurrentRuns[a].status = "<span style='color:brown;'>" + CurrentRuns[a].status + "</span>";
-				break;
+					break;
 
 				case "OK":
 					CurrentRuns[a].status = "<span style='color:green;'><b>" + CurrentRuns[a].status + "</b></span>";
-				break;
+					break;
 
 				case "RUNTIME_ERROR":
 					CurrentRuns[a].status = "<span style='color:blue;'><b>" + CurrentRuns[a].status + "</b></span>";				
-				break;
+					break;
 
 				case "INCORRECTO":
 					CurrentRuns[a].status = "<span style='color:red;'><b>" + CurrentRuns[a].status + "</b></span>";				
-				break;
+					break;
 
 				case "JUDGING":
-					case "WAITING":
-					CurrentRuns[a].status = "<span style='color:purple;'>" + CurrentRuns[a].status + "...</span>";	//<img src='img/load.gif'>
-				break;
+				case "WAITING":
+					CurrentRuns[a].status = "<span style='color:purple;'>" + CurrentRuns[a].status + "...</span>";
+					break;
 			}
 
 			html +=  "<TD align='center' ><a href='verCodigo.php?execID=" +CurrentRuns[a].execID+ "'>" +CurrentRuns[a].execID+ "</a></TD>";
@@ -416,160 +481,55 @@ function showRuns()
 	})
 }
 
-function runsCallback(data)
-{
-	if(CurrentRuns === null)
-	{
-		//es la primera vez
-		CurrentRuns = data;
-		showRuns();
-		return;
-	}
 
-	if(CurrentRuns.length == data.length)
-	{
-		//asumir que es el mismo, aunque no necesariamente
-		//es el caso 
-		return;
-	}
-
-	CurrentRuns = data;
-	showRuns();
-}
-
-function askforruns (cid)
-{
-	$.ajax({
-			url: "ajax/runs.php",
-			data: "cid="+cid,
-			cache: false,
-			success: function(data){
-				var obj = jQuery.parseJSON(data);
-				runsCallback(obj);
-				setTimeout("askforruns("+cid+")",5000);
-			},
-			error: function(data)
-			{
-				setTimeout("askforruns("+cid+")",10000);
-			}
-		});
-}
-
-function showRank()
-{
+function showRank() {
 	$("#ranking_tabla").fadeOut("fast", function (){
-			html = "";
-			for( a = 0; a < CurrentRank.length; a++ )
-			{
-			if(a%2 ==0)
-			{
-			html += "<TR style=\"background:#e7e7e7; height: 50px;\">";
+		html = "";
+
+		for ( a = 0; a < CurrentRank.length; a++ ) {
+			if(a%2 ==0) {
+				html += "<TR style=\"background:#e7e7e7; height: 50px;\">";
 			}else{
-			html += "<TR style=\"background:white; height: 50px;\">";
+				html += "<TR style=\"background:white; height: 50px;\">";
 			}
+
 			html +=  "<TD align='center' style='font-size: 18px' ><b>" +CurrentRank[a].RANK+ "</b></a></TD>";
 			html +=  "<TD align='center' >" +CurrentRank[a].userID+"</a> </TD>";
 			html +=  "<TD align='center' >" +CurrentRank[a].ENVIOS+"</a> </TD>";
 			html +=  "<TD align='center' >" +CurrentRank[a].OK+"</a> </TD>";
-			var problemas = [ /* <?php foreach($PROBLEMAS as $p){echo $p . ",";}; ?> */ ];
-			//console.log(problemas)
-			//console.log(CurrentRank[a].problemas)
-			for( z = 0 ; z < problemas.length ; z++ )
-			{
-			var rankValueHtml = "";
-			for ( p in CurrentRank[a].problemas  )
-			{
-				if(p == problemas[z])
-				{
-					rankValueHtml = "x";
-					//CurrentRank[a].problemas[p].bad
-					if(CurrentRank[a].problemas[p].ok > 0)
-					{
-						tiempo = parseInt(CurrentRank[a].problemas[p].ok_time / 60);
-						tiempo += ":"; 
-						bar = parseInt((parseInt(CurrentRank[a].problemas[p].ok_time % 60)));
-						if(bar<=9){ bar = "0"+bar;}
-						tiempo += bar;
-						//tiempo += parseInt((parseInt(CurrentRank[a].problemas[p].ok_time % 60)*60)/100);
-						/*
-						   100 - 60
-						   x - 
-						   (x*60)/100
-						   */
-						rankValueHtml = "<b>" +  tiempo + "</b> / "+CurrentRank[a].problemas[p].ok_time+"<br>";
-						rankValueHtml += "("+CurrentRank[a].problemas[p].bad+")";
-					}else{
-						rankValueHtml = "-"+CurrentRank[a].problemas[p].bad+"";
+
+			var problemas = CurrentProblems; 
+
+			for (z = 0 ; z < problemas.length ; z++) {
+				var rankValueHtml = "";
+				for (p in CurrentRank[a].problemas) {
+					if (p == problemas[z]) {
+						rankValueHtml = "x";
+						if (CurrentRank[a].problemas[p].ok > 0) {
+							tiempo = parseInt(CurrentRank[a].problemas[p].ok_time / 60);
+							tiempo += ":"; 
+							bar = parseInt((parseInt(CurrentRank[a].problemas[p].ok_time % 60)));
+							if(bar<=9) {
+								bar = "0"+bar;
+							}
+							tiempo += bar;
+							//tiempo += parseInt((parseInt(CurrentRank[a].problemas[p].ok_time % 60)*60)/100);
+							rankValueHtml = "<b>" +  tiempo + "</b> / "+CurrentRank[a].problemas[p].ok_time+"<br>";
+							rankValueHtml += "("+CurrentRank[a].problemas[p].bad+")";
+						}else{
+							rankValueHtml = "-"+CurrentRank[a].problemas[p].bad+"";
+						}
 					}
 				}
-			}
-	html +=  "<TD align='center' >" + rankValueHtml +"</TD>";
-			}
-	html +=  "<TD align='center' >" +CurrentRank[a].PENALTY+" </TD>";
-	html +=  "</TR>";
+				html +=  "<TD align='center' >" + rankValueHtml +"</TD>";
 			}
 
-	document.getElementById("ranking_tabla").innerHTML = html;
-	$("#ranking_tabla").fadeIn();
+			html +=  "<TD align='center' >" +CurrentRank[a].PENALTY+" </TD>";
+			html +=  "</TR>";
+		}
+
+		document.getElementById("ranking_tabla").innerHTML = html;
+		$("#ranking_tabla").fadeIn();
 	});
 }
-
-function askforrank()
-{
-	$.ajax({
-			url: "ajax/rank.php",
-			data: "cid=2",
-			cache: false,
-			success: function(data){
-				CurrentRank = jQuery.parseJSON(data);
-				showRank();
-			}
-		});
-}
-
-function logout()
-{
-	$.ajax({
-		url: "ajax.php",
-		dataType: "json",
-		type : "POST",
-		data: {
-			'controller' : "c_sesion",
-			'method' : "logout"
-		}
-	}).always(function (response){
-		window.location.reload( false );
-	});//always
-}
-
-function lost()
-{
-	if ($("#user").val().length < 2) {
-		alert("Escribe tu nombre de usuario o correo electronico en el campo.");
-		return;
-	}
-
-	$('#login_area').slideUp('slow', function() {
-			$('#wrong').slideUp('slow');
-			$('#message').slideDown('slow', function() {
-				$.ajax({
-						url: "ajax.php",
-						dataType: 'json',
-						data: {
-							'controller' : "c_user",
-							'method' : "lostpassword",
-							'user' : $("#user").val()
-						}
-					}).always(function(response){
-						//response
-						$('#login_area').slideDown('slow');
-					});
-				
-				});
-		});
-}
-
-//function login()
-
-
 

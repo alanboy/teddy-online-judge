@@ -13,7 +13,8 @@ class c_concurso extends c_controller
 		$resultado = mysql_query( "select Inicio from Concurso where ( CID = {$cid}  ) ;" ) or die(mysql_error());
 		$row = mysql_fetch_array($resultado);
 		$inicio = $row['Inicio'];
-
+		$data = array();
+		
 		$resultado = mysql_query( "select * from Ejecucion where ( Concurso = {$cid}  ) ;" );
 		while($row = mysql_fetch_array($resultado)){
 
@@ -125,13 +126,17 @@ class c_concurso extends c_controller
 			$old = $row;
 		}
 
-
-		$json = array();
-
-		foreach( $data as $row ){
-			array_push($json, $row);
+		$data2 = array();
+		$i = 0;
+		foreach( $data as $row => $k){
+			$data2[$i++] = $data[$row];
 		}
-		echo json_encode($json);
+
+		return array(
+			"result" => "ok",
+			"rank" => $data2
+		);
+
 	}
 
 
