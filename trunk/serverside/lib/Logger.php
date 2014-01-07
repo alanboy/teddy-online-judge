@@ -33,7 +33,7 @@ class Logger {
 		}
 
 		if (!file_exists(self::$file)) {
-			die("self::$file  " . self::$file);
+			error_log("Unable to log to: " . self::$file);
 			return;
 		}
 

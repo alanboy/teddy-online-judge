@@ -31,7 +31,9 @@ require_once("lib/adodb_lite/adodb-exceptions.inc.php");
 require_once("lib/adodb_lite/adodb.inc.php");
 require_once("utils.php");
 require_once("lib/Logger.php");
-require_once "Mail.php";
+if (file_exists("Mail.php")) {
+	require_once "Mail.php";
+}
 
 if (isset($TEDDY_LOG)) {
 	Logger::$file = $TEDDY_LOG;
