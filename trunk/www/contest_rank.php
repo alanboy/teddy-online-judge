@@ -11,6 +11,7 @@
 		<!-- informacion del concurso -->
 		<?php
 		$result = c_concurso::info($_GET);
+
 		$concurso = $result["concurso"];
 		if (SUCCESS($result))
 		{

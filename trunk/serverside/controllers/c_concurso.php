@@ -153,7 +153,20 @@ class c_concurso extends c_controller
 		if (sizeof($resultData)== 1)
 		{
 			$contest = $resultData[0];
-			$contest["status"] = "PAST";
+
+			if( (time() > strtotime($contest["Inicio"])) 
+				&& (time() < strtotime($contest["Final"]))) {
+				$contest["status"] = "NOW";
+
+			} else if ((time() > strtotime($contest["Final"]))) {
+				$contest["status"] = "PAST";		
+
+			}else if (time() < strtotime($contest["Inicio"])) {
+				$contest["status"] = "FUTURE";
+
+			}
+
+			//$contest["status"] = "PAST";
 		}
 
 		return array(
