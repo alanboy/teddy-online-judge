@@ -125,7 +125,7 @@ var Teddy =
 	c_sesion :
 	{
 		//
-		//iniciarsesion()
+		// iniciar()
 		//
 		iniciar : function(args, cb)
 		{
@@ -135,23 +135,20 @@ var Teddy =
 					"login",
 					args,
 					cb);
-		}
-		/*
-		function logout()
+		},
+		//
+		// logout()
+		//
+		logout : function(args,cb)
 		{
-			$.ajax({
-				url: "ajax.php",
-				dataType: "json",
-				type : "POST",
-				data: {
-					'controller' : "c_sesion",
-					'method' : "logout"
-				}
-			}).always(function (response){
-				window.location.reload( false );
-			});//always
+			Teddy.api.ajax(
+					"POST",
+					"c_sesion",
+					"logout",
+					args,
+					cb);			
 		}
-		*/
+		
 	},
 
 	//
@@ -244,8 +241,6 @@ Util =
 
 
 // To be refactored:
-
-//$(document).ready(function() { });
 window.onload = function ()
 {
 	dp.SyntaxHighlighter.ClipboardSwf = 'flash/clipboard.swf';
@@ -283,14 +278,6 @@ window.onload = function ()
 	});
 }
 
-/*
- * Mensajes
-		var foo = function(){
-			$("#mailbox_menu").fadeTo("slow", .4, function(){
-				$("#mailbox_menu").fadeTo("slow", 1, foo);
-			});
-		}
-		*/
 
 //////////////////////////////////////////////
 //registro.php
@@ -396,6 +383,9 @@ function updateTime()
 	//hora = hora < 10 ? "0" + hora : hora;
 	$("#time_left").html(hora+":"+min+":"+seg);
 }
+
+
+
 
 
 var CurrentRuns = null;

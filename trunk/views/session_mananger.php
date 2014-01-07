@@ -41,12 +41,21 @@ if (c_sesion::isLoggedIn()) {
 						}
 					?>
 					<td>
-						<a onClick="logout()"><img src="img/55.png" > Cerrar Sesion</a>
+						<a onClick="LogOut()" style="cursor:pointer"><img src="img/55.png" > Cerrar Sesion</a>
 					</td>
 				</tr>
 			</table>
 		</div>
 	</div>
+	<script>
+	function LogOut()
+	{
+		Teddy.c_sesion.logout([],
+		function(result) {
+			window.location.reload( false );
+		});
+	}
+	</script>
 	<?php
 
 	}else{
@@ -97,7 +106,7 @@ if (c_sesion::isLoggedIn()) {
 				});
 			return false;
 		}
-		
+
 		$("#login-form-top-nav").submit(IniciarSesionTopNav);
 		</script>
 		<?php
