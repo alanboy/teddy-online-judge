@@ -16,7 +16,13 @@
 
 		$res = $controller::$method($_REQUEST);
 
-		Logger::info("API CALL: " . $controller . "::" . $method . "()    \tRESULT:" . $res["result"] );
+
+		if (SUCCESS($res)) {
+			Logger::info("API CALL OK: " . $controller . "::" . $method . "()" );
+		} else {
+			Logger::error("API CALL FAILED: " . $controller . "::" . $method . "()\tREASON:" . $res["reason"] );
+		}
+
 		header('Content-type: application/json');
 
 		if (SUCCESS($res))
