@@ -523,3 +523,9 @@ function showRank() {
 	});
 }
 
+function ShowTab(tabId) {
+	$(".tab").hide();
+	$("#"+tabId).show();
+}
+
+

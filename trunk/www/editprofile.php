@@ -12,8 +12,8 @@
 	$datos = $respuesta["user"];
 
 ?>
-	<div class="post" >
-		<form action="" method="post" onsubmit="return validate()" class="datos">
+	<div class="post_blanco" >
+		<form action="" method="post" onsubmit="return validate()" >
 			<p>
 				Aqui puedes cambiar los datos de tu perfil. 
 			</p>
@@ -59,7 +59,7 @@
 		</script>
 
 <br>
-		<form class="datos"  >
+		<form >
 			<p>Editar password</p>
 
 			<label>Contrase&ntilde;a</label>
@@ -94,16 +94,6 @@
 </script>
 	
 	</div>
-<!--
-	<label for="password">
-		Password:
-	</label>
-	<input type="password" id="password" name="password" class="text" value=""/>
-	<label for="re_password">
-		Confirma Password:
-	</label>
-	<input type="password" id="re_password" name="re_password" class="text" value=""/>
--->
 
 	<?php include_once("footer.php"); ?>
 
