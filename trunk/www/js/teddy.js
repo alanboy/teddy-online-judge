@@ -523,9 +523,11 @@ function showRank() {
 	});
 }
 
-function ShowTab(tabId) {
+function ShowTab(tabId, flipEl) {
 	$(".tab").hide();
 	$("#"+tabId).show();
+	$("li.subtab").removeClass("selected");
+	$(flipEl).parent().addClass("selected");
 }
 
 

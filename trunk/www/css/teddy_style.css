@@ -58,15 +58,8 @@ color:#555;
 font-weight:700;
 }
 
-.datos form {
-width:400px;
-border:1px solid #bbb;
--moz-border-radius:11px;
-margin:30px auto auto;
-padding:30px;
-}
 
-.datos input.text,form input.text {
+form input.text {
 background:#FBFBFB none repeat scroll 0 0;
 border:1px solid #E5E5E5;
 font-size:24px;
@@ -224,14 +217,14 @@ padding:3px;
 }
 
 .post_blanco {
-background:#FFF;
+/*background:#FFF;*/
 margin-top:10px;
--moz-border-radius:11px;
+/*-moz-border-radius:11px;
 -webkit-border-radius:11px;
 -khtml-border-radius:11px;
-border-radius:11px;
+border-radius:11px;*/
 /*border:1px solid #bbb; */
-padding:10px;
+padding: 0 10px;
 width:85%;
 margin: 0 auto;
 }
@@ -320,6 +313,8 @@ margin:0 auto;
 
 .tab{
 display:none;
+border-left:1px solid #d7dbdf;
+padding-top:10px;
 }
 
 .wrapper {
@@ -469,7 +464,7 @@ background:#fff;
 height:40px;
 float:none;
 border-bottom:1px solid #d7dbdf;
-margin:10px 0 0;
+margin:10px -10px 0;
 padding:0;
 }
 

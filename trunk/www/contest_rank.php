@@ -6,29 +6,45 @@
 
 	require_once("head.php");
 ?>
-
-	<div class="post_blanco" >
-		<!-- informacion del concurso -->
-		<?php
-		$result = c_concurso::info($_GET);
-
-		$concurso = $result["concurso"];
-		if (SUCCESS($result))
+<div class="post_blanco"  >
+	<!-- informacion del concurso -->
+	<?php
+	$result = c_concurso::info($_GET);
+	$concurso = $result["concurso"];
+	if (SUCCESS($result))
+	{
+		if (!is_null($concurso))
 		{
-			if (!is_null($concurso))
-			{
-				gui::informacionDeConcuso($concurso);
-			}
-			else
-			{
-				// Concurso no existe
-				echo "Este concurso no existe";
-			}
+			gui::informacionDeConcuso($concurso);
+		} else {
+			echo "Este concurso no existe";
 		}
-		?>
-	</div>
+	}
+	?>
+</div>
+
+<div class="post_blanco">
+	<ul id="subtabs" class="new-style">
+		<li  class="subtab selected">
+			<a href="#rank" onclick="ShowTab( 'tab-concurso-rank', this);">
+			<span>Rank</span>
+			</a>
+		</li>
+		<li  class="subtab">
+			<a href="#runs" onclick="ShowTab( 'tab-concurso-runs', this);">
+			<span>Envios</span>
+			</a>
+		</li>
+		<li  class="subtab rightmost-tab">
+			<a href="#enviar" onclick="ShowTab( 'tab-concurso-enviar', this);">
+			<span>Enviar solucion</span>
+			</a>
+		</li>
+	</ul>
+</div>
+
 	
-	<div class="post" >
+	<div class="post_blanco tab" id="tab-concurso-enviar">
 		<!-- ENVIAR SOLUCION -->
 		<div style="font-size: 18px" align=center>
 			<?php
@@ -72,10 +88,7 @@
 					{
 						?> <div align="center">Debes iniciar sesion en la parte de arriba para poder enviar problemas a <b>Teddy</b>.</div> <?php
 					}else{
-						if ( isset($_REQUEST["ENVIADO"]) )
-							enviando();
-						else
-							imprimirForma();
+						include ("form.new-submission.php");
 					}
 					break;
 				}
@@ -91,7 +104,7 @@
 		<!--
 			RANK
 		-->
-		<div class="post_blanco" >
+		<div class="post_blanco tab" id="tab-concurso-rank">
 			<div style="font-size: 18px" align=center>Ranking</div>	
 			<div id='ranking_div' align=center>
 				<table border='0' style="font-size: 14px;" > 
@@ -129,7 +142,7 @@
 		<!-- 
 			RUNS
 		-->
-		<div class="post" >
+		<div class="post_blanco tab" id="tab-concurso-runs">
 			<div style="font-size: 18px" align=center>Envios</div>
 			<div id='runs_div' align=center>
 				<table border='0' style="font-size: 14px;" > 
@@ -155,6 +168,9 @@
 		<?php
 	}
 	?>
-
+	<script>
+		// Mostrar el tab de rank
+		ShowTab("tab-concurso-rank", $("li.subtab a")[0]);
+	</script>
 	<?php include_once("footer.php"); ?>
 

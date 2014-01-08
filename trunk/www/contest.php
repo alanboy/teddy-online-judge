@@ -10,22 +10,22 @@
 <div class="post_blanco">
 	<ul id="subtabs" class="new-style clearfix">
 		<li  class="subtab selected">
-			<a href="#profile" onclick="ShowTab( 'tab-concursos-pasados');">
+			<a href="#pasados" onclick="ShowTab( 'tab-concursos-pasados', this);">
 			<span>Pasados</span>
 			</a>
 		</li>
 		<li  class="subtab">
-			<a href="#personal" onclick="ShowTab( 'tab-concursos-futuros');">
+			<a href="#futuros" onclick="ShowTab( 'tab-concursos-futuros', this);">
 			<span>Futuros</span>
 			</a>
 		</li>
 		<li  class="subtab rightmost-tab">
-			<a href="#newsecurity" onclick="ShowTab( 'tab-confursos-activos');">
+			<a href="#activos" onclick="ShowTab( 'tab-concursos-activos', this);">
 			<span>Activos</span>
 			</a>
 		</li>
 		<li  class="subtab rightmost-tab">
-			<a href="#newsecurity" onclick="ShowTab( 'tab-concursos-nuevo');">
+			<a href="#nuevo" onclick="ShowTab( 'tab-concursos-nuevo', this);">
 			<span>Crar un concurso</span>
 			</a>
 		</li>
