@@ -8,12 +8,26 @@
 	require_once("require_login.php")
 
 ?>
-<div class="post_blanco">
-	<table border=0>
-			<tr><td>Enviar Mensaje</td></tr>
-			<tr><td><textarea name="msg" cols=44 rows=5></textarea></td></tr>
-			<tr><td><input type=submit value="Enviar Mensaje"></td></tr>
-	</table>
+<div class="post">
+
+	<form>
+		<textarea name="msg" cols=44 rows=5></textarea>
+		<input type="button" onClick="EnviarMensaje(this)" value="Enviar Mensaje">
+		<input type="hidden" name="para" value="alanboy">
+	</form>
+
+	<script>
+	function EnviarMensaje(form)
+	{
+		Util.SerializeAndCallApi( 
+			$(form).parent(),
+			Teddy.c_mensaje.Nuevo,
+			function(result) {
+				Teddy.msg("OK");
+			});
+	}
+	</script>
+
 	<?php 
 		$result = c_sesion::usuarioActual();
 		if (SUCCESS($result)) {

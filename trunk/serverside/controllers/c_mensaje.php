@@ -1,38 +1,57 @@
 <?php
 
 class c_mensaje extends c_controller
-{
-	
-	public static function nuevo()
+{	
+	/**
+	 *
+	 * @param para
+	 * @param msg
+	 * @param 
+	 *
+	 **/
+	public static function Nuevo($request)
 	{
-		if(isset($_REQUEST['enviado']) && $_REQUEST['enviado'] = "si"){
-			echo '<div class="post_blanco"  align=center>';
+		$apiresult = c_usuario::getByNickOrEmail(array( "user" => $request["para"]));
 
-			$msg = addslashes($_REQUEST['msg']);
-			$para = addslashes($_REQUEST['para']);
-			$q = "INSERT INTO Mensaje (de , para , mensaje, fecha ) VALUES (   '{$_SESSION['userID']}',  '{$para}',  '{$msg}', '" .date("Y-m-d H:i:s", time()).  "');";
-			$resultado = mysql_query($q) or die('Donte be evil with teddy :P ' );
-			echo "Mensaje enviado !";
-			echo '</div>';
+		global $db;
+
+		if(SUCCESS($apiresult))
+		{
+			$sql = "INSERT INTO Mensaje (de , para , mensaje, fecha ) VALUES (  ?, ?, ?, ?);";
+			$inputarray = array($_SESSION['userID'], $request["para"], $request["msg"], date("Y-m-d H:i:s", time()));
+			$result = $db->Execute($sql, $inputarray);
 		}
+
+		if (SUCCESS($apiresult)
+			/* destinatario tiene correo valido */ 
+			/* destinatario tiene opcion de recibir correos */)
+		{
+			$mensaje = "Hola,\n\nTienes un nuevo mensaje en teddy de parte de " .  $_SESSION['userID'] . ": https://" . $_SERVER['SERVER_NAME'] . "/inbox.php";
+
+			// Ignorar el resultado
+			$ignore_apiresult  = c_mail::EnviarMail($mensaje, $apiresult["user"]["mail"], "Nuevo mensaje en Teddy");
+
+			$apiresult  = array('result' => "ok" );
+		}
+
+		unset($apiresult["user"]);
+
+		return $apiresult;
 	}
 
-	public static function markasread()
+	public static function MarcarComoLeido()
 	{
-		/*
-	// Mark message as read
-		if(isset($_REQUEST['enviado']) && $_REQUEST['enviado'] = "si"){
-			echo '<div class="post_blanco"  align=center>';
-			$msg = addslashes($_REQUEST['msg']);
-			$q = "INSERT INTO Mensaje (de , para , mensaje, fecha ) VALUES (   '{$_SESSION['userID']}',  'alanboy',  '{$msg}', '" .date("Y-m-d H:i:s", time()).  "');";
-			$resultado = mysql_query($q) or die('Donte be evil with teddy :P ' );
-			echo "Mensaje enviado !";
-			echo '</div>';
-		}
-		 */
+
+		$sql = "UPDATE  `Mensaje` SET `unread` =  '0' WHERE para = ? ;";
+		$inputarray = array( $request["para"] );
+
+		global $db;
+		$result = $db->Execute($sql, $inputarray);
+
+		return array( "result" => "ok" );
 	}
 	
-	public static function lista($request)
+	public static function Lista($request)
 	{
 		$sql = "SELECT * FROM Mensaje WHERE de = ? OR para = ? ORDER BY fecha DESC";
 		$inputarray = array(  $request["userID"], $request["userID"] );

@@ -34,7 +34,7 @@ var Teddy =
 				data: $.extend({}, params)
 			})
 			.always(function (response){
-					if (response.result == "error" ){
+					if ((response.result === undefined) || (response.result == "error") ){
 						if(response.reason !== undefined) {
 							$("#notif_area").html(response.reason).show();
 						}else{
@@ -46,6 +46,26 @@ var Teddy =
 					}
 			});//always
 		}
+	},
+
+	//
+	// c_mensaje
+	//
+	c_mensaje :
+	{
+		//
+		// Nuevo() 
+		//
+		Nuevo : function(args, cb)
+		{
+			Teddy.api.ajax(
+					"POST",
+					"c_mensaje",
+					"Nuevo",
+					args,
+					cb);
+		}
+
 	},
 
 	//
@@ -214,9 +234,6 @@ var Teddy =
 	}
 }// Teddy
 
-
-
-
 Util =
 {
 	SerializeAndCallApi : function(form_with_data, api_to_call, callback)
@@ -228,17 +245,6 @@ Util =
 		api_to_call.call(null, data, callback);
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
 
 // To be refactored:
 window.onload = function ()

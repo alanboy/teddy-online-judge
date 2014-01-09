@@ -15,9 +15,12 @@ padding-left:0;
 }
 
 #notif_area {
-background-color:red;
-color:#FFF;
-text-align:center;
+background-color: #ffebe8;
+color: black;
+text-align: center;
+border: 1px solid #dd3c10;
+width: 28%;
+margin: 10 auto;
 }
 
 #tabs {

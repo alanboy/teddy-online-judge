@@ -14,11 +14,25 @@
 		$controller = $_REQUEST["controller"];
 		$method = $_REQUEST["method"];
 
+
 		$res = $controller::$method($_REQUEST);
 
 
 		if (SUCCESS($res)) {
-			Logger::info("API CALL OK: " . $controller . "::" . $method . "()" );
+			$sparams = "";
+			foreach ($_REQUEST as $key => $value) {
+
+				if (($key == "pass")
+					 ||($key == "controller")
+					 ||($key == "method"))
+				{
+					// Do not leak password
+				}else{
+					$sparams .= $key . " = " . ( strlen($value) > 16 ? substr($value, 0, 16 ) . "..."  : $value  ).", ";
+				}
+			}
+			Logger::info("API CALL OK: " . $controller . "::" . $method . "(".$sparams . ")" );
+
 		} else {
 			Logger::error("API CALL FAILED: " . $controller . "::" . $method . "()\tREASON:" . $res["reason"] );
 		}

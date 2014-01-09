@@ -27,8 +27,7 @@ require_once("controllers/c_mensaje.php");
 
 // Inlclude libs
 require_once("gui.php");
-require_once("lib/adodb_lite/adodb-exceptions.inc.php");
-require_once("lib/adodb_lite/adodb.inc.php");
+require_once("lib/adodb/adodb.inc.php");
 require_once("utils.php");
 require_once("lib/Logger.php");
 if (file_exists("Mail.php")) {
