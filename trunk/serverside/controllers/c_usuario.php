@@ -110,6 +110,7 @@ class c_usuario extends c_controller
 	 * */
 	public static function nuevo($request)
 	{
+
 		$result = self::getByNickOrEmail($request);
 		if (!is_null($result["user"]))
 		{

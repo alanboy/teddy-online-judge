@@ -2,7 +2,7 @@
 
 class c_backup extends c_controller
 {
-	function BackupDatabase()
+	public static function BackupDatabase()
 	{
 		global $TEDDY_DB_USER;
 		global $TEDDY_DB_PASS;

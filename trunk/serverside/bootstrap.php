@@ -30,6 +30,7 @@ require_once("gui.php");
 require_once("lib/adodb/adodb.inc.php");
 require_once("utils.php");
 require_once("lib/Logger.php");
+
 if (file_exists("Mail.php")) {
 	require_once "Mail.php";
 }
@@ -42,5 +43,19 @@ Logger::info("REQUEST:" . $_SERVER["REQUEST_URI"]);
 
 // Connect to DB
 $db = ADONewConnection('mysql');
-$result = $db->Connect( $TEDDY_DB_SERVER, $TEDDY_DB_USER, $TEDDY_DB_PASS, $TEDDY_DB_NAME);
+
+try{
+	$result = $db->Connect( $TEDDY_DB_SERVER, $TEDDY_DB_USER, $TEDDY_DB_PASS, $TEDDY_DB_NAME);
+
+	if ($result == false) {
+		Logger::error("No db connection");
+		header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
+		die();
+	}
+	
+}catch(Exception $e){
+	Logger::error("No db connection");
+	header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
+	die();
+}
 
