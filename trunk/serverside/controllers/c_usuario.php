@@ -1,9 +1,9 @@
 <?php
 
+use Respect\Validation\Validator as validator;
+
 class c_usuario extends c_controller
 {
-
-
 	public static function solvedProblems($request)
 	{
 		$query = "select distinct probID from Ejecucion where userID = ? AND status = 'OK' order by probID";
@@ -12,9 +12,9 @@ class c_usuario extends c_controller
 
 	public static function canCreateContest($request)
 	{
-			$consulta = "select COUNT( DISTINCT probID ) from Ejecucion where ( userID = '". addslashes( $_SESSION['userID'] ) ."' AND  status = 'OK' )";
-			$resultado = mysql_query($consulta) or die('Algo anda mal: ' . mysql_error());
-			$row = mysql_fetch_array($resultado);
+		$consulta = "select COUNT( DISTINCT probID ) from Ejecucion where ( userID = '". addslashes( $_SESSION['userID'] ) ."' AND  status = 'OK' )";
+		$resultado = mysql_query($consulta) or die('Algo anda mal: ' . mysql_error());
+		$row = mysql_fetch_array($resultado);
 	}
 
 	public static function runs($request)
@@ -111,6 +111,24 @@ class c_usuario extends c_controller
 	public static function nuevo($request)
 	{
 
+		$usernameValidator = validator::alnum()->noWhitespace()->length(4,15);
+
+		if ( !array_key_exists("nombre", $request)
+			|| !array_key_exists("email", $request)
+			|| !array_key_exists("password", $request)
+			|| !array_key_exists("nick", $request)) {
+				return array("result" => "error", "reason" => "Faltan datos");
+		}
+
+		try {
+			$usernameValidator->check($request["nick"]);
+
+		} catch(InvalidArgumentException $e) {
+			return array(
+				"result" => "error", "reason" => "Validacion de datos fallo"
+				);
+		}
+
 		$result = self::getByNickOrEmail($request);
 		if (!is_null($result["user"]))
 		{
@@ -123,12 +141,11 @@ class c_usuario extends c_controller
 			$request["nick"],
 			$request["nombre"],
 			crypt($request["password"]),
-			$request["ubicacion"],
-			$request["escuela"],
+			isset($request["ubicacion"]) ? $request["ubicacion"] : "",
+			isset($request["escuela"]) ? $request["escuela"] : "",
 			$request["email"],
 			""
 		);
-
 		global $db;
 		$res = $db->Execute($sql, $inputarray);
 
@@ -148,6 +165,7 @@ class c_usuario extends c_controller
 			return array( "result" => "error", "reason" => "Error interno." );
 		}
 
+		Logger::info("Creado usuario " . $request["nick"] );
 		return array( "result" => "ok" );
 	}
 

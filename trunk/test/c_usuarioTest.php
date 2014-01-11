@@ -21,9 +21,8 @@ class c_usuarioTest extends PHPUnit_Framework_TestCase
 			"nombre" => "foobar",
 			"email" => "foo@example.net",
 			"password" => "foobar123123",
-			"nick" => "foobar123123",
-			"ubicacion" => "celaya",
-			);
+			"nick" => "u" . time(),
+			"ubicacion" => "celaya" );
 		$result = c_usuario::nuevo($arg);
 
 		$this->assertTrue(SUCCESS($result));

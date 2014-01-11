@@ -30,6 +30,9 @@ require_once("gui.php");
 require_once("lib/adodb/adodb.inc.php");
 require_once("utils.php");
 require_once("lib/Logger.php");
+include_once '../vendor/autoload.php';
+
+use Respect\Validation\Validator as v;
 
 if (file_exists("Mail.php")) {
 	require_once "Mail.php";
