@@ -9,8 +9,11 @@ if (c_sesion::isLoggedIn()) {
 					<td colspan=1>
 						<a href="runs.php?user=<?php echo $_SESSION['userID']; ?>">
 							<img id="avatar" src="https://secure.gravatar.com/avatar/<?php 
-								// Get email from db
-								// echo md5( $_SESSION['mail'] ); 
+								$res = c_sesion::usuarioActual();
+								if (SUCCESS($res)) {
+									$user = $res["user"];
+									echo md5($user['mail']);
+								}
 							?>?s=140" alt="" width="20" height="20"  />
 						</a>
 						Bienvenido <b><?php echo $_SESSION['userID']; ?></b> !<br>
@@ -27,11 +30,11 @@ if (c_sesion::isLoggedIn()) {
 					<td id="mailbox_menu">
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<a href="inbox.php">
-								<img src="img/49.png" > Mensajes (0)
+								<img src="img/49.png" > Mensajes
 							</a>
 					</td>
 					<?php 
-					if(c_sesion::isLoggedIn()) 
+					if(c_sesion::isAdmin())
 					{
 						?>
 						<td>

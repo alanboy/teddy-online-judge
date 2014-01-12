@@ -5,7 +5,7 @@ $param = array(
 		"nick" => $_GET["user"]
 	);
 
-$response = c_usuario::getByNickOrEmail($param);
+$response = c_usuario::getByNick($param);
 
 if (SUCCESS($response))
 {

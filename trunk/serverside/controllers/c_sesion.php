@@ -18,7 +18,7 @@ class c_sesion extends c_controller
 		$user = null;
 		if (self::isLoggedIn())
 		{
-			$result = c_usuario::getByNickOrEmail(array( "user" => $_SESSION['userID']));
+			$result = c_usuario::getByNick(array( "nick" => $_SESSION['userID']));
 			if (SUCCESS($result))
 			{
 				$user = $result["user"];

@@ -11,7 +11,7 @@ class c_mensaje extends c_controller
 	 **/
 	public static function Nuevo($request)
 	{
-		$apiresult = c_usuario::getByNickOrEmail(array( "user" => $request["para"]));
+		$apiresult = c_usuario::getByNick(array( "user" => $request["para"]));
 
 		global $db;
 
