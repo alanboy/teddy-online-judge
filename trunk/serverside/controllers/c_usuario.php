@@ -37,23 +37,15 @@ class c_usuario extends c_controller
 	 *
 	 *
 	 * */
-	public static function getByNickOrEmail($request)
+	public static function getByNick($request)
 	{
 		$searchValue = null;
 		if (isset($request["nick"]))
 		{
 			$searchValue = $request["nick"];
 		}
-		else if (isset($request["mail"]))
-		{
-			$searchValue = $request["mail"];
-		}
-		else if (isset($request["user"]))
-		{
-			$searchValue = $request["user"];
-		}
 
-		$sql = "select * from Usuario where userID = ? or mail = ? limit 1";
+		$sql = "select * from Usuario where userID = ?  limit 1";
 		$inputarray = array($searchValue, $searchValue);
 
 		global $db;
@@ -83,6 +75,43 @@ class c_usuario extends c_controller
 			);
 	}
 
+	public static function getByEmail($request)
+	{
+		$searchValue = null;
+		if (isset($request["email"]))
+		{
+			$searchValue = $request["email"];
+		}
+
+		$sql = "select * from Usuario where mail = ? limit 1";
+		$inputarray = array($searchValue, $searchValue);
+
+		global $db;
+		$result = $db->Execute($sql, $inputarray);
+		$resultData = $result->GetArray();
+
+		if (sizeof($resultData) == 0)
+		{
+			return array(
+					"result" => "ok",
+					"user" => null
+				);
+		}
+
+		// Calcular el rank
+		if( $resultData[0]["solved"] != 0 )
+		{
+			$rat = ($resultData[0]["solved"]/$resultData[0]["tried"])*100;
+			$resultData[0]["ratio"] = substr( $rat , 0 , 5 ) . "%";
+		}
+		else
+			$resultData[0]["ratio"] = "0.0%";
+
+		return array(
+				"result" => "ok",
+				"user" => $resultData[0]
+			);
+	}
 	public static function rank($request = null)
 	{
 		$sql = "select * from Usuario order by solved DESC, tried ASC ;";
@@ -97,8 +126,26 @@ class c_usuario extends c_controller
 			);
 	}
 
+	private static function UsuarioValido($request)
+	{
+		$usernameValidator = validator::alnum()->noWhitespace()->length(4,15);
+		$escuelaValidator = validator::alnum("()")->length(3,50);
+
+		try {
+			$usernameValidator->check($request["nick"]);
+
+			if (array_key_exists("escuela", $request)) {
+				$escuelaValidator->check($request["escuela"]);
+			}
+
+		} catch(InvalidArgumentException $e) {
+			return false;
+		}
+		
+		return true;
+	}
+
 	/**
-	 *
 	 * @param nombre
 	 * @param email
 	 * @param password
@@ -111,28 +158,36 @@ class c_usuario extends c_controller
 	public static function nuevo($request)
 	{
 
-		$usernameValidator = validator::alnum()->noWhitespace()->length(4,15);
-
 		if ( !array_key_exists("nombre", $request)
 			|| !array_key_exists("email", $request)
 			|| !array_key_exists("password", $request)
-			|| !array_key_exists("nick", $request)) {
-				return array("result" => "error", "reason" => "Faltan datos");
+			|| !array_key_exists("nick", $request))
+		{
+			Logger::warn("Faltan parametros");
+			return array("result" => "error", "reason" => "Faltan datos");
 		}
 
-		try {
-			$usernameValidator->check($request["nick"]);
+		Logger::info("Creando usuario " . $request["nick"] . " / " . $request["email"]);
 
-		} catch(InvalidArgumentException $e) {
-			return array(
-				"result" => "error", "reason" => "Validacion de datos fallo"
-				);
+		if (!self::UsuarioValido($request)) {
+			Logger::warn("Validacion fallo");
+			return array("result" => "error", "reason" => "Validacion de datos fallo" );
 		}
 
-		$result = self::getByNickOrEmail($request);
+		$result = self::getByNick($request);
 		if (!is_null($result["user"]))
 		{
-			return array( "result" => "error", "reason" => "Este usuario/email ya estan registrados." );
+			$msg = "Este usuario ya estan registrado";
+			Logger::warn($msg);
+			return array( "result" => "error", "reason" => $msg);
+		}
+
+		$result = self::getByEmail($request);
+		if (!is_null($result["user"]))
+		{
+			$msg = "Este email ya estan registrado";
+			Logger::warn($msg);
+			return array( "result" => "error", "reason" => $msg);
 		}
 
 		$sql = "insert into Usuario (userID, nombre, pswd, ubicacion, escuela, mail, twitter) values (?,?,?,?,?,?,?)";
@@ -218,7 +273,6 @@ class c_usuario extends c_controller
 
 		if (!self::IsResetPassTokenValid($request))
 		{
-			//Logger::error
 			return array("result" => "error", "reason" => "Token de reset invalido.");
 		}
 
@@ -245,7 +299,7 @@ class c_usuario extends c_controller
 
 	public static function RequestResetPass($request)
 	{
-		$result = self::getByNickOrEmail($request);
+		$result = self::getByNick($request);
 		if (is_null($result["user"]))
 		{
 			return array( "result" => "error", "reason" => "Este usuario no existe." );
@@ -288,12 +342,15 @@ class c_usuario extends c_controller
 
 	public static function editar($request)
 	{
-		$request["user"] = $request["nick"];
-
-		$result = self::getByNickOrEmail($request);
+		$result = self::getByNick($request);
 		if (is_null($result["user"]))
 		{
 			return array( "result" => "error", "reason" => "Este usuario no existe." );
+		}
+
+		if (!self::UsuarioValido($request)) {
+			Logger::warn("Validacion fallo");
+			return array("result" => "error", "reason" => "Validacion de datos fallo" );
 		}
 
 		$sql = "update  `Usuario`  SET  nombre = ?, escuela = ?, mail = ?, `twitter` =  ? 
@@ -301,9 +358,9 @@ class c_usuario extends c_controller
 
 		$inputarray = array(
 			$request["nombre"],
-			$request["escuela"],
+			isset($request["escuela"]) ? $request["escuela"] : "",
 			$request["email"],
-			$request["twitter"],
+			isset($request["twitter"]) ? $request["twitter"] : "",
 			$request["nick"]
 		);
 
