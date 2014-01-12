@@ -91,6 +91,7 @@ public class Compilador {
 
 		}catch(Exception e){
 			//error interno del juez
+			TeddyLog.logger.fatal(e);
 			System.out.println("ERROR EN EL JUEZ: " + e);
 			return false;
 		}

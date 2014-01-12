@@ -39,6 +39,8 @@ public class Teddy {
 
 		TeddyLog.logger.info("-- Teddy Online Judge --");
 
+		testDirs();
+
 		while(true){
 			try{
 				run();
@@ -51,6 +53,25 @@ public class Teddy {
 		}
 	}
 
+
+	public static boolean testDirs () {
+
+		String [] neededPaths = {
+						"../codigos/",
+						"../work_zone/"
+					};
+
+		for (int i = 0; i < neededPaths.length; i++) {
+			File f = new File(neededPaths[i]);
+			if (!f.canWrite()) {
+
+				System.out.println("No puedo escribir a " + f);
+				System.exit(-1);
+				return false;
+			}
+		}
+		return true;
+	}
 
 	public static void run(  ){
 		String execID;
