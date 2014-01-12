@@ -214,6 +214,7 @@ class envios
 					
 					case "COMPILACION": 
 						html += "Tu programa no compilo !";
+						html += "<pre style='text-align:left'>" + response.compilador + "</pre>";
 					break;
 					
 					

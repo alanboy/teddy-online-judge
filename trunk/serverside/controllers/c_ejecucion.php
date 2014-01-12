@@ -112,10 +112,32 @@ class c_ejecucion extends c_controller
 		$data = array( $request["execID"] );
 		$result = $db->Execute($sql, $data)->GetArray();
 
-		return array(
-				"result" => "ok", 
-				"status" => $result[0][0]
+		if (sizeof($result) ==0) {
+			return array(
+					"result" => "error", 
+					"reason" => "Este run no existe"
+				);
+		}
+
+		if (!is_dir("../codigos/"))
+		{
+			return array("result" => "error", "reason" => "El directorio de codigos no existe.");
+		}
+
+		$status =  $result[0][0];
+
+		$result = array(
+				"result" => "ok",
+				"status" => $status
 			);
+
+		if ($status == "COMPILACION"
+			&& file_exists("../codigos/".$request['execID'] . ".compiler_out")) {
+			$compiler = file_get_contents("../codigos/".$request['execID'] . ".compiler_out");
+			$result["compilador"] = $compiler;
+		}
+
+		return $result;
 	}
 
 	/**
