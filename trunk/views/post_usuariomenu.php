@@ -61,7 +61,7 @@ if (c_sesion::isLoggedIn()) {
 	</script>
 	<?php
 
-	}else{
+	}else{ // No hay sesion
 
 		?>
 		<div class="post" >
@@ -72,6 +72,8 @@ if (c_sesion::isLoggedIn()) {
 					<img  src="img/55.png"> <input type='password' id="pass" name="pass" placeholder="Contrase&ntilde;a" />
 					<input type="submit" class="button" value="Iniciar sesion"  />
 					<input type="button" class="button" value="Olvide mi contrase&ntilde;a" onClick="RequestResetPass(this)" />
+					 o
+					<a href="registro.php"><input type="button" class="button" value="Crea una cuenta" onClick="" /></a>
 				</form>
 			</div>
 

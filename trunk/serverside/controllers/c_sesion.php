@@ -72,7 +72,7 @@ class c_sesion extends c_controller
 	public static function logout($request = null)
 	{
 		unset($_SESSION['userID']);
-		return array( "status" => "ok" );
+		return array( "result" => "ok" );
 	}
 }
 

@@ -1,11 +1,6 @@
 <div class="post">
 	<div class="navcenter">
 		<a href="index.php">home</a>&nbsp;&nbsp;&nbsp;
-		<?php
-		if (!c_sesion::isLoggedIn()) {
-			?><a href="registro.php">registro</a>&nbsp;&nbsp;&nbsp;<?php
-		}
-		?>
 		<a href="problemas.php">problemas</a>&nbsp;&nbsp;&nbsp;
 		<a href="enviar.php">enviar solucion</a>&nbsp;&nbsp;&nbsp;
 		<a href="runs.php">ejecuciones</a>&nbsp;&nbsp;&nbsp;
