@@ -6,10 +6,6 @@
 
 	require_once("head.php");
 
-	if (isset($_GET["welcome"]))
-	{
-		include ("bienvenido.php");
-	}
 ?>
 <div class="post_blanco">
 
@@ -17,7 +13,7 @@
 
 	if (isset($_GET["user"]))
 	{
-		include ("profile.php");
+		include ("parcial_perfil.php");
 		$envios = c_usuario::runs( $_GET );
 	}
 	else
@@ -25,12 +21,12 @@
 		$envios = c_ejecucion::lista();
 	}
 
-	$envios = $envios["runs"];
-	gui::listaDeRuns($envios);
+	$runs = $envios["runs"];
+	include ("parcial_listadeejecuciones.php");
 
 	?>
 
 </div>
 
-<?php include_once("footer.php"); ?>
+<?php include_once("post_footer.php"); ?>
 

@@ -220,16 +220,13 @@ padding:3px;
 }
 
 .post_blanco {
-/*background:#FFF;*/
-margin-top:10px;
-/*-moz-border-radius:11px;
+-moz-border-radius:11px;
 -webkit-border-radius:11px;
 -khtml-border-radius:11px;
-border-radius:11px;*/
-/*border:1px solid #bbb; */
-padding: 0 10px;
-width:85%;
-margin: 0 auto;
+border-radius:11px;
+border:1px solid #bbb;
+padding: 10px 10px;
+margin: 10px auto;
 }
 
 .resultado_final {

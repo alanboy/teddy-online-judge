@@ -74,12 +74,13 @@
 		$res = c_problema::problemaBestTimes($prob);
 		if (SUCCESS($res))
 		{
-			gui::listaDeRuns($res["tiempos"]);
+			$runs = $res["tiempos"];
+			include ("parcial_listadeejecuciones.php");
 		}
 	}
 	?>
 </div>
 
 <?php 
-	include_once("footer.php"); 
+	include_once("post_footer.php"); 
 ?>

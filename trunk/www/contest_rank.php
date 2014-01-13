@@ -15,7 +15,7 @@
 	{
 		if (!is_null($concurso))
 		{
-			gui::informacionDeConcuso($concurso);
+			include("parcial_informaciondeconcurso.php");
 		} else {
 			echo "Este concurso no existe";
 		}
@@ -172,5 +172,5 @@
 		// Mostrar el tab de rank
 		ShowTab("tab-concurso-rank", $("li.subtab a")[0]);
 	</script>
-	<?php include_once("footer.php"); ?>
+	<?php include_once("post_footer.php"); ?>
 

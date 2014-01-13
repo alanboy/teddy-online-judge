@@ -14,11 +14,11 @@
 		$result = c_ejecucion::canUserViewRun();
 
 		if($result) {
-			include ("showsourcecode.php");	
+			include ("parcial_mostrarcodigo.php");	
 		}
 		
 	?>
 </div>
 
-<?php include_once("footer.php"); ?>
+<?php include_once("post_footer.php"); ?>
 

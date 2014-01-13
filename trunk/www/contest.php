@@ -35,7 +35,7 @@
 
 <div id="tab-concursos-nuevo" class="post_blanco tab">
 	<h2>Crear un concurso</h2>
-	<?php include("form.new-contest.php"); ?>
+	<?php include("parcial_nuevoconcurso.php"); ?>
 </div>
 
 <div id="tab-concursos-activos" class="post_blanco tab">
@@ -44,7 +44,8 @@
 	$resultado = c_concurso::concursosActivos();
 	if (SUCCESS($resultado))
 	{
-		gui::listaDeConcursos($resultado["concursos"]);
+		$concursos = $resultado["concursos"];
+		include "parcial_listadeconcursos.php";	
 	}
 ?>
 </div>
@@ -55,7 +56,8 @@
 	$resultado = c_concurso::concursosPasados();
 	if (SUCCESS($resultado))
 	{
-		gui::listaDeConcursos($resultado["concursos"]);
+		$concursos = $resultado["concursos"];
+		include "parcial_listadeconcursos.php";	
 	}
 ?>
 </div>
@@ -67,11 +69,12 @@
 	$resultado = c_concurso::concursosFuturos();
 	if (SUCCESS($resultado))
 	{
-		gui::listaDeConcursos($resultado["concursos"]);
+		$concursos = $resultado["concursos"];
+		include "parcial_listadeconcursos.php";	
 	}
 ?>
 </div>
 
 
-<?php include_once("footer.php"); ?>
+<?php include_once("post_footer.php"); ?>
 

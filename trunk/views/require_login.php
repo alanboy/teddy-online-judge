@@ -10,7 +10,7 @@
 			Necesitas iniciar sesion.
 		</div>
 		<?php
-		include_once("footer.php"); 
+		include_once("post_footer.php"); 
 		exit;
 	}
 

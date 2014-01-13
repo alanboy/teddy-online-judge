@@ -21,8 +21,6 @@ c_ejecucion::nuevo()
 c_mensaje::lista()
 c_mensaje::markasread()
 c_mensaje::nuevo()
-c_mensaje::nuevo()
-c_mensaje::nuevo()
 
 c_problema::lista()
 c_problema::problemaAddView()
@@ -42,12 +40,4 @@ c_usuario::rank()
 c_usuario::runs()
 c_usuario::solvedProblems()
 c_usuario::resetpass()
-```
-
-
-
-```
-gui::informacionDeConcuso($concurso)
-gui::listaDeConcursos($concursos)
-gui::listaDeRuns($runs)
 ```

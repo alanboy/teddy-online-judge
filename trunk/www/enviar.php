@@ -10,9 +10,9 @@
 
 	<div class="post_blanco">
 	<?php
-			include ("form.new-submission.php")
+			include ("parcial_nuevoenvio.php")
 	?>
 	</div>
 
-	<?php include_once("footer.php"); ?>
+	<?php include_once("post_footer.php"); ?>
 

@@ -65,6 +65,17 @@
 	</table>
 </div>
 
+
+<div class="post_blanco">
+Como funciona?
+1) Lee el problema:
+2) Escribe codigo que lo resuelva:
+3) Sube el codigo:
+	<?php
+			include ("parcial_nuevoenvio.php")
+	?>
+</div>
+
 <div class="post_blanco">
 	
 	<div align="center"><h2>Estadisticas</h2></div>
@@ -192,4 +203,4 @@
 	</div>
 </div>
 
-<?php include_once("footer.php"); ?>
+<?php include_once("post_footer.php"); ?>

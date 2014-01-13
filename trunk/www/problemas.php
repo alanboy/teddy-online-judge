@@ -7,14 +7,14 @@
 	require_once("head.php");
 
 ?>
-<div class="post_blanco" align=center>
+<div class="post_blanco">
 	<h2>Problem-Set</h2>
 
 	<table>
 		<thead>
 		<tr>
 			<th width='5%'>ID</th>
-			<th width='25%'>Titulo</th>
+			<th >Titulo</th>
 			<th width='12%'><a href="problemas.php?orden=vistas">Vistas</a></th>
 			<th width='12%'><a href="problemas.php?orden=aceptados">Aceptados</a></th>
 			<th width='12%'><a href="problemas.php?orden=intentos">Intentos</a></th>
@@ -65,5 +65,5 @@
 	</table>
 	</div>
 
-<?php include_once("footer.php"); ?>
+<?php include_once("post_footer.php"); ?>
 
