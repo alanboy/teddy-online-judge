@@ -38,6 +38,7 @@ c_usuario::getByNickOrEmail()
 c_usuario::nuevo()
 c_usuario::rank()
 c_usuario::runs()
-c_usuario::solvedProblems()
+c_usuario::problemasResueltos()
+c_usuario::problemasIntentados()
 c_usuario::resetpass()
 ```

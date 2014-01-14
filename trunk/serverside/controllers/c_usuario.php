@@ -4,10 +4,57 @@ use Respect\Validation\Validator as validator;
 
 class c_usuario extends c_controller
 {
-	public static function solvedProblems($request)
+	public static function problemasResueltos($request)
 	{
-		$query = "select distinct probID from Ejecucion where userID = ? AND status = 'OK' order by probID";
-		$reques["userID"];
+		$sql = "select distinct probID from Ejecucion where userID = ? AND status = 'OK' order by probID";
+		$inputarray = array( $request["userID"] );
+
+		global $db;
+		$result = $db->Execute($sql, $inputarray);
+
+		$it = $result->GetArray();
+		$resultArray = Array();
+
+		for ($i = 0;  $i < sizeof($it); $i++) {
+			array_push($resultArray, $it[$i]["probID"]);
+		}
+
+		return array(
+				"result" => "ok",
+				"problemas" => $resultArray
+			);
+	}
+
+	public static function problemasIntentados($request)
+	{
+		$sql = "select
+			distinct probID 
+			from 
+			Ejecucion 
+			where 
+			userID = ? 
+			AND status != 'OK' 
+			AND probID not in ( select distinct probID from Ejecucion where userID = ? AND status = 'OK' order by probID )
+			order by probID";
+
+		$inputarray = array( $request["userID"], $request["userID"] );
+
+		global $db;
+		$result = $db->Execute($sql, $inputarray);
+
+		$it = $result->GetArray();
+		$resultArray = Array();
+
+		for ($i = 0;  $i < sizeof($it); $i++) {
+			array_push($resultArray, $it[$i]["probID"]);
+		}
+
+		return array(
+				"result" => "ok",
+				"problemas" => $resultArray
+			);
+
+		return $result;
 	}
 
 	public static function canCreateContest($request)

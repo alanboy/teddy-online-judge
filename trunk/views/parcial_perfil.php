@@ -53,6 +53,15 @@ if (SUCCESS($response))
 			</td>
 		</tr>
 		</table>
+
+
+		<a href="problemas.php?userID=<?php echo $user['userID']; ?>">
+			<form>
+			<input type="button" class="button"	value="Problemas no resueltos"	>
+		</form>
+		</a>
+				
+		<br>	<br>
 		<?php
 	}
 }

@@ -36,7 +36,7 @@
 
 		if (isset($row["probID"]))
 		{
-			echo "<TD align='center' ><a href='verProblema.php?pid=". $row['probID']  ."'>". $row["probID"]   ."</a> </TD>";
+			echo "<TD align='center' ><a href='verProblema.php?id=". $row['probID']  ."'>". $row["probID"]   ."</a> </TD>";
 		}
 
 		echo "<TD align='center' ><a href='runs.php?user=". $row['userID']  ."'>". $row["userID"]   ."</a> </TD>";

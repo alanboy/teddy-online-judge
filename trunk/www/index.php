@@ -65,7 +65,7 @@
 	</table>
 </div>
 
-
+<!--
 <div class="post_blanco">
 Como funciona?
 1) Lee el problema:
@@ -75,6 +75,7 @@ Como funciona?
 			include ("parcial_nuevoenvio.php")
 	?>
 </div>
+-->
 
 <div class="post_blanco">
 	

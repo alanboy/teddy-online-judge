@@ -16,16 +16,22 @@ class c_sesion extends c_controller
 	public static function usuarioActual()
 	{
 		$user = null;
+		$result = array("status" => "error");
+
 		if (self::isLoggedIn())
 		{
 			$result = c_usuario::getByNick(array( "nick" => $_SESSION['userID']));
+
 			if (SUCCESS($result))
 			{
-				$user = $result["user"];
+				$result = array(
+					"result" => "ok",
+					"user" => $result["user"],
+					"userID" => $_SESSION['userID']);
 			}
 		}
 
-		return array("result" => "ok", "user" => $user);
+		return $result;
 	}
 
 	/**

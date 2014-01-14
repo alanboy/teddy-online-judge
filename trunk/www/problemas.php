@@ -10,9 +10,19 @@
 <div class="post_blanco">
 	<h2>Problem-Set</h2>
 
-	<table>
+	<table style="width:100%">
 		<thead>
 		<tr>
+			<?php
+				if(isset($_GET["userID"]))
+				{
+					echo "<th width='5%'>".$_GET["userID"]."</th>";
+				}
+				elseif (c_sesion::isLoggedIn())
+				{
+					echo "<th width='5%'>Resuelto</th>";
+				}
+			?>
 			<th width='5%'>ID</th>
 			<th >Titulo</th>
 			<th width='12%'><a href="problemas.php?orden=vistas">Vistas</a></th>
@@ -25,11 +35,41 @@
 		<?php
 		
 		$params = array("public" => "SI");
+
 		if (isset($_GET["orden"])) {
 			$params["orden"] = $_GET["orden"];
 		}
 
 		$result = c_problema::lista($params);
+
+		$resueltos = null;
+		$intentados = null;
+
+		if(isset($_GET["userID"]) || c_sesion::isLoggedIn())
+		{
+			if (isset($_GET["userID"]))
+			{
+				$user = $_GET;
+			}
+			else
+			{
+				$user = c_sesion::usuarioActual();
+			}
+			
+			$res = c_usuario::problemasResueltos($user);
+
+			if (SUCCESS($res))
+			{
+				$resueltos = $res["problemas"];
+			}
+
+			$res = c_usuario::problemasIntentados($user);
+
+			if (SUCCESS($res))
+			{
+				$intentados = $res["problemas"];
+			}
+		}
 		
 		if (SUCCESS($result))
 		{
@@ -43,7 +83,19 @@
 				}else{
 					echo "<TR align=center>";
 				}
-
+			
+				if (c_sesion::isLoggedIn() || isset($_GET["userID"]))
+				{
+					echo "<TD >";
+					if(in_array($prob['probID'], $resueltos))
+					{
+						echo "<img title=\"Problema resuelto\" src=\"img/10.png\">";
+					} elseif(in_array($prob['probID'], $intentados)) {
+						echo "<img title=\"Problema intentado\" src=\"img/12.png\">";
+					}
+					echo "</td>";
+				}
+			
 				echo "<TD align='center' >". $prob['probID'] ."</TD>";
 				echo "<TD align='left' ><a href='verProblema.php?id=". $prob['probID']  ."'>". $prob['titulo']   ."</a> </TD>";
 				echo "<TD align='center' >". $prob['vistas']   ." </TD>";
