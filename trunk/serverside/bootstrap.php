@@ -24,6 +24,7 @@ require_once("controllers/c_ejecucion.php");
 require_once("controllers/c_mail.php");
 require_once("controllers/c_backup.php");
 require_once("controllers/c_mensaje.php");
+require_once("controllers/c_escuela.php");
 
 // Inlclude libs
 require_once("lib/adodb/adodb.inc.php");
