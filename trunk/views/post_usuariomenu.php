@@ -16,7 +16,7 @@ if (c_sesion::isLoggedIn()) {
 								}
 							?>?s=140" alt="" width="20" height="20"  />
 						</a>
-						Bienvenido <b><?php echo $_SESSION['userID']; ?></b> !<br>
+						<b><?php echo $_SESSION['userID']; ?></b> !<br>
 					</td>
 					<td>
 						<a href="runs.php?user=<?php echo $_SESSION['userID']; ?>"><img src="img/67.png" > Mi perfil</a>

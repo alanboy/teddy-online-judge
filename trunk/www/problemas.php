@@ -16,7 +16,20 @@
 			<?php
 				if(isset($_GET["userID"]))
 				{
-					echo "<th width='5%'>".$_GET["userID"]."</th>";
+					$res = c_usuario::getByNick($_GET);
+
+					if (SUCCESS($res))
+					{
+						$user = $res["user"];
+						?>
+						<th width='5%'>
+						<a href="runs.php?user=<?php echo $_GET['userID']; ?>">
+							<img id="avatar" src="https://secure.gravatar.com/avatar/<?php echo md5($user['mail']);	?>?s=140" alt="" width="20" height="20"  />
+							<?php echo $_GET['userID']; ?>
+						</a>
+						</th>
+						<?php	
+					}
 				}
 				elseif (c_sesion::isLoggedIn())
 				{

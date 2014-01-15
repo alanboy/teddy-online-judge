@@ -23,7 +23,7 @@
 	?>
 </div>
 
-<div class="post_blanco">
+<div class="">
 	<ul id="subtabs" class="new-style">
 		<li  class="subtab selected">
 			<a href="#rank" onclick="ShowTab( 'tab-concurso-rank', this);">

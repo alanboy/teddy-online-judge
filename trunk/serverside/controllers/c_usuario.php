@@ -91,6 +91,10 @@ class c_usuario extends c_controller
 		{
 			$searchValue = $request["nick"];
 		}
+		elseif (isset($request["userID"]))
+		{
+			$searchValue = $request["userID"];
+		}
 
 		$sql = "select * from Usuario where userID = ?  limit 1";
 		$inputarray = array($searchValue, $searchValue);

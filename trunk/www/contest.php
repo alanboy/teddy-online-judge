@@ -7,7 +7,7 @@
 	require_once("head.php");
 
 ?>
-<div class="post_blanco">
+<div class="">
 	<ul id="subtabs" class="new-style clearfix">
 		<li  class="subtab selected">
 			<a href="#pasados" onclick="ShowTab( 'tab-concursos-pasados', this);">

@@ -3,7 +3,7 @@
 margin-top:-3px;
 margin-right:3px;
 vertical-align:middle;
-border:1px solid #FFF;
+border:1px solid #999;
 }
 
 #full-content .content-tab {
@@ -224,7 +224,7 @@ padding:3px;
 -webkit-border-radius:11px;
 -khtml-border-radius:11px;
 border-radius:11px;
-border:1px solid #bbb;
+border:1px solid #d7dbdf;
 padding: 10px 10px;
 margin: 10px auto;
 }
@@ -460,12 +460,12 @@ margin:7px 4px 0 0;
 }
 
 ul#subtabs.new-style {
-background:#fff;
+/*background:#fff;*/
 height:40px;
 float:none;
-border-bottom:1px solid #d7dbdf;
-margin:10px -10px 0;
-padding:0;
+/*border-bottom:1px solid #d7dbdf;*/
+margin: 13px 15px -10px;
+padding: 0;
 }
 
 ul#subtabs.new-style li.subtab {
