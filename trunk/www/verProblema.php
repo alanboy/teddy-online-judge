@@ -29,33 +29,35 @@
 			if (!isset($_REQUEST['cid']))
 			{
 			?>
-					<div align="center">
+				<div align="center">
 					<form action="enviar.php" method="get">
-					<input type="hidden" name="send_to" value="<?php echo $_GET['id']; ?>">
-					<input type="submit" value="enviar solucion">
+						<input type="hidden" name="send_to" value="<?php echo $_GET['id']; ?>">
+						<input type="submit" value="enviar solucion">
 					</form>
-					</div>
+				</div>
 			<?php
 			}
 			else
 			{
-				//si es concurso
 			?>
-				<!--
-					<div align="center" >
+				<div align="center" >
 					Enviar problema para el concurso
 					<form action="contest_rank.php?cid=<?php echo $_REQUEST['cid']; ?>" method="POST" enctype="multipart/form-data">
-					<br>
 					<table border=0>
-					<tr><td  style="text-align: right">Codigo fuente&nbsp;&nbsp;</td><td><input name="userfile" type="file"></td></tr>
-					<tr><td></td><td><input type="submit" value="Enviar Solucion"></td></tr>
+						<tr>
+							<td  style="text-align: right">Codigo fuente&nbsp;&nbsp;</td>
+							<td><input name="userfile" type="file"></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td><input type="submit" value="Enviar Solucion"></td>
+						</tr>
 					</table>
 					<input type="hidden" name="ENVIADO" value="SI">
 					<input type="hidden" name="prob" value="<?php echo $_REQUEST['id']; ?>">
 					<input type="hidden" name="cid" value="<?php echo $_REQUEST['cid']; ?>">
-					</form> 
-					</div>
-				-->
+					</form>
+				</div>
 			<?php
 			}
 		}
@@ -65,22 +67,54 @@
 		}
 	?>
 </div>
-
-<div class="post_blanco">
-	<h2>Mejores tiempos para este problema</h2>
-	<?php
-	if (!isset($_REQUEST['cid']))
-	{
-		$res = c_problema::problemaBestTimes($prob);
-		if (SUCCESS($res))
+<?php
+if (!isset($_REQUEST['cid']))
+{
+?>
+	<div >
+		<ul id="subtabs" class="new-style">
+			<li  class="subtab selected">
+				<a href="#codigos" onclick="ShowTab( 'tab-verproblema-codigos', this);">
+				<span>Codigos</span>
+				</a>
+			</li>
+			<li  class="subtab">
+				<a href="#casos" onclick="ShowTab( 'tab-verproblema-casos', this);">
+				<span>Casos</span>
+				</a>
+			</li>
+			<li  class="subtab rightmost-tab">
+				<a href="#stats" onclick="ShowTab( 'tab-verproblema-stats', this);">
+				<span>Estadisticas</span>
+				</a>
+			</li>
+		</ul>
+	</div>
+	<div class="post_blanco tab" id="tab-verproblema-codigos">
+		<h2>Mejores tiempos para este problema</h2>
+		<?php
+		if (!isset($_REQUEST['cid']))
 		{
-			$runs = $res["tiempos"];
-			include ("parcial_listadeejecuciones.php");
+			$res = c_problema::mejoresTiempos($prob);
+			if (SUCCESS($res))
+			{
+				$runs = $res["tiempos"];
+				echo "<div style='padding:15px'>";
+				include ("parcial_listadeejecucionesconcodigo.php");
+				echo "</div>";
+			}
 		}
-	}
-	?>
-</div>
+		?>
+	</div>
+	<div class="post_blanco tab" id="tab-verproblema-stats">
+	</div>
+	<script>
+		// Mostrar el tab de rank
+		ShowTab("tab-verproblema-codigos", $("li.subtab a")[0]);
+	</script>
+<?php
+}
 
-<?php 
+
 	include_once("post_footer.php"); 
 ?>

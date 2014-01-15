@@ -1,8 +1,11 @@
 <?php
+	//@param $execID
 
-	$execID = $_GET["execID"];
+	//$execID = $_GET["execID"];
 
-	$resultado = c_ejecucion::details($_GET);
+	$param = array("execID" => $execID);
+
+	$resultado = c_ejecucion::details($param);
 	$run = $resultado["run"];
 
 	$file  = "../codigos/" . $execID  ;
@@ -19,44 +22,42 @@
 		default : 		$file .= ".java"; 	$sintaxcolor = "java";
 	}
 
+	?>
+	<div align=center >
+		<table border='0' style="font-size: 14px;" > 
+		<thead> <tr >
+			<th width='12%'>execID</th> 
+			<th width='12%'>Usuario</th> 
+			<th width='12%'>Lenguaje</th> 
+			<th width='12%'>Resultado</th> 
+			<th width='10%'>Tiempo</th> 
+			<th width='14%'>Fecha</th>
+			</tr> 
+		</thead> 
+		<tbody>
+		<?php
+			echo "<TR style=\"background:#e7e7e7;\">";
+			echo "<TD align='center' >". $run['execID'] ."</TD>";
+			echo "<TD align='center' ><a href='runs.php?user=". $run['userID']  ."'>". $run["userID"]   ."</a> </TD>";
+			echo "<TD align='center' >". $run['LANG']   ."</TD>";
+			echo "<TD align='center' >". $run['status']   ."</TD>";
+			echo "<TD align='center' ><b>". $run['tiempo']  ."</b></TD>";
+			echo "<TD align='center' >". $run['fecha'] . "</TD>";
+			echo "</TR>";
+		?>		
+		</tbody>
+		</table>
+	</div>
+	<?php
 	if (!file_exists($file)) 
 	{
-		echo "No encuentro el archivo original.";
+		echo "<div class='post_blanco' style='border: 0px'><h3>No se encuentra el archivo.</h3></div>";
 	}
 	else
 	{
 		$codigo = file_get_contents($file);
 		$codigo = htmlspecialchars($codigo);
-
-		?>
-		<div align=center >
-			<table border='0' style="font-size: 14px;" > 
-			<thead> <tr >
-				<th width='12%'>execID</th> 
-				<th width='12%'>Usuario</th> 
-				<th width='12%'>Lenguaje</th> 
-				<th width='12%'>Resultado</th> 
-				<th width='10%'>Tiempo</th> 
-				<th width='14%'>Fecha</th>
-				</tr> 
-			</thead> 
-			<tbody>
-			<?php
-				echo "<TR style=\"background:#e7e7e7;\">";
-				echo "<TD align='center' >". $run['execID'] ."</TD>";
-				echo "<TD align='center' ><a href='runs.php?user=". $run['userID']  ."'>". $run["userID"]   ."</a> </TD>";
-				echo "<TD align='center' >". $run['LANG']   ."</TD>";
-				echo "<TD align='center' >". $run['status']   ."</TD>";
-				echo "<TD align='center' ><b>". $run['tiempo']  ."</b> Segundos </TD>";
-				$datewformat = $run['fecha']; 
-				echo "<TD align='center' >". $datewformat . "</TD>";
-				echo "</TR>";
-			?>		
-			</tbody>
-			</table>
-		</div>
-		<?php
-		echo "<textarea name=\"code\" class=\"$sintaxcolor\" cols=\"60\" runs=\"10\">{$codigo}</textarea>";
+		echo "<textarea name=\"code\" class=\"$sintaxcolor\">{$codigo}</textarea>";
 	}
 	
 	

@@ -3,8 +3,9 @@
 	font-family: "Consolas", "Courier New", Courier, mono, serif;
 	font-size: 12px;
 	background-color: #E7E5DC;
-	width: 99%;
-	overflow: auto;
+	width: 1000px;
+	max-height: 1000px;
+	overflow: scroll;
 	margin: 18px 0 18px 0 !important;
 	padding-top: 1px; /* adds a little border on top when controls are hidden */
 }

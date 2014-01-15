@@ -70,7 +70,7 @@ class c_problema extends c_controller
 	}
 
 
-	public static function problemaBestTimes($request = null)
+	public static function mejoresTiempos($request = null)
 	{
 		$sql = "SELECT DISTINCT 
 			`userID`, `execID` , `status` , MIN(`tiempo`) as 'tiempo', fecha, `LANG`
@@ -82,7 +82,7 @@ class c_problema extends c_controller
 			`userID`
 			order by
 			tiempo asc
-			LIMIT 5";
+			LIMIT 10";
 
 		$inputarray = array($request["probID"]);
 

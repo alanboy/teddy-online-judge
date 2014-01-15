@@ -24,7 +24,7 @@ c_mensaje::nuevo()
 
 c_problema::lista()
 c_problema::problemaAddView()
-c_problema::problemaBestTimes()
+c_problema::mejoresTiempos()
 c_problema::problema()
 
 c_sesion::isLoggedIn()
