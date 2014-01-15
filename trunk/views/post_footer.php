@@ -1,25 +1,12 @@
-<div class="post" style="background: #060a15; ">
-	<div  align=center>
-		<table border=0>
-			<tr>
-			<td>
-				<!--<img src="img/mail.png">-->
-			</td>
-			<td class="footer" style="color: white;" colspan=2>
-				Hecho por <b><a href="http://twitter.com/_alanboy" style="color:white;">Alan Gonzalez @_alanboy</a></b>
-				<br>
-				Concepto <b><a href="http://twitter.com/lhchavez" style="color:white;">Luis Hector Chavez @lhchavez</a></b>
-			</td>
-			</tr>
-			<tr>
-			<td>
-			</td>
-			<td class="footer" style="color: white;" colspan=2>
-				alanboy@itcelaya.edu.mx
-			</td>
-			</tr>
-			</table>
-		</div>
+<div class="post footer" align=center>
+	<p>
+	Hecho por <b><a href="http://twitter.com/_alanboy" >Alan Gonzalez @_alanboy</a></b>
+	;
+	Concepto <b><a href="http://twitter.com/lhchavez" >Luis Hector Chavez @lhchavez</a></b>
+	</p>
+	<p>
+	contribuciones de los usuarios bajo la licencia <a href="http://creativecommons.org/licenses/by-sa/3.0/" >cc-wiki</a> con atribucion requerida
+	</p>
 </div>
 
 <script>(function(d, s, id) {

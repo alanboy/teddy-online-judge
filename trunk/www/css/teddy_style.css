@@ -74,11 +74,23 @@ padding:3px;
 }
 
 .footer {
-font-size:12px;
+background: #060a15 !important;
+color: white
+}
+
+.footer a {
+color:white;
 line-height:14px;
+font-size:12px;
 text-align:center;
 }
 
+.footer p {
+color:white;
+line-height:14px;
+font-size:12px;
+text-align:center;
+}
 .header {
 margin-left:auto;
 }
@@ -220,7 +232,7 @@ padding:3px;
 }
 
 .post_blanco {
--moz-border-radius:11px;
+footer-moz-border-radius:11px;
 -webkit-border-radius:11px;
 -khtml-border-radius:11px;
 border-radius:11px;
