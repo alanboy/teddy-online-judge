@@ -3,6 +3,8 @@
 	Hecho por <b><a href="http://twitter.com/_alanboy" >Alan Gonzalez @_alanboy</a></b>
 	;
 	Concepto <b><a href="http://twitter.com/lhchavez" >Luis Hector Chavez @lhchavez</a></b>
+	;
+	Infraestructura por <b><a href="http://itcelaya.edu.mx/" >Instituto Tecnologico de Celaya</a></b>
 	</p>
 	<p>
 	contribuciones de los usuarios bajo la licencia <a href="http://creativecommons.org/licenses/by-sa/3.0/" >cc-wiki</a> con atribucion requerida
