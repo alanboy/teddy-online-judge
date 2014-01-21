@@ -16,7 +16,7 @@ class c_sesion extends c_controller
 	public static function usuarioActual()
 	{
 		$user = null;
-		$result = array("status" => "error");
+		$result = array("result" => "error");
 
 		if (self::isLoggedIn())
 		{

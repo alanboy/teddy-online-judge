@@ -68,53 +68,73 @@
 	?>
 </div>
 <?php
-if (!isset($_REQUEST['cid']))
+$result = c_sesion::usuarioActual();
+
+if (SUCCESS($result))
 {
-?>
-	<div >
-		<ul id="subtabs" class="new-style">
-			<li  class="subtab selected">
-				<a href="#codigos" onclick="ShowTab( 'tab-verproblema-codigos', this);">
-				<span>Codigos</span>
-				</a>
-			</li>
-			<li  class="subtab">
-				<a href="#casos" onclick="ShowTab( 'tab-verproblema-casos', this);">
-				<span>Casos</span>
-				</a>
-			</li>
-			<li  class="subtab rightmost-tab">
-				<a href="#stats" onclick="ShowTab( 'tab-verproblema-stats', this);">
-				<span>Estadisticas</span>
-				</a>
-			</li>
-		</ul>
-	</div>
-	<div class="post_blanco tab" id="tab-verproblema-codigos">
-		<h2>Mejores tiempos para este problema</h2>
-		<?php
-		if (!isset($_REQUEST['cid']))
+	$result = c_usuario::problemasResueltos($result);
+}
+
+if (SUCCESS($result))
+{
+	$resuelto = false;
+	for ($i = 0; $i < sizeof($result["problemas"]); $i++)
+	{
+		if ($result["problemas"] == $_GET["id"])
 		{
-			$res = c_problema::mejoresTiempos($prob);
-			if (SUCCESS($res))
-			{
-				$runs = $res["tiempos"];
-				echo "<div style='padding:15px'>";
-				include ("parcial_listadeejecucionesconcodigo.php");
-				echo "</div>";
-			}
+			$resuelto = true;
+			break;
 		}
-		?>
-	</div>
-	<div class="post_blanco tab" id="tab-verproblema-stats">
-	</div>
-	<script>
-		// Mostrar el tab de rank
-		ShowTab("tab-verproblema-codigos", $("li.subtab a")[0]);
-	</script>
-<?php
+	}
+
+	if ($resuelto)
+	{
+	?>
+		<div >
+			<ul id="subtabs" class="new-style">
+				<li  class="subtab selected">
+					<a href="#codigos" onclick="ShowTab( 'tab-verproblema-codigos', this);">
+					<span>Codigos</span>
+					</a>
+				</li>
+				<li  class="subtab">
+					<a href="#casos" onclick="ShowTab( 'tab-verproblema-casos', this);">
+					<span>Casos</span>
+					</a>
+				</li>
+				<li  class="subtab rightmost-tab">
+					<a href="#stats" onclick="ShowTab( 'tab-verproblema-stats', this);">
+					<span>Estadisticas</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+		<div class="post_blanco tab" id="tab-verproblema-codigos">
+			<h2>Mejores tiempos para este problema</h2>
+			<?php
+			if (!isset($_REQUEST['cid']))
+			{
+				$res = c_problema::mejoresTiempos($prob);
+				if (SUCCESS($res))
+				{
+					$runs = $res["tiempos"];
+					echo "<div style='padding:15px'>";
+					include ("parcial_listadeejecucionesconcodigo.php");
+					echo "</div>";
+				}
+			}
+			?>
+		</div>
+		<div class="post_blanco tab" id="tab-verproblema-stats">
+		</div>
+		<script>
+			// Mostrar el tab de rank
+			ShowTab("tab-verproblema-codigos", $("li.subtab a")[0]);
+		</script>
+	<?php
+	}
 }
 
 
-	include_once("post_footer.php"); 
+	include_once("post_footer.php");
 ?>

@@ -42,17 +42,31 @@ class c_problema extends c_controller
 			);
 	}
 
-	public static function problema($request = null)
+	public static function problema($request)
 	{
+		if (!isset($request["probID"]))
+		{
+			return array("result" => "error",
+							"reason" => "Este problema no existe");
+		}
+
 		$sql = "select titulo, problema, tiempoLimite, aceptados, intentos from Problema WHERE probID = ? limit 1;";
 		$inputarray = array($request["probID"]);
 
 		global $db;
 		$result = $db->Execute($sql, $inputarray);
 
+		$data =  $result->GetArray();
+
+		if (sizeof($data) == 0)
+		{
+			return array("result" => "error",
+							"reason" => "Este problema no existe");
+		}
+
 		return array(
 				"result" => "ok",
-				"problema" => $result->GetArray()
+				"problema" => $data
 			);
 	}
 
