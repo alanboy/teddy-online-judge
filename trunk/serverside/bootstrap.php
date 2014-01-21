@@ -21,6 +21,13 @@ if (isset($TEDDY_CODIGOS_PATH))
 	define("PATH_TO_CODIGOS", __DIR__ . "/../codigos");
 }
 
+if (isset($TEDDY_CASOS_PATH))
+{
+	define("PATH_TO_CASOS", $TEDDY_CASOS_PATH);
+}else{
+	define("PATH_TO_CASOS", __DIR__ . "/../casos");
+}
+
 // Inlclude controllers
 require_once("controllers/c_controller.php");
 require_once("controllers/c_usuario.php");

@@ -1,10 +1,76 @@
 <?php
 
+use Respect\Validation\Validator as validator;
+
 class c_problema extends c_controller
 {
+	// "titulo" => 
+	// "problema" => "",
+	// "tiempoLimite" => "",
+	// "entrada" => "",
+	// "salida" => "",
+	private static function ProblemaValido($request)
+	{
+		$tituloValidator = validator::alnum()->length(4,15);
+		$problemaValidator = validator::length(100,1024*5);
+		//$tiempoLimiteValidator = validator::num();
+		$entradaValidator = validator::alnum("()")->length(3,50);
+		$SalidaValidator = validator::alnum("()")->length(3,50);
+
+		try {
+			$tituloValidator->check($request["titulo"]);
+
+			if (array_key_exists("escuela", $request)) {
+				$escuelaValidator->check($request["escuela"]);
+			}
+
+		} catch(InvalidArgumentException $e) {
+			return false;
+		}
+		
+		return true;
+	}
+
+	public static function Nuevo($request)
+	{
+		if (!self::ProblemaValido($request))
+		{
+			return array( "result" => "error", "reason" => "Datos invalidos" );
+		}
+
+		$sql = "insert into Problema (titulo, problema, tiempoLimite) values (?,?,?)";
+
+		$inputarray = array(
+			$request["titulo"],
+			$request["problema"],
+			$request["tiempoLimite"]
+		);
+
+		global $db;
+		$res = $db->Execute($sql, $inputarray);
+
+		if($res===false)
+		{
+			Logger::error("TEDDY:" . $db->ErrorNo() ." " . $db->ErrorMsg() );
+			return array("result" => "error", "reason" => "Error interno.");
+		}
+
+		$id = $db->Insert_ID();
+
+		file_put_contents(PATH_TO_CASOS . "/" . $id . ".in", $request["entrada"]);
+		file_put_contents(PATH_TO_CASOS . "/" . $id . ".out", $request["salida"]);
+
+		Logger::info("Nuevo problema creado. ProbID: ". $id ." Titulo: " . $request["titulo"]);
+
+		return array(
+				"result" => "ok",
+				"probID" => $id
+			);
+	}
+
 	public static function lista($request = null)
 	{
-		$sql = "select probID, titulo, vistas, aceptados, intentos from Problema WHERE publico = ? ";
+		$sql = "select probID, titulo, problema, vistas, aceptados, intentos, tiempoLimite from Problema WHERE publico = ? ";
 		$inputarray = array($request["public"]);
 
 		/*
@@ -17,7 +83,7 @@ class c_problema extends c_controller
 				}
 		 */
 
-		if (array_key_exists("orden", $request)) {
+		if ( !is_null($request) && array_key_exists("orden", $request)) {
 			$sql .= " order by ". $request["orden"];
 		}
 
