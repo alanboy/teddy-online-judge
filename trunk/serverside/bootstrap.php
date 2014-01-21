@@ -44,7 +44,8 @@ require_once("controllers/c_escuela.php");
 require_once("lib/adodb/adodb.inc.php");
 require_once("utils.php");
 require_once("lib/Logger.php");
-include_once '../vendor/autoload.php';
+
+include_once (__DIR__ . '/../vendor/autoload.php');
 
 use Respect\Validation\Validator as v;
 

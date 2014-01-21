@@ -4,23 +4,22 @@
 
 	define("PAGE_TITLE", "Editar perfil");
 
-	require_once("../includes/head.php");
-
-	// This page requires a logged user
-	require_once("includes/require_login.php")
+	require_once("head.php");
 
 	function read($lines = 100)
 	{
 
-		if(!file_exists(LOGFILENAME)){
-			die("Unable to open logfile:" .LOGFILENAME );
+		global $TEDDY_LOG;
+
+		if(!file_exists($TEDDY_LOG)){
+			die("Unable to open logfile:" .$TEDDY_LOG );
 		}
 
 		// $file: Name of file to open
 		// $lines: Number of lines to obtain from the end of the file
 		// $header: flag to indicate that the file contains a header which should not be included if the number of lines in the file is <= lines
 
-		$file = LOGFILENAME;
+		$file = $TEDDY_LOG;
 		$header = null;
 		global $error_string;
 
@@ -148,17 +147,18 @@
 			if( sizeof($linea) > 1 ){
 				$ip = $linea[1];
 				$octetos = explode(".", $ip);
-				
+				if (sizeof($octetos)>3)
 				echo "<div style='color: white; background-color: rgb( " . $octetos[1] . " , " . $octetos[2] . " , " . $octetos[3] . ")'>" . $lines[$a] . "\n</div>" ;		
-						
+				else 
+					echo "<div>";
+
 			}else{
-				
-				echo "<div>" . $lines[$a] . "\n</div>" ;		
+				echo "<div>" . $lines[$a] . "\n</div>" ;
 			}
 		}
 		echo "</pre>";
 	?>
 	</div>
 
-	<?php include_once("../includes/footer.php"); ?>
+	<?php include_once("post_footer.php"); ?>
 

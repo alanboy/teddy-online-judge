@@ -10,7 +10,16 @@ class c_sesion extends c_controller
 
 	public static function isAdmin($request = null)
 	{
-		return false;
+		if ($request == null)
+		{
+			$request = self::usuarioActual();
+		}
+		else
+		{
+			$request = c_usuario::getByNick($request);
+		}
+
+		return ($request["user"]["cuenta"]=="ADMIN");
 	}
 
 	public static function usuarioActual()

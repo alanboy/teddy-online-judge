@@ -6,7 +6,5 @@
 
 	require_once("head.php");
 
-	require_once("require_admin.php")
-
-	include_once("footer.php");
+	include_once("post_footer.php");
 

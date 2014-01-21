@@ -4,14 +4,10 @@
 
 	define("PAGE_TITLE", "Editar perfil");
 
-	require_once("../includes/head.php");
-
-	// This page requires a logged user
-	require_once("includes/require_login.php")
+	require_once("head.php");
 
 ?>
-<div class="post_blanco">
-	<h2>Revisar un codigo fuente</h2>
+<div class="post_blanco"> <h2>Revisar un codigo fuente</h2>
 
 <?php
 	function mostrarCodigo( $lenguaje, $execID , $row){
@@ -88,5 +84,5 @@
 ?>
 	</div>
 
-	<?php include_once("../includes/footer.php"); ?>
+	<?php include_once("post_footer.php"); ?>
 
