@@ -8,7 +8,7 @@
 	$resultado = c_ejecucion::details($param);
 	$run = $resultado["run"];
 
-	$file  = "../codigos/" . $execID  ;
+	$file  = PATH_TO_CODIGOS . "/" . $execID  ;
 
 	switch($run["LANG"])
 	{

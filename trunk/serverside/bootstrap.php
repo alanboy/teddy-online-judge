@@ -14,6 +14,8 @@ define("PATH_TO_BACKUPS", __DIR__ . "/../backups/");
 
 require_once("config.php");
 
+define("PATH_TO_CODIGOS", $TEDDY_CODIGOS_PATH);
+
 // Inlclude controllers
 require_once("controllers/c_controller.php");
 require_once("controllers/c_usuario.php");

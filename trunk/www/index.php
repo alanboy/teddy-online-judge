@@ -100,7 +100,7 @@ Como funciona?
 	$python = ($python * 100)/$total;
 	$php = ($php * 100)/$total;
 	?>
-	<img src="http://chart.apis.google.com/chart?
+	<img src="https://chart.googleapis.com/chart?
 		chs=400x200
 	&amp;	chtt=Lenguajes+usados
 	&amp;	chd=t:<?php print($java.','.$c.','.$cpp.','.$python.','.$perl.','.$php); ?>
@@ -127,7 +127,7 @@ Como funciona?
 
 	?>
 
-	<img src="http://chart.apis.google.com/chart?
+	<img src="https://chart.googleapis.com/chart?
 		chs=400x200
 	&amp;	chtt=Status+de+envios
 	&amp;	chd=t:<?php print($ok.','.$wrong.','.$tiempo.','.$compilacion.','.$runtime.','.$otros); ?>
@@ -155,7 +155,7 @@ Como funciona?
 	</div>
 <br>
 	<div align="center">
-		<img src="http://chart.apis.google.com/chart?
+		<img src="https://chart.googleapis.com/chart?
 			chs=400x200
 		&amp;	chtt=Envios+de+los+ultimos+7+dias
 		&amp;	cht=ls
@@ -188,7 +188,7 @@ Como funciona?
 			$data_for_chart_dates = substr($data_for_chart_dates , 0, strlen($data_for_chart_dates) - 1 );
 		?>
 
-			<img src="http://chart.apis.google.com/chart?
+			<img src="https://chart.googleapis.com/chart?
 				chs=400x200
 				&amp;	chtt=Envios+de+los+ultimos+meses
 				&amp;	cht=ls
