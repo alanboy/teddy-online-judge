@@ -19,7 +19,12 @@ class c_sesion extends c_controller
 			$request = c_usuario::getByNick($request);
 		}
 
+		if (SUCCESS($request))
+		{
 		return ($request["user"]["cuenta"]=="ADMIN");
+		}
+
+		return false;
 	}
 
 	public static function usuarioActual()
