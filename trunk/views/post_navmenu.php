@@ -1,36 +1,85 @@
-<div class="post">
+<?php
+
+	$menu = array(
+		"default" => array(
+			"index" => "home",
+			"problemas" => "problemas",
+			"enviar" => "enviar ",
+			"runs" => "ejecuciones",
+			"escuelas" => "escuelas",
+			"rank" => "rank",
+			"contest" => "concursos",
+			"faq" => "preguntas ",
+		),
+		"USER" => array(
+			"index" => "home",
+			"problemas" => "problemas",
+			"enviar" => "enviar ",
+			"runs" => "ejecuciones",
+			"escuelas" => "escuelas",
+			"rank" => "rank",
+			"contest" => "concursos",
+			"faq" => "preguntas ",
+		),
+		"ADMIN" => array(
+			"index" => "home",
+			"problemas" => "problemas",
+			"enviar" => "enviar ",
+			"runs" => "ejecuciones",
+			"escuelas" => "escuelas",
+			"rank" => "rank",
+			"contest" => "concursos",
+			"faq" => "preguntas ",
+			"admin/problemas" => "<b>problemas</b>",
+			"admin/soluciones" => "<b>soluciones</b>",
+			"admin/runs" => "<b>ejecuciones</b>",
+			"admin/usuarios" => "<b>usuarios</b>",
+		),
+		"OWNER" => array(
+			"index" => "home",
+			"problemas" => "problemas",
+			"enviar" => "enviar ",
+			"runs" => "ejecuciones",
+			"escuelas" => "escuelas",
+			"rank" => "rank",
+			"contest" => "concursos",
+			"faq" => "preguntas ",
+			"admin/test" => "estado",
+			"admin/problemas" => "problemas",
+			"admin/soluciones" => "soluciones",
+			"admin/inbox" => "mensajes",
+			"admin/runs" => "ejecuciones",
+			"admin/usuarios" => "usuarios",
+			"admin/log" => "log",
+			"admin/config" => "configuracion"
+		)
+	);
+
+?><div class="post">
 	<div class="navcenter">
-		<a href="index.php">home</a>&nbsp;&nbsp;&nbsp;
-		<a href="problemas.php">problemas</a>&nbsp;&nbsp;&nbsp;
-		<a href="enviar.php">enviar solucion</a>&nbsp;&nbsp;&nbsp;
-		<a href="runs.php">ejecuciones</a>&nbsp;&nbsp;&nbsp;
-		<a href="escuelas.php">escuelas</a>&nbsp;&nbsp;&nbsp;
-		<a href="rank.php">rank</a>&nbsp;&nbsp;&nbsp;
-		<a href="contest.php">concursos</a>&nbsp;&nbsp;&nbsp;
-		<a href="faq.php">preguntas frecuentes</a>&nbsp;&nbsp;&nbsp;
+		<?php
+		$usermenu = $menu["default"];
+		$result = c_sesion::usuarioActual();
+
+		if (SUCCESS($result))
+		{
+			switch($result["user"]["cuenta"])
+			{
+				case "USER":
+				case "ADMIN":
+				case "OWNER":
+					$usermenu = $menu[$result["user"]["cuenta"]];
+			}
+		}
+
+		foreach ($usermenu as $key => $value )
+		{
+			echo "<a href=\"" . $key . ".php\">". $value ."</a>&nbsp;&nbsp;&nbsp;";
+		}
+		?>
 	</div>
 </div>
 
-<?php
-	if (c_sesion::isAdmin())
-	{
-		?>
-		<div class="post">
-			<div class="navcenter">
-				<a href="../index.php">teddy home</a>&nbsp;&nbsp;&nbsp;
-				<a href="test.php">estado</a>&nbsp;&nbsp;&nbsp;
-				<a href="problemas.php">problemas</a>&nbsp;&nbsp;&nbsp;
-				<a href="soluciones.php">soluciones</a>&nbsp;&nbsp;&nbsp;
-				<a href="inbox.php">mensajes</a>&nbsp;&nbsp;&nbsp;
-				<a href="runs.php">ejecuciones</a>&nbsp;&nbsp;&nbsp;
-				<a href="usuarios.php">usuarios</a>&nbsp;&nbsp;&nbsp;
-				<a href="log.php">log</a>&nbsp;&nbsp;&nbsp;
-				<a href="config.php">configuracion</a>&nbsp;&nbsp;&nbsp;
-			</div>
-		</div>
-		<?php
-	}
-?>
 
 <div id="notif_area"  class="post hidden" >
 	<div class="navcenter">

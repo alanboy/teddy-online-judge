@@ -6,6 +6,9 @@
 
 	require_once("head.php");
 
+	require_once("require_login.php");
+	require_once("require_admin.php");
+
 ?>
 <div class="post_blanco"  align=center>
 		<h2>Problemas</h2>

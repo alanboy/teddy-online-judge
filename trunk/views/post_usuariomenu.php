@@ -15,31 +15,20 @@ if (c_sesion::isLoggedIn()) {
 									echo md5($user['mail']);
 								}
 							?>?s=140" alt="" width="20" height="20"  />
-						</a>
 						<b><?php echo $_SESSION['userID']; ?></b> !<br>
+						</a>
 					</td>
-					<td>
-						<a href="runs.php?user=<?php echo $_SESSION['userID']; ?>"><img src="img/67.png" > Mi perfil</a>
-					</td>
+<!--
 					<td>
 						<a href="editprofile.php"><img src="img/71.png" > Editar tu perfil</a>
 					</td>
+-->
 					<td id="mailbox_menu">
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<a href="inbox.php">
 								<img src="img/49.png" > Mensajes
 							</a>
 					</td>
-					<?php 
-					if(c_sesion::isAdmin())
-					{
-						?>
-						<td>
-							<a href="admin/"><img src="img/71.png" >Administracion</a>
-						</td>
-						<?php
-						}
-					?>
 					<td>
 						<a onClick="LogOut()" style="cursor:pointer"><img src="img/55.png" > Cerrar Sesion</a>
 					</td>
