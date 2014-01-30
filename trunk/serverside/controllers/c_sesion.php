@@ -58,6 +58,11 @@ class c_sesion extends c_controller
 		$request["user"] = isset($request["user"]) ? $request["user"] : null;
 		$request["email"] = $request["user"];
 
+		if (isset($request["password"]))
+		{
+			$request["pass"] = $request["password"];
+		}
+
 		$sql = "select pswd, cuenta, userID, mail from Usuario where BINARY ( userID = ? or mail = ? )";
 		$inputarray = array($request["user"], $request["email"]);
 
@@ -76,6 +81,7 @@ class c_sesion extends c_controller
 
 				$_SESSION['userID'] = $dbUser['userID'];
 
+				Logger::info("sesion iniciada para ". $dbUser["userID"]);
 				return array(
 					"result" => "ok",
 					"user" => $dbUser
@@ -83,7 +89,7 @@ class c_sesion extends c_controller
 			}
 		}
 
-		Logger::error("Credenciales invalidas para usuario " . $request["user"] );
+		Logger::error("Credenciales invalidas para usuario :" . $request["user"] );
 		return array(
 			"result" => "error",
 			"reason" => "Credenciales invalidas." );

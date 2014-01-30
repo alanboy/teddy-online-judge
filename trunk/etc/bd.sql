@@ -107,6 +107,9 @@ CREATE TABLE IF NOT EXISTS `Problema` (
   `vistas` int(11) NOT NULL default '0',
   `aceptados` int(11) NOT NULL default '0',
   `intentos` int(11) NOT NULL default '0',
+  `fecha_creacion` timestamp NOT NULL default CURRENT_TIMESTAMP COMMENT 'fecha en que se creo el problema',
+  `fecha_publicacion` timestamp  NULL default null COMMENT 'fecha en que se hizo publico el problema',
+  `usuario_redactor` varchar(64) NOT NULL COMMENT 'usuario que creo el problema',
   PRIMARY KEY  (`probID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Problemas para el Juez Teddy' AUTO_INCREMENT=71 ;
 

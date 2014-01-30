@@ -14,6 +14,8 @@ class c_problemaTest extends PHPUnit_Framework_TestCase
 
 		$result = c_problema::nuevo($arg);
 
+		// esto debe fallar porque no hay sesion
+		// y porque falta el parametro titulo
 		$this->assertTrue(!SUCCESS($result));
 	}
 
@@ -49,9 +51,24 @@ class c_problemaTest extends PHPUnit_Framework_TestCase
 				"entrada" => "1 1\n1 2\n100 100\n",
 				"salida" => "2\n3\n200\n",
 			);
-		$result = c_problema::nuevo($arg);
 
+		// crear un usuario e iniciar sesion
+		$nick = "p" . time();
+		$uarg = array(
+			"nombre" => "problem tester",
+			"email" => $nick . "@example.net",
+			"password" => "foobar23123",
+			"nick" => $nick,
+			"user" => $nick,
+			"ubicacion" => "celaya" );
+		$result = c_usuario::nuevo($uarg);
+		$result = c_sesion::login($uarg);
+
+
+		$result = c_problema::nuevo($arg);
 		$this->assertTrue(SUCCESS($result));
+
+		$this->assertTrue(SUCCESS($result), "Crear un nuevo problema correctamente");
 
 		$rlistaprobs = array("public" => "NO");
 		$res = c_problema::lista($rlistaprobs);
@@ -72,6 +89,7 @@ class c_problemaTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals( $found_prob["titulo"], $arg["titulo"] );
 		$this->assertEquals( $found_prob["problema"], $arg["problema"] );
 		$this->assertEquals( $found_prob["tiempoLimite"], $arg["tiempoLimite"] );
+		$this->assertEquals( $found_prob["usuario_redactor"], $argu["user"] );
 
 	}
 

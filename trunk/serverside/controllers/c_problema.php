@@ -40,20 +40,31 @@ class c_problema extends c_controller
 
 	public static function Nuevo($request)
 	{
+		Logger::info("nuevo problema");
+
 		try{
 			self::ProblemaValido($request);
 
 		} catch(InvalidArgumentException $e) {
-			Logger::warn($e);
+			Logger::warn("imposible crear nuevo problema:" . $e->getMessage());
 			return array( "result" => "error", "reason" => $e->getMessage() );
+
 		}
 
-		$sql = "insert into Problema (titulo, problema, tiempoLimite) values (?,?,?)";
+		$usuarioActual = c_sesion::usuarioActual();
+		if (!SUCCESS($usuarioActual))
+		{
+			Logger::error("no hay permiso para crear nuevo problema");
+			return array("result" => "error", "reason" => "No tienes permiso de hacer esto.");
+		}
+
+		$sql = "insert into Problema (titulo, problema, tiempoLimite, usuario_redactor) values (?,?,?,?)";
 
 		$inputarray = array(
 			$request["titulo"],
 			$request["problema"],
-			$request["tiempoLimite"]
+			$request["tiempoLimite"],
+			$usuarioActual["userID"]
 		);
 
 		global $db;
