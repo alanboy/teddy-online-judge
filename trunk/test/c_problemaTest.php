@@ -36,9 +36,15 @@ class c_problemaTest extends PHPUnit_Framework_TestCase
 
 		$this->assertTrue(!$found);
 
+
+		$contents = "";
+		for ($i = 0; $i < 100; $i++)
+		{
+			$contents .= "a";
+		}
 		$arg = array(
 				"titulo" => $titulo,
-				"problema" => "contenido del probmea: " . $titulo,
+				"problema" => $contents,
 				"tiempoLimite" => 3456,
 				"entrada" => "1 1\n1 2\n100 100\n",
 				"salida" => "2\n3\n200\n",
