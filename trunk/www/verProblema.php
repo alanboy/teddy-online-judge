@@ -17,7 +17,7 @@
 		if (SUCCESS($result))
 		{
 			c_problema::problemaAddView($prob);
-			$row = $result["problema"][0];
+			$row = $result["problema"];
 			$tiempo = $row['tiempoLimite'] / 1000;
 
 			echo "<h2>" . $_GET["id"] . ". " . $row['titulo'] ."</h2>";

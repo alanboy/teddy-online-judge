@@ -4,38 +4,48 @@ use Respect\Validation\Validator as validator;
 
 class c_problema extends c_controller
 {
-	// "titulo" => 
-	// "problema" => "",
-	// "tiempoLimite" => "",
-	// "entrada" => "",
-	// "salida" => "",
+	/*
+	 * titulo
+	 * problema
+	 * tiempoLimite
+	 * entrada
+	 * salida
+	 *
+	 **/
 	private static function ProblemaValido($request)
 	{
-		$tituloValidator = validator::alnum()->length(4,15);
-		$problemaValidator = validator::length(100,1024*5);
-		//$tiempoLimiteValidator = validator::num();
-		$entradaValidator = validator::alnum("()")->length(3,50);
-		$SalidaValidator = validator::alnum("()")->length(3,50);
+		$tituloValidator = validator::notEmpty()->alnum()->length(4,15);
+		$problemaValidator = validator::notEmpty()->length(100,1024*5);
+		$entradaValidator = validator::notEmpty()->alnum("()")->length(3,50);
+		$salidaValidator = validator::notEmpty()->alnum("()")->length(3,50);
 
-		try {
+		if (array_key_exists("titulo", $request)) {
 			$tituloValidator->check($request["titulo"]);
-
-			if (array_key_exists("escuela", $request)) {
-				$escuelaValidator->check($request["escuela"]);
-			}
-
-		} catch(InvalidArgumentException $e) {
-			return false;
+		} else{
+			throw new InvalidArgumentException("Falta titulo");
 		}
-		
+
+		if (array_key_exists("problema", $request)) {
+			$problemaValidator->check($request["problema"]);
+		} else{
+			throw new InvalidArgumentException("Falta redaccion de problema");
+		}
+
+		if (!array_key_exists("tiempoLimite", $request)) {
+			throw new InvalidArgumentException("Falta tiempolimite");
+		}
+
 		return true;
 	}
 
 	public static function Nuevo($request)
 	{
-		if (!self::ProblemaValido($request))
-		{
-			return array( "result" => "error", "reason" => "Datos invalidos" );
+		try{
+			self::ProblemaValido($request);
+
+		} catch(InvalidArgumentException $e) {
+			Logger::warn($e);
+			return array( "result" => "error", "reason" => $e->getMessage() );
 		}
 
 		$sql = "insert into Problema (titulo, problema, tiempoLimite) values (?,?,?)";
@@ -132,7 +142,7 @@ class c_problema extends c_controller
 
 		return array(
 				"result" => "ok",
-				"problema" => $data
+				"problema" => $data[0]
 			);
 	}
 

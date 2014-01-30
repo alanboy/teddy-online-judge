@@ -38,7 +38,10 @@ var Teddy =
 						if(response.reason !== undefined) {
 							$("#notif_area").html(response.reason).show();
 						}else{
-							$("#notif_area").html("Error Interno. No sabemos que paso. No hay sospechosos.").show();
+							$("#notif_area").html(
+								"error interno. no sabemos que paso. no hay sospechosos.<br>"
+								 + response.responseText
+								).show();
 						}
 						
 					}else{
@@ -190,6 +193,24 @@ var Teddy =
 		}
 	},
 
+	//
+	// c_problema
+	//
+	c_problema :
+	{
+		//
+		// nuevo()
+		//
+		nuevo : function(args, cb)
+		{
+			Teddy.api.ajax(
+					"POST",
+					"c_problema",
+					"nuevo",
+					args,
+					cb);
+		}
+	},
 	//
 	// c_ejecucion
 	//
