@@ -179,6 +179,17 @@ class c_ejecucion extends c_controller
 			$id_concurso  = null;
 		}
 
+		// Revisar que pueda escribir el codigo fuente
+		if (!is_dir("../codigos/"))
+		{
+			return array("result" => "error", "reason" => "El directorio de codigos no existe.");
+		}
+
+		if (!is_writable("../codigos/"))
+		{
+			return array("result" => "error", "reason" => "No se puede escribir en el directorio de codigos.");
+		}
+
 		global $db;
 		$sql = "select probID from Problema where BINARY ( probID = ?) ";
 		$inputarray = array($request["id_problema"]);
@@ -259,15 +270,6 @@ class c_ejecucion extends c_controller
 		}
 		else
 		{
-			if (!is_dir("../codigos/"))
-			{
-				return array("result" => "error", "reason" => "El directorio de codigos no existe.");
-			}
-
-			if (!is_writable("../codigos/"))
-			{
-				return array("result" => "error", "reason" => "No se puede escribir en el directorio de codigos.");
-			}
 
 			// Crear un archivo y escribir el contenido
 			if (file_put_contents("../codigos/".$execID . "." . $lang, $request['plain_source']) === false)
