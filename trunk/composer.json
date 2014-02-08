@@ -1,0 +1,6 @@
+{
+    "require": {
+        "kriswallsmith/assetic": "*",
+        "Respect/Validation": "dev-develop"
+    }
+}
