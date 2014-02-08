@@ -2,7 +2,7 @@
 
 class c_ejecucion extends c_controller
 {
-	public static function  details($request)
+	public static function details($request)
 	{
 		$sql = "SELECT *  FROM `Ejecucion` where execID = ? limit 1";
 
@@ -144,17 +144,20 @@ class c_ejecucion extends c_controller
 	 * @param id_problema int el id del problema a resolver
 	 * @param id_concurso int el id del concurso si es que este run pertenece a un concurso
 	 * @param lang String el identificador del lenguaje ( c,cpp,java,py,php,pl)
+	 * @param plain_source String 
+	 *
 	 * */
 	public static function nuevo($request)
 	{
-		if (!isset($_SESSION["userID"]))
+		if (!c_sesion::isLoggedIn())
 		{
+			Logger::warn("Se intento enviar una ejecucion sin sesion");
 			return array("result" => "error", "reason" => "Debes iniciar sesion para poder enviar problemas.");
 		}
 
 		if (!(isset($request['id_problema']) && isset($request['lang'])))
 		{
-			return array("result" => "error", "reason" => "Faltan parametros");
+			return array("result" => "error", "reason" => "Faltan parametros (id_problema y lang)");
 		}
 
 		if (empty($_FILES) && !isset($request["plain_source"]))
@@ -162,13 +165,14 @@ class c_ejecucion extends c_controller
 			return array("result" => "error", "reason" => "No se envio el codigo fuente.");
 		}
 
-		$usuario      = $_SESSION["userID"];
-		$id_problema  = stripslashes($_REQUEST["id_problema"]);
-		$lang         = stripslashes($_REQUEST["lang"]);
+		$usuarioArray      = c_sesion::usuarioActual();
+		$usuario      =  $usuarioArray["userID"];
+		$id_problema  = stripslashes($request["id_problema"]);
+		$lang         = stripslashes($request["lang"]);
 
-		if (isset($_REQUEST["id_concurso"]))
+		if (isset($request["id_concurso"]))
 		{
-			$id_concurso  = stripslashes($_REQUEST["id_concurso"]);
+			$id_concurso  = stripslashes($request["id_concurso"]);
 		}
 		else
 		{
@@ -176,7 +180,7 @@ class c_ejecucion extends c_controller
 		}
 
 		global $db;
-		$sql = "select probID from Problema where BINARY ( probID = ? AND publico = 'SI') ";
+		$sql = "select probID from Problema where BINARY ( probID = ?) ";
 		$inputarray = array($request["id_problema"]);
 		$resultado = $db->Execute($sql, $inputarray);
 
@@ -185,8 +189,12 @@ class c_ejecucion extends c_controller
 			return array("result" => "error", "reason" => "El problema no existe.");
 		}
 
-		$lang_desc = null;
 
+		// si el concurso no es public, 
+		// solo un admin puede enviar problemas
+		//
+
+		$lang_desc = null;
 		switch($lang)
 		{
 			case "java"     : $lang_desc = "JAVA";  break;
@@ -197,7 +205,13 @@ class c_ejecucion extends c_controller
 			case "pl"       : $lang_desc = "Perl";  break;
 			case "php"      : $lang_desc = "Php";   break;
 			default:
-				return array("result" => "error", "reason" =>"Este no es un lenguaje reconocido por Teddy.");
+				return array("result" => "error", "reason" =>"\"" . $lang . "\" no es un lenguaje reconocido por Teddy.");
+		}
+
+		if (isset($_SERVER["REMOTE_ADDR"])) {
+			$ip = $_SERVER["REMOTE_ADDR"];
+		} else {
+			$ip = "0.0.0.0";
 		}
 
 		/**
@@ -211,14 +225,14 @@ class c_ejecucion extends c_controller
 			$sql = "INSERT INTO Ejecucion (`userID`, `status`, `probID` , `remoteIP`, `LANG`, `fecha`  ) 
 									VALUES (?, 'WAITING', ?, ?, ?, ?);";
 
-			$inputarray = array( $usuario, $id_problema, $_SERVER['REMOTE_ADDR'], $lang_desc, date("Y-m-d H:i:s", mktime(date("H"), date("i") )));
+			$inputarray = array( $usuario, $id_problema, $ip, $lang_desc, date("Y-m-d H:i:s", mktime(date("H"), date("i") )));
 		}
 		else
 		{
 			$sql = "INSERT INTO Ejecucion (`userID` ,`status`, `probID` , `remoteIP`, `LANG`, `Concurso`, `fecha`  ) 
 									VALUES (?, 'WAITING', ?, ?, ?, ?, ?);";
 			
-			$inputarray = array( $usuario, $id_problema, $_SERVER['REMOTE_ADDR'], $lang_desc, $id_concurso, date("Y-m-d H:i:s", mktime(date("H"), date("i") )));
+			$inputarray = array( $usuario, $id_problema, $ip, $lang_desc, $id_concurso, date("Y-m-d H:i:s", mktime(date("H"), date("i") )));
 		}
 
 		$result = $db->Execute($sql, $inputarray);
@@ -226,9 +240,15 @@ class c_ejecucion extends c_controller
 		// Si hacemos esto $execID = $db->Insert_ID( ); hay un Overflow porque los ids son muy grandes
 		$sql = "select execID from Ejecucion where ( userId = ? ) order by fecha DESC LIMIT 1";
 		$inputarray = array($usuario);
-		$resultado = $db->Execute($sql, $inputarray)->GetArray();
-		$execID = $resultado[0]["execID"];
 
+		try{
+			$resultado = $db->Execute($sql, $inputarray)->GetArray();
+			$execID = $resultado[0]["execID"];
+
+		}catch(exception $e){
+			Logger::error($e);
+			return array("result" => "error", "reason" => "Error al hacer la consulta");
+		}
 
 		if (!empty($_FILES))
 		{
@@ -236,7 +256,6 @@ class c_ejecucion extends c_controller
 			{
 				return array("result" => "error", "reason" => "Error al subir el archivo");
 			}
-
 		}
 		else
 		{
@@ -251,12 +270,13 @@ class c_ejecucion extends c_controller
 			}
 
 			// Crear un archivo y escribir el contenido
-			if (file_put_contents("../codigos/".$execID . "." . $lang, $_REQUEST['plain_source']) === false)
+			if (file_put_contents("../codigos/".$execID . "." . $lang, $request['plain_source']) === false)
 			{
 				return array("result" => "error");
 			}
 		}
 
+		Logger::info("Nueva ejecucion " . $execID);
 		return array("result" => "ok", "execID" => $execID);
 	}
 

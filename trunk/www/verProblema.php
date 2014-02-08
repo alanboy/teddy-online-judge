@@ -16,6 +16,15 @@
 
 		if (SUCCESS($result))
 		{
+			// es un problema privado ?
+			if (($result["problema"]["publico"] == "NO") && !c_sesion::isAdmin())
+			{
+				echo "<div align='center'><h2>El problema " . $_GET["id"] . " no es publico.</h2></div>";
+				echo "</div>";
+				include_once("post_footer.php");
+				exit;
+			}
+
 			c_problema::problemaAddView($prob);
 			$row = $result["problema"];
 			$tiempo = $row['tiempoLimite'] / 1000;
@@ -80,7 +89,7 @@ if (SUCCESS($result))
 	$resuelto = false;
 	for ($i = 0; $i < sizeof($result["problemas"]); $i++)
 	{
-		if ($result["problemas"] == $_GET["id"])
+		if ($result["problemas"][$i] == $_GET["id"])
 		{
 			$resuelto = true;
 			break;

@@ -41,6 +41,7 @@ require_once("controllers/c_mensaje.php");
 require_once("controllers/c_escuela.php");
 
 // Inlclude libs
+require_once("lib/adodb/adodb-exceptions.inc.php");
 require_once("lib/adodb/adodb.inc.php");
 require_once("utils.php");
 require_once("lib/Logger.php");

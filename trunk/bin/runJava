@@ -1,4 +1,6 @@
-cd ..
-cd work_zone
-cd $1
-sandbox java Main USER_CODE $2
+cd ../work_zone/$1
+
+hash sandbox 2>/dev/null || { 
+	 java Main USER_CODE $2
+}
+

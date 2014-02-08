@@ -1,8 +1,6 @@
 <?php
 	//@param $execID
 
-	//$execID = $_GET["execID"];
-
 	$param = array("execID" => $execID);
 
 	$resultado = c_ejecucion::details($param);

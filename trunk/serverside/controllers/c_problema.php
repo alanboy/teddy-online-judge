@@ -40,7 +40,6 @@ class c_problema extends c_controller
 
 	public static function Nuevo($request)
 	{
-		Logger::info("nuevo problema");
 
 		try{
 			self::ProblemaValido($request);
@@ -77,6 +76,12 @@ class c_problema extends c_controller
 		}
 
 		$id = $db->Insert_ID();
+
+		if (!file_exists(PATH_TO_CASOS))
+		{
+			Logger::error("TEDDY: " . PATH_TO_CASOS . " no existe");
+			return array("result" => "error", "reason" => "Error interno.");
+		}
 
 		file_put_contents(PATH_TO_CASOS . "/" . $id . ".in", $request["entrada"]);
 		file_put_contents(PATH_TO_CASOS . "/" . $id . ".out", $request["salida"]);
@@ -137,7 +142,7 @@ class c_problema extends c_controller
 							"reason" => "Este problema no existe");
 		}
 
-		$sql = "select titulo, problema, tiempoLimite, aceptados, intentos from Problema WHERE probID = ? limit 1;";
+		$sql = "select titulo, problema, tiempoLimite, aceptados, intentos, publico from Problema WHERE probID = ? limit 1;";
 		$inputarray = array($request["probID"]);
 
 		global $db;

@@ -23,8 +23,20 @@
 			} else {
 				echo "<TR align=center>";
 			}
-			echo "<TD align='center' >". $n ."</TD>";
-			echo "<TD ><a href=\"runs.php?user=". $user["userID"]."\">". $user["userID"] ."</TD>";
+			echo "<TD align='center' >". ($n+1) ."</TD>";
+			switch ($user["cuenta"])
+			{
+				case "ADMIN":
+					echo "<TD ><a href=\"runs.php?user=". $user["userID"]."\">". $user["userID"] ."(A)</a></TD>";
+				break;
+
+				case "OWNER":
+					echo "<TD ><a href=\"runs.php?user=". $user["userID"]."\">". $user["userID"] ."(O)</a></TD>";
+				break;
+
+				default:
+					echo "<TD ><a href=\"runs.php?user=". $user["userID"]."\">". $user["userID"] ."</a></TD>";
+			}
 			echo "<TD >". $user["ubicacion"] ."</TD>";
 			echo "<TD >". $user["escuela"] ."</TD>";
 			echo "<TD >". $user["solved"] ."</TD>";

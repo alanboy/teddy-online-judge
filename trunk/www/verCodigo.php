@@ -14,6 +14,7 @@
 		$result = c_ejecucion::canUserViewRun();
 
 		if($result) {
+			$execID = $_GET["execID"];
 			include ("parcial_mostrarcodigo.php");	
 		}
 		

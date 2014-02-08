@@ -31,6 +31,7 @@
 			"contest" => "concursos",
 			"faq" => "preguntas ",
 			"admin/problemas" => "<b>problemas</b>",
+			"nuevoproblema" => "<b>nuevo problema</b>",
 			"admin/soluciones" => "<b>soluciones</b>",
 			"admin/runs" => "<b>ejecuciones</b>",
 			"admin/usuarios" => "<b>usuarios</b>",
@@ -49,7 +50,7 @@
 			"admin/soluciones" => "soluciones",
 			"admin/inbox" => "mensajes",
 			"admin/runs" => "ejecuciones",
-			"admin/usuarios" => "usuarios",
+			"admin/usuarioslaksjf" => "usuarios",
 			"admin/log" => "log",
 			"admin/config" => "configuracion"
 		)

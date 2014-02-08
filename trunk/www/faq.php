@@ -85,15 +85,22 @@ Tu programa debera regresar un 0 al termino de su ejecucion, de lo contrario obt
 </ul>
 </p>
 
-<p>
-<b>&iquest; Quien puede organizar concursos ?</b><br>
-Debes cumplir con estos lineamientos:<br>
-<ul>
-	<li>
-		Tener un minimo de 5 problemas resueltos.
-	</li>
-</ul>
-</p>
+
+
+<table border=1>
+<tr>
+	<td>3 problema resueltos</td><td>votar en soluciones</td>
+<tr></tr>
+	<td>5 problema resueltos</td><td>comentar en soluciones y organizar concursos</td>
+<tr></tr>
+	<td>10 problema resueltos</td><td>crear nuevos problemas no publicos</td>
+<tr></tr>
+	<td>2 problemas redactados</td><td>1 problema resuelto</td>
+<tr></tr>
+	<td>20 problema resueltos</td><td>administrador del sitio</td>
+</tr>
+</table>
+
 
 <p>
 <b>Ejemplos</b><br>
