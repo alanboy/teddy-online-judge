@@ -350,6 +350,8 @@ class c_usuario extends c_controller
 
 	public static function RequestResetPass($request)
 	{
+		$request["nick"] = $request["user"];
+
 		$result = self::getByNick($request);
 		if (is_null($result["user"]))
 		{
