@@ -50,9 +50,8 @@ include_once (__DIR__ . '/../vendor/autoload.php');
 
 use Respect\Validation\Validator as v;
 
-if (file_exists("Mail.php")) {
-	require_once "Mail.php";
-}
+include_once ("Mail.php");
+
 
 if (isset($TEDDY_LOG)) {
 	Logger::$file = $TEDDY_LOG;

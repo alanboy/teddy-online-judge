@@ -4,7 +4,7 @@ class c_mail
 {
 	public static function EnviarMail($cuerpo, $destinatario, $titulo) {
 
-		if (!file_exists("Mail.php")) {
+		if (!class_exists("Mail")) {
 			Logger::error("Imposible enviar mail sin Pear Mail");
 			return array("result" => "error", "reason" => "Imposible enviar mail sin Pear Mail");
 		}
