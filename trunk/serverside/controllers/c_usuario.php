@@ -370,9 +370,15 @@ class c_usuario extends c_controller
 
 		$sql = "INSERT INTO LostPassword (`userID` , `IP` , `Token` ) VALUES (?,?,?);" ;
 
+		if (isset($_SERVER["REMOTE_ADDR"])) {
+			$ip = $_SERVER["REMOTE_ADDR"];
+		} else {
+			$ip = "0.0.0.0";
+		}
+
 		$inputarray = array(
 			$user["userID"],
-			"127.0.0.1",
+			$ip,
 			$token
 		);
 
@@ -382,6 +388,11 @@ class c_usuario extends c_controller
 		$content = "Hola,\n\nSigue este enlace para resetear tu password en Teddy: https://" . $_SERVER['SERVER_NAME'] . "/reset.php?token=" . $token;
 
 		$result = c_mail::EnviarMail( $content, $user["mail"], "Teddy Online Judge");
+
+		if(!SUCCESS($result))
+		{
+			return array("result" => "error", "reason" => "impsible enviar el correo electronico");
+		}
 
 		$sql = "update LostPassword set mailSent = 1 where id = ?";
 
