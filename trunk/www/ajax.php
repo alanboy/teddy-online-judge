@@ -17,24 +17,24 @@
 
 		$res = $controller::$method($_REQUEST);
 
+		$sparams = "";
+		foreach ($_REQUEST as $key => $value) {
+
+			if (($key == "pass")
+				 ||($key == "controller")
+				 ||($key == "method"))
+			{
+				// Do not leak password
+			}else{
+				$sparams .= $key . " = " . ( strlen($value) > 16 ? substr($value, 0, 16 ) . "..."  : $value  ).", ";
+			}
+		}
 
 		if (SUCCESS($res)) {
-			$sparams = "";
-			foreach ($_REQUEST as $key => $value) {
-
-				if (($key == "pass")
-					 ||($key == "controller")
-					 ||($key == "method"))
-				{
-					// Do not leak password
-				}else{
-					$sparams .= $key . " = " . ( strlen($value) > 16 ? substr($value, 0, 16 ) . "..."  : $value  ).", ";
-				}
-			}
 			Logger::info("API CALL OK: " . $controller . "::" . $method . "(".$sparams . ")" );
 
 		} else {
-			Logger::error("API CALL FAILED: " . $controller . "::" . $method . "()\tREASON:" . $res["reason"] );
+			Logger::error("API CALL FAILED: " . $controller . "::" . $method . "(" .$sparams . ")\tREASON:" . $res["reason"] );
 		}
 
 		header('Content-type: application/json');
