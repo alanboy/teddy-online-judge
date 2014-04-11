@@ -58,7 +58,7 @@ if (isset($TEDDY_LOG)) {
 }
 
 if (array_key_exists("REQUEST_URI", $_SERVER)) {
-	Logger::info("REQUEST:" . $_SERVER["REQUEST_URI"]);
+	Logger::info("REQUEST:" . $_SERVER["REQUEST_URI"] . " ". $_SERVER['HTTP_USER_AGENT']);
 }
 
 // Connect to DB
