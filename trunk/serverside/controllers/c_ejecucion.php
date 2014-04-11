@@ -119,7 +119,7 @@ class c_ejecucion extends c_controller
 				);
 		}
 
-		if (!is_dir("../codigos/"))
+		if (!is_dir(TEDDY_CODIGOS_PATH))
 		{
 			return array("result" => "error", "reason" => "El directorio de codigos no existe.");
 		}
@@ -132,8 +132,8 @@ class c_ejecucion extends c_controller
 			);
 
 		if ($status == "COMPILACION"
-			&& file_exists("../codigos/".$request['execID'] . ".compiler_out")) {
-			$compiler = file_get_contents("../codigos/".$request['execID'] . ".compiler_out");
+			&& file_exists(TEDDY_CODIGOS_PATH.$request['execID'] . ".compiler_out")) {
+			$compiler = file_get_contents(TEDDY_CODIGOS_PATH.$request['execID'] . ".compiler_out");
 			$result["compilador"] = $compiler;
 		}
 
@@ -180,12 +180,12 @@ class c_ejecucion extends c_controller
 		}
 
 		// Revisar que pueda escribir el codigo fuente
-		if (!is_dir("../codigos/"))
+		if (!is_dir(TEDDY_CODIGOS_PATH))
 		{
 			return array("result" => "error", "reason" => "El directorio de codigos no existe.");
 		}
 
-		if (!is_writable("../codigos/"))
+		if (!is_writable(TEDDY_CODIGOS_PATH))
 		{
 			return array("result" => "error", "reason" => "No se puede escribir en el directorio de codigos.");
 		}
@@ -263,7 +263,7 @@ class c_ejecucion extends c_controller
 
 		if (!empty($_FILES))
 		{
-			if (!move_uploaded_file($_FILES['Filedata']['tmp_name'], "../../codigos/" . $execID . "." . $lang  ))
+			if (!move_uploaded_file($_FILES['Filedata']['tmp_name'], TEDDY_CODIGOS_PATH. $execID . "." . $lang  ))
 			{
 				return array("result" => "error", "reason" => "Error al subir el archivo");
 			}
@@ -272,7 +272,7 @@ class c_ejecucion extends c_controller
 		{
 
 			// Crear un archivo y escribir el contenido
-			if (file_put_contents("../codigos/".$execID . "." . $lang, $request['plain_source']) === false)
+			if (file_put_contents(TEDDY_CODIGOS_PATH.$execID . "." . $lang, $request['plain_source']) === false)
 			{
 				return array("result" => "error");
 			}
