@@ -6,6 +6,9 @@
 
 	require_once("head.php");
 
+	require_once("require_login.php");
+	require_once("require_admin.php");
+
 	function read($lines = 100)
 	{
 

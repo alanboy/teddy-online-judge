@@ -5,6 +5,8 @@
 	define("PAGE_TITLE", "Editar perfil");
 
 	require_once("head.php");
+	require_once("require_login.php");
+	require_once("require_admin.php");
 
 ?>
 	<div class="post_blanco">
