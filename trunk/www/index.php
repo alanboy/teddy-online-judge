@@ -169,23 +169,19 @@ Como funciona?
 		alt="Lenguajes enviados a Teddy" />
 	
 		<?php
-			$days = 6;
+			$months = 7;
 			$data_for_chart  = "";
 			$data_for_chart_dates  = "";
 
-			while ( $days >= 0 )
-			{
-				$dia  = mktime(0, 0, 0, date("m") - $days , date("d") , date("Y"));
-
-				$res = mysql_query("sELECT count(execID) FROM `Ejecucion` WHERE fecha like '" . date("Y-m", $dia) . "-% %:%:%'");
+			$res = mysql_query("SELECT count(execID), DATE_FORMAT(fecha, '%b') FROM `Ejecucion` where fecha > DATE_SUB(CURDATE(),INTERVAL $months MONTH) group by DATE_FORMAT(fecha, '%Y-%m%') order by fecha desc");
+			while(--$months > 0){
 				$row = mysql_fetch_array($res);
-				$data_for_chart .= $row[0] . ",";
-				$data_for_chart_dates .= date("M|", $dia);	
-				$days -- ;
+				$data_for_chart = ",$row[0]$data_for_chart";
+				$data_for_chart_dates = "|$row[1]$data_for_chart_dates";	
 			}
-
-			$data_for_chart = substr($data_for_chart , 0, strlen($data_for_chart) - 1 );
-			$data_for_chart_dates = substr($data_for_chart_dates , 0, strlen($data_for_chart_dates) - 1 );
+			$data_for_chart = substr($data_for_chart , 1);
+			$data_for_chart_dates = substr($data_for_chart_dates ,1);
+			
 		?>
 
 			<img src="https://chart.googleapis.com/chart?
