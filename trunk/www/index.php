@@ -175,8 +175,7 @@ Como funciona?
 
 			while ( $days >= 0 )
 			{
-				$dia  = date('Y-m');			
-				$dia = strtotime ("-$days month", strtotime ($dia));
+				$dia = strtotime("-$days month");
 				$res = mysql_query("sELECT count(execID) FROM `Ejecucion` WHERE fecha like '" . date("Y-m", $dia) . "-% %:%:%'");
 				$row = mysql_fetch_array($res);
 				$data_for_chart .= $row[0] . ",";
