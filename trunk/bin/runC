@@ -1,9 +1,2 @@
 cd ../work_zone/$1
-
-hash sandbox 2>/dev/null || { 
-	 ./a.out USER_CODE $2
-}
-
-hash sandbox 2>/dev/null && { 
-	 sandbox ./a.out USER_CODE $2
-}
+./a.out USER_CODE $2

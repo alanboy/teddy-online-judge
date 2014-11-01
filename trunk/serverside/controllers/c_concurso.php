@@ -252,7 +252,7 @@ class c_concurso extends c_controller
 
 	public static function concursosPasados()
 	{
-		$sql = "select * from Concurso where BINARY ( Final < ? ) limit 10";
+		$sql = "select * from Concurso where BINARY ( Final < ? ) limit 50 order by Final";
 		return self::concursosLista($sql);
 	}
 

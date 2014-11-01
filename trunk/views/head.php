@@ -68,7 +68,6 @@
 				</tr>
 			</table>
 		</div>
-
 		<?php
 			include_once("post_navmenu.php");
 			include_once("post_usuariomenu.php");

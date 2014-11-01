@@ -1,4 +1,16 @@
 
+	.sampleio {
+		border-collapse: collapse;
+	}
+	.sampleio td {
+		background: #ccc;
+		font-family: monospace;
+		border: 1px solid #808080;
+		padding: 10px;
+		min-width: 300px;
+		vertical-align: top;
+	}
+
 #avatar {
 margin-top:-3px;
 margin-right:3px;
