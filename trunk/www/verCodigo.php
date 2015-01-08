@@ -2,7 +2,7 @@
 
 	require_once("../serverside/bootstrap.php");
 
-	define("PAGE_TITLE", "Editar perfil");
+	define("PAGE_TITLE", "Ver Codigo");
 
 	require_once("head.php");
 
