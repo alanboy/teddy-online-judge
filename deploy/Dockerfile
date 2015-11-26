@@ -47,7 +47,7 @@ ADD conf/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 ADD conf/nginx.conf /etc/nginx/nginx.conf
 ADD conf/php-fpm.conf /etc/php5/fpm/php-fpm.conf
 ADD conf/sites-available /etc/nginx/sites-available/
-ADD conf/sites-available /etc/nginx/sites-enabled/
+RUN ln -s /etc/nginx/sites-available/teddy /etc/nginx/sites-enabled/teddy
 
 # Setup database
 RUN echo "mysqld_safe &" > /tmp/config \
