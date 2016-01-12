@@ -192,7 +192,7 @@ class c_usuario extends c_controller
 		} catch(InvalidArgumentException $e) {
 			return false;
 		}
-		
+
 		return true;
 	}
 

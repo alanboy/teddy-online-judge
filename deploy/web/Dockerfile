@@ -1,4 +1,6 @@
-
+#############################################
+#       Teddy Online Judge - Web Application
+#############################################
 FROM ubuntu:14.04
 MAINTAINER Alan Gonzalez<alanboy@alanboy.net>
 
@@ -15,7 +17,7 @@ RUN apt-get -y install php5-mysql
 RUN apt-get -y install supervisor
 RUN apt-get -y install git
 RUN apt-get -y install mysql-server mysql-client
-RUN apt-get -y install nano
+RUN apt-get -y install vim
 RUN apt-get -y install curl
 RUN apt-get -y install php5
 RUN apt-get -y install php5-cli
@@ -34,10 +36,20 @@ RUN cd /opt/teddy/trunk; git submodule update
 RUN cp /opt/teddy/trunk/serverside/config.sample.php /opt/teddy/trunk/serverside/config.php
 
 RUN echo "\$TEDDY_DB_USER = \"root\";" >> /opt/teddy/trunk/serverside/config.php \
-    && echo "\$TEDDY_DB_SERVER = \"localhost\""; >> /opt/teddy/trunk/serverside/config.php \
-    && echo "\$TEDDY_DB_NAME = \"teddy\";" >> /opt/teddy/trunk/serverside/config.php
+    && echo "\$TEDDY_DB_SERVER = \"localhost\";"; >> /opt/teddy/trunk/serverside/config.php \
+    && echo "\$TEDDY_DB_NAME = \"teddy\";" >> /opt/teddy/trunk/serverside/config.php \
+    && echo "\$TEDDY_LOG = \"/var/log/teddy/teddy.log\";" >> /opt/teddy/trunk/serverside/config.php
 
-RUN cd /opt/teddy/trunk; git pull --rebase 
+RUN mkdir /var/log/teddy/
+RUN touch /var/log/teddy/teddy.log
+RUN chmod 777 /var/log/teddy/teddy.log
+
+RUN mkdir /opt/teddy/trunk/codigos
+RUN chmod 777 /opt/teddy/trunk/codigos
+RUN mkdir /opt/teddy/trunk/work_zone
+RUN chmod 777 /opt/teddy/trunk/work_zone
+
+RUN cd /opt/teddy/trunk
 RUN curl -sS https://getcomposer.org/installer | php
 RUN php composer.phar install --working-dir /opt/teddy/trunk/ 
 
@@ -47,6 +59,7 @@ ADD conf/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 ADD conf/nginx.conf /etc/nginx/nginx.conf
 ADD conf/php-fpm.conf /etc/php5/fpm/php-fpm.conf
 ADD conf/sites-available /etc/nginx/sites-available/
+ADD conf/my.cnf /etc/mysql/
 RUN ln -s /etc/nginx/sites-available/teddy /etc/nginx/sites-enabled/teddy
 
 # Setup database
@@ -60,7 +73,6 @@ RUN echo "mysqld_safe &" > /tmp/config \
 
 ## Define mountable directories
 VOLUME ["/etc/nginx/sites-enabled", "/etc/nginx/sites-available", "/var/log/nginx"]
-VOLUME ["/var/log/nginx"]
 #
 ## Expose http & https
 EXPOSE 80

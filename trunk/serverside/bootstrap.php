@@ -54,7 +54,7 @@ include_once ("Mail.php");
 
 
 if (isset($TEDDY_LOG)) {
-	Logger::$file = $TEDDY_LOG;
+	Logger::file = $TEDDY_LOG;
 }
 
 if (array_key_exists("REQUEST_URI", $_SERVER)) {

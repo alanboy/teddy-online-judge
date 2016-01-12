@@ -33,12 +33,12 @@ class Logger {
 		}
 
 		if (!file_exists(self::$file)) {
-			error_log("Unable to log to: " . self::$file);
+			error_log("unable to log to: " . self::$file);
 			return;
 		}
 
 		if (!is_writable(self::$file)) {
-			die("self::$file");
+			error_log("unable to write to : " . self::$file);
 			return;
 		}
 
