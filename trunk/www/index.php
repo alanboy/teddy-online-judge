@@ -46,7 +46,7 @@
 	<tr>
 	<td style="text-align:justify;">
 	<br>
-	    <p>Laura es un oso de peluche, como se puede apreciar en la figura 1.0. Lo que lo distingue de los dem&aacute;s peluches es que Teddy sabe programar.
+		<p>Teddy es un oso de peluche, como se puede apreciar en la figura 1.0. Lo que lo distingue de los dem&aacute;s peluches es que Teddy sabe programar.
 		<br><br>
 		Introducido al mundo de la programaci&oacute;n a la tierna edad de d&iacute;a y medio de haber sido fabricado, Teddy es uno de los programadores m&aacute;s h&aacute;biles, habiendo resuelto todos los problemas del mundo. Conoce todos los trucos y t&eacute;cnicas para convertir un problema aparentemente imposible en algo tan sencillo que hasta un oso podr&iacute;a resolver.
 		<br><br>

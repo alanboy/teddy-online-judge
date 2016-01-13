@@ -121,6 +121,7 @@ class c_ejecucion extends c_controller
 
 		if (!is_dir(PATH_TO_CODIGOS))
 		{
+			Logger::warn("El directorio de codigos no existe: " . PATH_TO_CODIGOS);
 			return array("result" => "error", "reason" => "El directorio de codigos no existe.");
 		}
 

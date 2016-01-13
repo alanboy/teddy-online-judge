@@ -1,7 +1,7 @@
 # hostname or public ip in case you don't have a domain name handy
 server {
     listen 80;
-    root /opt/teddy/trunk/www;
+    root /opt/teddy/webapp/www;
     index index.php index.html index.htm;
     if (!-e $request_filename) {
         rewrite ^/(.+)$ /index.php?url=$1 last;

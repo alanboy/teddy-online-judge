@@ -4,18 +4,18 @@ web:
     - "8080:80"
     - "3306:3306"
     volumes:
-    - "$PWD/../trunk/serverside/controllers:/opt/teddy/trunk/serverside/controllers"
-    - "$PWD/../trunk/www:/opt/teddy/trunk/www"
+    - "$PWD/../trunk/:/opt/teddy/webapp"
     - "/var/log/teddy:/var/log/teddy"
+    - "/usr/teddy/codigos:/usr/teddy/codigos"
+    - "/var/log/nginx:/var/log/nginx"
 
 runner:
     build: runner
     volumes:
-    - "$PWD/../trunk/codigos:/opt/teddy/trunk/codigos"
-    - "$PWD/../trunk/work_zone:/opt/teddy/trunk/work_zone"
     - "$PWD/../runner/bin:/opt/teddy/runner/bin"
     - "$PWD/../runner/lib:/opt/teddy/runner/lib"
     - "/var/log/teddy:/var/log/teddy"
+    - "/usr/teddy/codigos:/usr/teddy/codigos"
     links:
     - web
 

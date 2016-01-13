@@ -12,7 +12,8 @@ date_default_timezone_set('America/Mexico_City');
 
 define("PATH_TO_BACKUPS", __DIR__ . "/../backups/");
 
-require_once("config.php");
+// El archivo de configuracion esta dentro del contenedor.
+require_once("/opt/teddy/container/config.php");
 
 if (isset($TEDDY_CODIGOS_PATH))
 {
@@ -46,7 +47,7 @@ require_once("lib/adodb/adodb.inc.php");
 require_once("utils.php");
 require_once("lib/Logger.php");
 
-include_once (__DIR__ . '/../vendor/autoload.php');
+include_once ("/opt/teddy/container/vendor/autoload.php");
 
 use Respect\Validation\Validator as v;
 
@@ -54,7 +55,7 @@ include_once ("Mail.php");
 
 
 if (isset($TEDDY_LOG)) {
-	Logger::file = $TEDDY_LOG;
+	Logger::$file = $TEDDY_LOG;
 }
 
 if (array_key_exists("REQUEST_URI", $_SERVER)) {
@@ -72,7 +73,7 @@ try{
 		header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
 		die();
 	}
-	
+
 }catch(Exception $e){
 	Logger::error("No db connection");
 	header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);

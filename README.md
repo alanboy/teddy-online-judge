@@ -5,25 +5,18 @@ Teddy Online Judge es el resultado de una iniciativa denominada Club de Programa
 Instalacion
 ==================
 ```
-  #apt-get install mysql-server mysql-client apache2 php5 libapache2-mod-php5 php5-mysql php-pear php5-mcrypt
   $git clone https://github.com/alanboy/teddy-online-judge.git
-  
-  $cd teddy-online-judge
-  $git submodule init
-  $git submodule update
-  
-  $cd trunk
-  $curl -sS https://getcomposer.org/installer | php
-  $php composer.phar install
-  
-  $cp serverside/config.sample.php serverside/config.php
-  
+
+  $cd teddy-online-judge\deploy
+  $docker-compose build
+  $docker-compose up
 ```
 
 API
 ==================
 ```
  c_backup::BackupDatabase()
+
  c_concurso::canshow()
  c_concurso::concursosActivos()
  c_concurso::concursosFuturos()

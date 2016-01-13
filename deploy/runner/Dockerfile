@@ -15,18 +15,18 @@ RUN apt-get -y install git
 RUN apt-get -y install mysql-server mysql-client
 RUN apt-get -y install curl
 
-
 # Install compilers and interpreters
 RUN apt-get -y install openjdk-8-jdk
 
 RUN apt-get -y install vim
 
 RUN mkdir --parents /opt/teddy/runner
+RUN mkdir --parents /var/tmp/teddy/work_zone
 
-RUN echo "\$TEDDY_DB_USER = \"root\";" >> /opt/teddy/runner/config.php 
-RUN echo "\$TEDDY_DB_SERVER = \"web\";"; >> /opt/teddy/runner/config.php 
+RUN echo "\$TEDDY_DB_USER = \"root\";" >> /opt/teddy/runner/config.php
+RUN echo "\$TEDDY_DB_SERVER = \"web\";" >> /opt/teddy/runner/config.php
 RUN echo "\$TEDDY_DB_NAME = \"teddy\";" >> /opt/teddy/runner/config.php
-RUN echo "\$TEDDY_DB_PASSWORD= \"teddy\";" >> /opt/teddy/runner/config.php
+RUN echo "\$TEDDY_DB_PASSWORD= \"\";" >> /opt/teddy/runner/config.php
 
 # Add config files
 ADD conf/supervisord.conf /etc/supervisor/conf.d/supervisord.conf

@@ -106,15 +106,14 @@ public class Teddy {
 
 	public static boolean testDirs () {
 		String [] neededPaths = {
-						"../../trunk/codigos/",
-						"../../trunk/work_zone/"
+						"/var/tmp/teddy/work_zone/",
+						"/usr/teddy/codigos"
 					};
 
 		for (int i = 0; i < neededPaths.length; i++) {
 			File f = new File(neededPaths[i]);
 			if (!f.canWrite()) {
-
-				System.out.println("No puedo escribir a " + f);
+			    TeddyLog.logger.error("No puedo escribir a " + f);
 				System.exit(-1);
 				return false;
 			}
