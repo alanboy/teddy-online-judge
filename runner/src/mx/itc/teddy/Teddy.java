@@ -64,7 +64,7 @@ public class Teddy {
 
 	private static Conexion iniciarConexion() throws Exception{
 		//leer el archivo config.php para sacar los datos de la base de datos
-		BufferedReader br = new BufferedReader(new FileReader("../config.php"));
+		BufferedReader br = new BufferedReader(new FileReader("/opt/teddy/runner/config.php"));
 		String s, tempString, server = null, login = null, password = null, bd = null;
 
 		while ((s = br.readLine()) != null) {
@@ -204,17 +204,17 @@ public class Teddy {
 		TeddyLog.logger.debug("userID : " + userID);
 
 		// crear un directorio para trabajar con ese codigo
-		File directorio = new File("../work_zone/" + execID);
+		File directorio = new File("/var/tmp/teddy/work_zone/" + execID);
 		directorio.setWritable(true);
 		directorio.mkdir();
 		// directorio.deleteOnExit();
 
 		// crear un objeto File de el codigo fuente que se ha subido en la primer carpeta
-		File cf = new File( "../codigos/" + fileName);
+		File cf = new File( "/usr/teddy/codigos/" + fileName);
 		cf.setWritable(true);
 
 		// crer un objeto File donde se guardara el codigo fuente para ser compilado dentro de su sub-carpeta
-		File cfNuevo = new File( directorio, fileName );
+		File cfNuevo = new File(directorio, fileName);
 		try{
 			cfNuevo.createNewFile();
 		}catch(IOException ioe) {
@@ -266,7 +266,8 @@ public class Teddy {
 		// al constructor se le proporciona la ruta hasta el .java
 		Compilador c = new Compilador();
 		c.setLang( LANG );
-		c.setFile( "../work_zone/" + execID +"/" + fileName );
+		c.setFile( "/var/tmp/teddy/work_zone/" + execID +"/" + fileName );
+		c.setRunId(execID);
 
 		// verificar si compilo bien o no
 		if (!c.compilar()) {
@@ -311,7 +312,7 @@ public class Teddy {
 
 		// llenar el contenido del archivo de entrada
 		try{
-			BufferedReader br = new BufferedReader( new FileReader( "../casos/"+probID+".in" ));
+			BufferedReader br = new BufferedReader( new FileReader( "/usr/teddy/casos/"+probID+".in" ));
 			PrintWriter pw = new PrintWriter( archivoEntrada );
 			String s = null;
 
@@ -441,7 +442,7 @@ public class Teddy {
 		// leer los contenidos del archivo ke genero el programa he ir comparando linea por linea con la respuesta
 		try{
 			BufferedReader salidaDePrograma = new BufferedReader(new FileReader(new File(directorio, "data.out")));
-			BufferedReader salidaCorrecta = new BufferedReader(new FileReader("../casos/" + probID + ".out"));
+			BufferedReader salidaCorrecta = new BufferedReader(new FileReader("/usr/teddy/casos/" + probID + ".out"));
 
 			String foo = null;
 			String bar = null;
@@ -541,8 +542,8 @@ public class Teddy {
 
 	static void vaciarCarpeta(String execID) {
 		// vaciar el contenido de la carpeta
-		for (String file :  new File("../work_zone/"+execID).list()) {
-			new File( "../work_zone/"+execID+"/"+file ).delete();
+		for (String file :  new File("/var/tmp/teddy/work_zone/"+execID).list()) {
+			new File( "/var/tmp/teddy/work_zone/"+execID+"/"+file ).delete();
 		}
 	}
 

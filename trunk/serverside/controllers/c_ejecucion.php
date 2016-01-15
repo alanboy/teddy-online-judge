@@ -269,10 +269,10 @@ class c_ejecucion extends c_controller
 		}
 		else
 		{
-
 			// Crear un archivo y escribir el contenido
-			if (file_put_contents(PATH_TO_CODIGOS.$execID . "." . $lang, $request['plain_source']) === false)
+			if (file_put_contents(PATH_TO_CODIGOS . "/" . $execID . "." . $lang, $request['plain_source']) === false)
 			{
+				Logger::Error("file_put_contents() fallo, tal vez no puedo escribir en  :".PATH_TO_CODIGOS);
 				return array("result" => "error");
 			}
 		}

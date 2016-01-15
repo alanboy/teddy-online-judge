@@ -19,15 +19,12 @@ public class Ejecutar implements Runnable{
 	}
 
 	public void destroyPID(){
-
 		//destruid pid con kill
 		try{
 			proc = Runtime.getRuntime().exec("./killprocess " + killcomand);
 		}catch(IOException ioe){
 			System.out.println(ioe);
 		}
-
-		//System.out.println("./killprocess " + killcomand);//java Main USER_CODE 0.3451665593858829
 	}
 
 	public void run(){
@@ -109,12 +106,12 @@ public class Ejecutar implements Runnable{
 							impMsg = false;
 						}
 						System.out.println( linea2 );
-					}				
+					}
 				}
 
 				//esperar a que termine el proceso
 				exitVal = proc.waitFor();
-				
+
 			} catch( Exception e ) {
 
 				//error interno del juez

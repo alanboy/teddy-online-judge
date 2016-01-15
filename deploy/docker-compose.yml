@@ -16,6 +16,7 @@ runner:
     - "$PWD/../runner/lib:/opt/teddy/runner/lib"
     - "/var/log/teddy:/var/log/teddy"
     - "/usr/teddy/codigos:/usr/teddy/codigos"
+    - "/usr/teddy/casos:/usr/teddy/casos"
     links:
     - web
 

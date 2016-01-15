@@ -15,7 +15,7 @@ public class TeddyLog {
 
 	static {
 		logger = Logger.getLogger(TeddyLog.class);
-		layout = new PatternLayout("%-6r [%15.15t] %-5p %30.30c %x - %m%n");
+		layout = new PatternLayout("%d{HH:mm:ss,SSS} | [runner] | %-5p %30.30c %x - %m%n");
 		logger.setLevel(Level.INFO);
 
 		try {
@@ -24,9 +24,6 @@ public class TeddyLog {
 
 		}catch(IOException ioe){
 			System.out.println("Imposible eescribir al archivo de log");
-			// Default appender to log to console.
-
-			// Esto causara AV
 			logger = null;
 		}
 	};

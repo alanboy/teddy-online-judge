@@ -2,15 +2,14 @@ package mx.itc.teddy;
 
 import java.io.*;
 
-
 public class Compilador {
 
 	private String fileName;
 	private String LANG;
+	private String runId;
 	final private boolean imprimirSalida = true;
 
-	public boolean compilar(){
-
+	public boolean compilar() {
 		String comando = "";
 
 		//no hay necesidad de compilar a python
@@ -25,11 +24,9 @@ public class Compilador {
 		if(LANG.equals("Php")) 
 			return true;
 
-
 		//genera el comando ke se ejecutara
-		if(LANG.equals("JAVA")) 
+		if(LANG.equals("JAVA"))
 			comando = "javac " + fileName;
-
 
 		if(LANG.equals("C")){
 			 String [] test = fileName.split("/");
@@ -52,12 +49,11 @@ public class Compilador {
 			exitVal = proc.waitFor();
 
 			//si es que vamos a imprimir salida
-			if(imprimirSalida){
-		
+			if (imprimirSalida) {
 				//capturar la salida
 				InputStreamReader isr = new InputStreamReader(proc.getInputStream());
 				BufferedReader br = new BufferedReader(isr);
-				
+
 				String linea = "";
 				while((linea = br.readLine()) != null){
 					//imprimir en salida estandar
@@ -67,26 +63,21 @@ public class Compilador {
 				//leer salida de error
 				InputStreamReader isr2 = new InputStreamReader( proc.getErrorStream() );
 				BufferedReader br2 = new BufferedReader( isr2 );
-				
-				
-				
+
 				String linea2 = null;
 				String endString = "";
-				
-				while((linea2 = br2.readLine()) != null){
 
+				while((linea2 = br2.readLine()) != null){
 					System.out.println( ">" + linea2 );
 					endString += linea2 + "\n";
 				}
-				
+
 				if(endString.length() > 0){
-					PrintWriter pw = new PrintWriter( new FileWriter( "../codigos/" + fileName.split("/")[2]  + ".compiler_out") );
+					PrintWriter pw = new PrintWriter( new FileWriter( "/usr/teddy/codigos/" + runId + ".compiler_out") );
 					pw.println( endString );
 					pw.flush();
-					pw.close();					
+					pw.close();
 				}
-
-
 			}
 
 		}catch(Exception e){
@@ -95,7 +86,7 @@ public class Compilador {
 			System.out.println("ERROR EN EL JUEZ: " + e);
 			return false;
 		}
-		
+
 
 		//si pudo compilar el juez
 		//depende lo que regrese el compilador es si si compilo o no compilo
@@ -107,15 +98,16 @@ public class Compilador {
 		System.out.println("Creando compilador...");
 	}
 
-	void setLang( String LANG ){
-		System.out.println("Setting language..." + LANG);		
+	void setLang(String LANG){
 		this.LANG = LANG;
 	}
 
-	void setFile( String fileName ){
-		System.out.println("Setting filename..." + fileName);		
+	void setFile(String fileName){
 		this.fileName = fileName;
 	}
 
+	void setRunId(String runId){
+		this.runId = runId;
+	}
 }
 

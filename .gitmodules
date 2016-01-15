@@ -1,3 +1,11 @@
 [submodule "trunk/serverside/lib/adodb"]
 	path = trunk/serverside/lib/adodb
 	url = http://git.code.sf.net/p/adodb/git
+
+[submodule "trunk/www/admin/pma"]
+	path = trunk/www/admin/pma
+	url = https://github.com/osalabs/phpminiadmin.git
+
+[submodule "trunk/www/admin/phpminiadmin"]
+	path = trunk/www/admin/phpminiadmin
+	url = https://github.com/osalabs/phpminiadmin
