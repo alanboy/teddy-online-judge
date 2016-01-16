@@ -1,4 +1,2 @@
-cd ..
-cd work_zone
-cd $1
-sandbox perl $1.pl USER_CODE $2
+cd /var/tmp/teddy/work_zone/$1
+perl $1.pl USER_CODE $2

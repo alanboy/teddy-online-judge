@@ -336,15 +336,15 @@ public class Teddy {
 		archivoEntrada.deleteOnExit();
 
 		// --------------ejecutar lo que salga de la compilacion -----------------------------------//
-		TeddyLog.logger.info("ejecutando...");
+		TeddyLog.logger.info("Ejecutando el codigo del concursante ...");
 
 		// aqui esta lo bueno, ejecutar el codigo... sniff
 		// por el momento al la clase ejecutar solo le pasaremos
 		// el execID y con eso ejecutara el Main que este dentro o el a.out etc 
-		Ejecutar e = new Ejecutar( execID );
+		Ejecutar e = new Ejecutar(execID);
 
 		// decirle que lenguaje es... pudiera ser c, c++, python, etc
-		e.setLang ( LANG );
+		e.setLang(LANG);
 
 		// la clase ejecutar es un hilo
 		Thread ejecucion = new Thread(e);

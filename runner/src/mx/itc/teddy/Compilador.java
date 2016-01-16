@@ -38,7 +38,7 @@ public class Compilador {
 			 comando = "./compileC++ " + test[2] + " " + test[3]; 
 		}
 
-		System.out.println("Comando para compilar > " + comando);
+		TeddyLog.logger.info("Comando para compilar > " + comando);
 		int exitVal = -1;
 
 		//intentar compilar
@@ -55,9 +55,9 @@ public class Compilador {
 				BufferedReader br = new BufferedReader(isr);
 
 				String linea = "";
-				while((linea = br.readLine()) != null){
+				while ((linea = br.readLine()) != null) {
 					//imprimir en salida estandar
-					System.out.println( linea );
+					TeddyLog.logger.warn("StdOut>>> " + linea);
 				}
 
 				//leer salida de error
@@ -67,8 +67,8 @@ public class Compilador {
 				String linea2 = null;
 				String endString = "";
 
-				while((linea2 = br2.readLine()) != null){
-					System.out.println( ">" + linea2 );
+				while ((linea2 = br2.readLine()) != null) {
+					TeddyLog.logger.warn("StdErr>>> " + linea2);
 					endString += linea2 + "\n";
 				}
 
@@ -82,8 +82,7 @@ public class Compilador {
 
 		}catch(Exception e){
 			//error interno del juez
-			TeddyLog.logger.fatal(e);
-			System.out.println("ERROR EN EL JUEZ: " + e);
+			TeddyLog.logger.fatal("ERROR EN EL JUEZ: " + e);
 			return false;
 		}
 
@@ -95,7 +94,7 @@ public class Compilador {
 
 	//constructor
 	Compilador( ){
-		System.out.println("Creando compilador...");
+		TeddyLog.logger.info("Creando compilador...");
 	}
 
 	void setLang(String LANG){

@@ -79,33 +79,24 @@ public class Ejecutar implements Runnable{
 				//ejecutar el script
 				proc = Runtime.getRuntime().exec(comando);
 
-				//imprmir salida 
-				if(imprimirSalida){
+				if (imprimirSalida) {
 
 					//leer salida estandar
 					InputStreamReader isr = new InputStreamReader( proc.getInputStream() );
 					BufferedReader br = new BufferedReader(isr);
-					boolean impMsg = true;
 					String linea = null;
-					while((linea = br.readLine()) != null){
-						if(impMsg){
-							System.out.println("Impresiones de tu programa a salida estandar:");
-							impMsg = false;
-						}
-						System.out.println( linea );
+
+					while ((linea = br.readLine()) != null) {
+						TeddyLog.logger.warn("StdOut>" + linea);
 					}
 
 					//leer salida de error
 					InputStreamReader isr2 = new InputStreamReader( proc.getErrorStream() );
 					BufferedReader br2 = new BufferedReader( isr2 );
-					impMsg = true;
 					String linea2 = null;
-					while((linea2 = br2.readLine()) != null){
-						if(impMsg){
-							System.out.println("Impresiones de tu programa a salida de error:");
-							impMsg = false;
-						}
-						System.out.println( linea2 );
+
+					while ((linea2 = br2.readLine()) != null) {
+						TeddyLog.logger.warn("StdErr>" + linea2);
 					}
 				}
 
