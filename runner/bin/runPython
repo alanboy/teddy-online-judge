@@ -1,4 +1,2 @@
-cd ..
-cd work_zone
-cd $2
-sandbox python $1 USER_CODE $3
+cd /var/tmp/teddy/work_zone/$1
+python $1.py USER_CODE $2

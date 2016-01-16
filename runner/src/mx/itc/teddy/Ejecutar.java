@@ -37,7 +37,7 @@ public class Ejecutar implements Runnable{
 
 			//genera el comando ke se ejecutara si es java
 			if(LANG.equals("Python")) {
-				comando = "./runPython "+ execID  + ".py " + execID + " " + uid;
+				comando = "./runPython "+ execID  + " " + uid;
 				killcomand = "python Main.py USER_CODE " + uid;
 			}
 

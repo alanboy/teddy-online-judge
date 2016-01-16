@@ -15,7 +15,7 @@ public class TeddyLog {
 
 	static {
 		logger = Logger.getLogger(TeddyLog.class);
-		layout = new PatternLayout("%d{HH:mm:ss,SSS} | [runner] | %-5p %30.30c %x - %m%n");
+		layout = new PatternLayout("%d{E, d M y HH:mm:ss Z} | [runner] | %-5p %30.30c %x - %m%n");
 		logger.setLevel(Level.INFO);
 
 		try {

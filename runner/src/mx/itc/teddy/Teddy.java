@@ -311,21 +311,23 @@ public class Teddy {
 		}
 
 		// llenar el contenido del archivo de entrada
-		try{
-			BufferedReader br = new BufferedReader( new FileReader( "/usr/teddy/casos/"+probID+".in" ));
+		String pathArchivoDeEntrada = "/usr/teddy/casos/"+probID+".in";
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(pathArchivoDeEntrada));
 			PrintWriter pw = new PrintWriter( archivoEntrada );
 			String s = null;
 
-			while((s = br.readLine()) != null) {
-				pw.println( s );
+			while ((s = br.readLine()) != null) {
+				pw.println(s);
 			}
 
 			pw.flush();
 			pw.close();
 
 		}catch(IOException ioe) {
-			TeddyLog.logger.fatal("Error al transcribir el archivo de entrada." );
-			TeddyLog.logger.fatal( ioe );
+			TeddyLog.logger.fatal("Error al transcribir el archivo de entrada: " + pathArchivoDeEntrada );
+			TeddyLog.logger.fatal(ioe);
+
 			con.update("UPDATE Ejecucion SET status = 'ERROR' WHERE execID = "+ execID +" LIMIT 1 ;");
 			return;
 		}

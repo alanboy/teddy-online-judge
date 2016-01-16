@@ -1,6 +1,3 @@
 cd /var/tmp/teddy/work_zone/$1
-
-hash sandbox 2>/dev/null || { 
-	 java Main USER_CODE $2
-}
+java Main USER_CODE $2
 
