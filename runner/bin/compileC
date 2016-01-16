@@ -1,4 +1,2 @@
-cd ..
-cd work_zone
-cd $1
+cd /var/tmp/teddy/work_zone/$1
 gcc $2 -O2 -ansi -fno-asm -Wall -lm -static -DONLINE_JUDGE

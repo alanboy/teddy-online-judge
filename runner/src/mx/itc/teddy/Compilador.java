@@ -29,14 +29,20 @@ public class Compilador {
 			comando = "javac " + fileName;
 
 		if(LANG.equals("C")){
-			 String [] test = fileName.split("/");
-			 comando = "./compileC " + test[2] + " " + test[3]; //comando = "gcc " + fileName;
+			//String [] test = fileName.split("/");
+			//comando = "./compileC " + test[2] + " " + test[3]; //comando = "gcc " + fileName;
+			comando = "gcc " + fileName + " -o /var/tmp/teddy/work_zone/" + runId  + "/a.out -O2 -ansi -fno-asm -Wall -lm -static -DONLINE_JUDGE";
 		}
 
 		if(LANG.equals("C++")){
-			 String [] test = fileName.split("/");
-			 comando = "./compileC++ " + test[2] + " " + test[3]; 
+			// String [] test = fileName.split("/");
+			// comando = "./compileC++ " + test[2] + " " + test[3]; 
+			comando = "g++ " + fileName + " -o /var/tmp/teddy/work_zone/" + runId  + "/a.out -O2 -ansi -fno-asm -Wall -lm -static -DONLINE_JUDGE";
+			//			g++ $2 -O2 -ansi -fno-asm -Wall -lm -static -DONLINE_JUDGE
+
+
 		}
+
 
 		TeddyLog.logger.info("Comando para compilar > " + comando);
 		int exitVal = -1;

@@ -1,2 +1,2 @@
-cd ../work_zone/$1
+cd /var/tmp/teddy/work_zone/$1
 ./a.out USER_CODE $2
