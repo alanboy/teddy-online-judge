@@ -6,11 +6,21 @@ Instalacion
 ==================
 ```
   $git clone https://github.com/alanboy/teddy-online-judge.git
+  $cd teddy-online-judge\
+  $git submoudle init
+  $git submoudle update
 
-  $cd teddy-online-judge\deploy
-  $docker-compose build
-  $docker-compose up
+  $cd deploy
+  #docker-compose build
+  #docker-compose up
 ```
+
+Despues de eso Teddy estara corriendo en http://127.0.0.1:8080/
+Logs(desde el host):
+ `/var/log/teddy/teddy.log`
+ `/var/log/ngninx/error.log`
+
+
 
 API
 ==================

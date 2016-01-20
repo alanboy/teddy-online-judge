@@ -7,6 +7,7 @@ web:
     - "$PWD/../trunk/:/opt/teddy/webapp"
     - "/var/log/teddy:/var/log/teddy"
     - "/usr/teddy/codigos:/usr/teddy/codigos"
+    - "/usr/teddy/casos:/usr/teddy/casos"
     - "/var/log/nginx:/var/log/nginx"
 
 runner:

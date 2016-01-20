@@ -77,7 +77,7 @@ class c_problema extends c_controller
 
 		$id = $db->Insert_ID();
 
-		if (!file_exists(PATH_TO_CASOS))
+		if (file_exists(PATH_TO_CASOS) === FALSE)
 		{
 			Logger::error("TEDDY: " . PATH_TO_CASOS . " no existe");
 			return array("result" => "error", "reason" => "Error interno.");

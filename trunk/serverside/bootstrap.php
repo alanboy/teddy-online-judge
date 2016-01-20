@@ -19,14 +19,14 @@ if (isset($TEDDY_CODIGOS_PATH))
 {
 	define("PATH_TO_CODIGOS", $TEDDY_CODIGOS_PATH);
 }else{
-	define("PATH_TO_CODIGOS", __DIR__ . "/../codigos");
+	define("PATH_TO_CODIGOS", "/usr/teddy/codigos");
 }
 
 if (isset($TEDDY_CASOS_PATH))
 {
 	define("PATH_TO_CASOS", $TEDDY_CASOS_PATH);
 }else{
-	define("PATH_TO_CASOS", __DIR__ . "/../casos");
+	define("PATH_TO_CASOS", "/usr/teddy/casos");
 }
 
 // Inlclude controllers
