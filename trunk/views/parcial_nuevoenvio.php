@@ -176,7 +176,7 @@ class envios
 						Teddy.c_ejecucion.nuevo({
 									lang 		: $('#lang').val(),
 									id_problema	: $('#prob_id').val(),
-									plain_source: $("#plain_text_area").val(),
+									plain_source: $("#plain_text_area").val()
 									<?php 
 										if($es_concurso !== null) {
 											echo ", 'id_concurso': " . $es_concurso; 
@@ -308,7 +308,7 @@ class envios
 	
 }
 
-envios::imprimir_forma_de_envio( );
+envios::imprimir_forma_de_envio($_REQUEST['cid']);
 /*
 	
 	

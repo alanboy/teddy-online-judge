@@ -272,36 +272,36 @@ class c_concurso extends c_controller
 
 			if (strlen($cname) < 5) {
 			    $msg =  "Escribe un titulo mas explicativo.";
-				return false;
+			    return array("result" => false, "msg" => $msg);
 			}
 			
 			if (strlen($cdesc) < 5) {
 			    $msg =  "Escribe una descripcion mas explicativa.";
-				return false;
+			    return array("result" => false, "msg" => $msg);
 			}
 			
 					
 			//parsear fecha de inicio
 			if (($time_inicio = strtotime($inicio)) === false) {
 			    $msg =  "La fecha de inicio es invalida.";
-				return false;
+			    return array("result" => false, "msg" => $msg);
 			} 
 
 			//que no sea en el pasado
 			if(time() > $time_inicio){
 				$msg = "No puedes iniciar un concurso en el pasado.";
-				return false;
+				return array("result" => false, "msg" => $msg);
 			}
 
 			//parsear fecha de final
 			if (($time_fin = strtotime($fin)) === false) {
 			    $msg =  "La fecha de fin es invalida.";
-				return false;
+			    return array("result" => false, "msg" => $msg);
 			} 
 
 			if($time_fin < $time_inicio){
 				$msg = "El concurso no puede terminar... antes de comenzar.";
-				return false;
+				return array("result" => false, "msg" => $msg);
 			}
 
 			$datetime1 = new DateTime($inicio);
@@ -310,7 +310,7 @@ class c_concurso extends c_controller
 			
 			if( (($intervalo->format('%h')*60)+$intervalo->format('%i')) > (60*5)){
 				$msg = "No puedes hacer concursos de mas de cinco horas.";
-				return false;
+				return array("result" => false, "msg" => $msg);
 			}
 			
 			
@@ -319,12 +319,12 @@ class c_concurso extends c_controller
 			
 			if(sizeof($probs) >= 6){
 				$msg = "Maximo 6 problemas";
-				return false;
+				return array("result" => false, "msg" => $msg);
 			}
 			
 			if(sizeof($probs) < 2){
 				$msg = "Minimo 2 problemas";
-				return false;
+				return array("result" => false, "msg" => $msg);
 			}
 			
 			for ($i=0; $i< sizeof( $probs ); $i++) {
@@ -337,7 +337,7 @@ class c_concurso extends c_controller
 				
 				if(mysql_numrows($rs)!=1){
 					$msg = "El problema " . $probs[ $i ] . " no existe.";
-					return false;
+					return array("result" => false, "msg" => $msg);
 				}
 				
 			}
@@ -345,6 +345,6 @@ class c_concurso extends c_controller
 			$query = "insert into Concurso(Titulo, Descripcion, Inicio, Final, Problemas, Owner) 
 								   values ('$cname','$cdesc','" . date("Y-m-d H:i:s", $time_inicio) . "','" . date("Y-m-d H:i:s", $time_fin) . "','$pset', '" . $_SESSION['userID'] . "')";
 			$rs = mysql_query($query) or die("Algo anda mal.");
-			return true;
+			return array("result" => true, "msg" => "Concurso guardado.");
 		}
 }
