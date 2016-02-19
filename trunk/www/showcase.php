@@ -70,40 +70,40 @@ if ($CONTEST == NULL) {
 <?php
 
 switch ($STATUS) {
-case "PAST":
-	echo "Este concurso ha terminado.";
-	break;
+	case "PAST":
+		echo "Este concurso ha terminado.";
+		break;
 
-case "FUTURE":
-	echo "Este concurso iniciar&aacute; en ";
-	$datetime1 = date_create($CDATA['Inicio']);
-	$datetime2 = date_create(date("Y-m-d H:i:s"));
-	$interval = date_diff($datetime1, $datetime2);
+	case "FUTURE":
+		echo "Este concurso iniciar&aacute; en ";
+		$datetime1 = date_create($CDATA['Inicio']);
+		$datetime2 = date_create(date("Y-m-d H:i:s"));
+		$interval = date_diff($datetime1, $datetime2);
 
-	if ($interval->format('%D') > 0) {
-		echo "<b>" . $interval->format('%D') . "</b> dias.";
-	} else {
+		if ($interval->format('%D') > 0) {
+			echo "<b>" . $interval->format('%D') . "</b> dias.";
+		} else {
+			?>
+								<b><span id='time_left'><?php echo $interval->format('%H:%I:%S'); ?></span></b>.
+								<script>
+									setInterval("updateTime()", 1000);
+								</script>
+							<?php
+	}
+		break;
+
+	case "NOW":
+		$datetime1 = date_create($CDATA['Final']);
+		$datetime2 = date_create(date("Y-m-d H:i:s"));
+		$interval = date_diff($datetime1, $datetime2);
+		echo "<span id='time_left'>" . $interval->format('%H:%I:%S') . "</span> restante.";
 		?>
-							<b><span id='time_left'><?php echo $interval->format('%H:%I:%S'); ?></span></b>.
-							<script>
-								setInterval("updateTime()", 1000);
-							</script>
+						<script>
+							setInterval("updateTime()", 1000);
+							setInterval("RenderContest(<?php echo $CONTEST ?>)", 5000);
+						</script>
 						<?php
-}
 	break;
-
-case "NOW":
-	$datetime1 = date_create($CDATA['Final']);
-	$datetime2 = date_create(date("Y-m-d H:i:s"));
-	$interval = date_diff($datetime1, $datetime2);
-	echo "<span id='time_left'>" . $interval->format('%H:%I:%S') . "</span> restante.";
-	?>
-					<script>
-						setInterval("updateTime()", 1000);
-						setInterval("RenderContest(<?php echo $CONTEST ?>)", 5000);
-					</script>
-					<?php
-break;
 }
 ?>
 		</div>
@@ -170,7 +170,7 @@ if ($STATUS == "NOW" || $STATUS == "PAST") {
 			</div>
 		</div>
 		<script type="text/javascript">
-			setProblems(<?php echo json_encode($PROBLEMAS); ?>);
+			CurrentProblems = <?php echo json_encode($PROBLEMAS); ?>;
 			RenderContest(<?php echo $CONTEST; ?>);
 		</script>
 <?php

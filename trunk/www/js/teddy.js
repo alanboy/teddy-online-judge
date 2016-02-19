@@ -384,32 +384,33 @@ function show_new_contest()
 //contest_rank.php
 function updateTime()
 {
-	if($("#time_left").length == 1){
-		data = $("#time_left").html().split(":");
-		hora = data[0];
-		min = data[1];
-		seg = data[2];
-
-		if(--seg < 0){
-			seg = 59;
-			if(--min < 0){
-				min = 59;
-				if(--hora < 0){
-					hora = 59;
-				}
-				hora = hora < 10 ? "0" + hora : hora;
-			}
-			min = min < 10 ? "0" + min : min;
-		}
-
-		seg = seg < 10 ? "0" + seg : seg;
-		if(hora == 0 && min == 0 && seg == 0){
-			window.location.reload( false );
-		}
-
-		//hora = hora < 10 ? "0" + hora : hora;
-		$("#time_left").html(hora+":"+min+":"+seg);
+	if ($("#time_left").length != 1) {
+		return;
 	}
+	
+	data = $("#time_left").html().split(":");
+	hora = data[0];
+	min = data[1];
+	seg = data[2];
+
+	if (--seg < 0) {
+		seg = 59;
+		if (--min < 0) {
+			min = 59;
+			if (--hora < 0) {
+				hora = 59;
+			}
+			hora = hora < 10 ? "0" + hora : hora;
+		}
+		min = min < 10 ? "0" + min : min;
+	}
+
+	seg = seg < 10 ? "0" + seg : seg;
+	if (hora == 0 && min == 0 && seg == 0) {
+		window.location.reload( false );
+	}
+
+	$("#time_left").html(hora+":"+min+":"+seg);
 }
 
 
@@ -419,9 +420,7 @@ function updateTime()
 var CurrentRuns = null;
 var CurrentRank = null;
 var CurrentProblems = null;
-function setProblems(problems){
-	CurrentProblems = problems;
-}
+
 function RenderContest (cid) {
 	Teddy.c_ejecucion.lista({
 			cid : cid
@@ -431,15 +430,15 @@ function RenderContest (cid) {
 			if ((CurrentRuns != null)
 			   && (CurrentRuns.length == data.runs.length)) {
 
-					dontRefresh = true;
+				dontRefresh = true;
 				for (i = 0; i < CurrentRuns.length; i++) {
 					if (CurrentRuns[i][3] == 'JUDGING' || CurrentRuns[i][3] == 'WAITING') {			   				
 		   				dontRefresh = false;
-		   				break
-		   			}	
-				};
+		   				break;
+		   			}
+		   		}
 
-				if (dontRefresh){
+				if (dontRefresh) {
 					return;
 				}
 			}
@@ -450,7 +449,7 @@ function RenderContest (cid) {
 			Teddy.c_concurso.rank({
 					cid : cid
 				},
-				function(data){			
+				function(data){
 					CurrentRank = data.rank;
 					showRank();
 				});
@@ -530,31 +529,31 @@ function showRank() {
 
 			var problemas = CurrentProblems; 
 
-			if (problemas != null) {
+			if (problemas == null) {
+				continue;
+			}
 
-				for (z = 0 ; z < problemas.length ; z++) {
-					var rankValueHtml = "";
-					for (p in CurrentRank[a].problemas) {
-						if (p == problemas[z]) {
-							rankValueHtml = "x";
-							if (CurrentRank[a].problemas[p].ok > 0) {
-								tiempo = parseInt(CurrentRank[a].problemas[p].ok_time / 60);
-								tiempo += ":"; 
-								bar = parseInt((parseInt(CurrentRank[a].problemas[p].ok_time % 60)));
-								if(bar<=9) {
-									bar = "0"+bar;
-								}
-								tiempo += bar;
-								//tiempo += parseInt((parseInt(CurrentRank[a].problemas[p].ok_time % 60)*60)/100);
-								rankValueHtml = "<b>" +  tiempo + "</b> / "+CurrentRank[a].problemas[p].ok_time+"<br>";
-								rankValueHtml += "("+CurrentRank[a].problemas[p].bad+")";
-							}else{
-								rankValueHtml = "-"+CurrentRank[a].problemas[p].bad+"";
+			for (z = 0 ; z < problemas.length ; z++) {
+				var rankValueHtml = "";
+				for (p in CurrentRank[a].problemas) {
+					if (p == problemas[z]) {
+						rankValueHtml = "x";
+						if (CurrentRank[a].problemas[p].ok > 0) {
+							tiempo = parseInt(CurrentRank[a].problemas[p].ok_time / 60);
+							tiempo += ":"; 
+							bar = parseInt((parseInt(CurrentRank[a].problemas[p].ok_time % 60)));
+							if(bar<=9) {
+								bar = "0"+bar;
 							}
+							tiempo += bar;
+							rankValueHtml = "<b>" +  tiempo + "</b> / "+CurrentRank[a].problemas[p].ok_time+"<br>";
+							rankValueHtml += "("+CurrentRank[a].problemas[p].bad+")";
+						}else{
+							rankValueHtml = "-"+CurrentRank[a].problemas[p].bad+"";
 						}
 					}
-					html +=  "<TD align='center' >" + rankValueHtml +"</TD>";
 				}
+				html +=  "<TD align='center' >" + rankValueHtml +"</TD>";
 			}
 
 			html +=  "<TD align='center' >" +CurrentRank[a].PENALTY+" </TD>";
