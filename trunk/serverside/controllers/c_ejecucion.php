@@ -239,6 +239,24 @@ class c_ejecucion extends c_controller
 		}
 		else
 		{
+			//vamos a verificar que el concurso este activo
+			$sql = "SELECT CID FROM teddy.Concurso WHERE CID = ? AND NOW() between Inicio AND Final;";
+			$inputarray = array($id_concurso);
+			$resultado = $db->Execute($sql, $inputarray);
+			if ($resultado->RecordCount() == 0)
+			{
+				return array("result" => "error", "reason" => "El concurso no esta activo.");
+			}
+			
+			//vamos a verificar que el problema sea parte de este concurso
+			$sql = "SELECT CID FROM teddy.Concurso WHERE CID = ? AND Problemas like ?;";
+			$inputarray = array($id_concurso, "%$id_problema%");
+			$resultado = $db->Execute($sql, $inputarray);
+			if ($resultado->RecordCount() == 0)
+			{
+				return array("result" => "error", "reason" => "El problema no es parte del concurso.");
+			}
+
 			$sql = "INSERT INTO Ejecucion (`userID` ,`status`, `probID` , `remoteIP`, `LANG`, `Concurso`, `fecha`  ) 
 									VALUES (?, 'WAITING', ?, ?, ?, ?, ?);";
 			
