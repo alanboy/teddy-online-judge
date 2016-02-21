@@ -226,8 +226,6 @@ class c_ejecucion extends c_controller
 
 		/**
 		 * @todo
-		 * - vamos a ver si estoy en un concurso, y si estoy en un concurso, que ese problema pertenesca a ese concurso 
-		 * - vamos a ver que no haya enviado hace menos de 5 min si esta en un concurso
 		 * - insertar un nuevo run y obtener el id insertado, como estado, hay que ponerle uploading
 		 **/
 		if ($id_concurso === null)
@@ -239,6 +237,24 @@ class c_ejecucion extends c_controller
 		}
 		else
 		{
+			// vamos a verificar que el concurso este activo
+			$sql = "SELECT CID FROM teddy.Concurso WHERE CID = ? AND NOW() between Inicio AND Final;";
+			$inputarray = array($id_concurso);
+			$resultado = $db->Execute($sql, $inputarray);
+			if ($resultado->RecordCount() == 0)
+			{
+				return array("result" => "error", "reason" => "El concurso no esta activo.");
+			}
+			
+			// vamos a verificar que el problema sea parte de este concurso
+			$sql = "SELECT CID FROM teddy.Concurso WHERE CID = ? AND Problemas like ?;";
+			$inputarray = array($id_concurso, "%$id_problema%");
+			$resultado = $db->Execute($sql, $inputarray);
+			if ($resultado->RecordCount() == 0)
+			{
+				return array("result" => "error", "reason" => "El problema no es parte del concurso.");
+			}
+
 			$sql = "INSERT INTO Ejecucion (`userID` ,`status`, `probID` , `remoteIP`, `LANG`, `Concurso`, `fecha`  ) 
 									VALUES (?, 'WAITING', ?, ?, ?, ?, ?);";
 			
