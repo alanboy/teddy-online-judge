@@ -222,7 +222,7 @@ class c_usuario extends c_controller
 
 		if (!self::UsuarioValido($request)) {
 			Logger::warn("Validacion fallo");
-			return array("result" => "error", "reason" => "Validacion de datos fallo" );
+			return array("result" => "error", "reason" => "El nombre de usuario no debe contener espacios" );
 		}
 
 		$result = self::getByNick($request);
@@ -414,7 +414,7 @@ class c_usuario extends c_controller
 
 		if (!self::UsuarioValido($request)) {
 			Logger::warn("Validacion fallo");
-			return array("result" => "error", "reason" => "Validacion de datos fallo" );
+			return array("result" => "error", "reason" => "El nombre de usuario no debe contener espacios" );
 		}
 
 		$sql = "update  `Usuario`  SET  nombre = ?, escuela = ?, mail = ?, `twitter` =  ? 
