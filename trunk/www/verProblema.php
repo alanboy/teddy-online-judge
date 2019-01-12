@@ -35,40 +35,21 @@
 			echo "Aceptados : <b>" . $row['aceptados'] . "</b></p> ";
 			echo  $row['problema'] ;
 
-			if (!isset($_REQUEST['cid']))
-			{
 			?>
 				<div align="center">
 					<form action="enviar.php" method="get">
 						<input type="hidden" name="send_to" value="<?php echo $_GET['id']; ?>">
+					<?php
+					if (isset($_REQUEST['cid'])) {
+					?>
+						<input type="hidden" name="cid" value="<?php echo $_REQUEST['cid']; ?>">
+					<?php
+					}
+					?>
 						<input type="submit" value="enviar solucion">
 					</form>
 				</div>
 			<?php
-			}
-			else
-			{
-			?>
-				<div align="center" >
-					Enviar problema para el concurso
-					<form action="contest_rank.php?cid=<?php echo $_REQUEST['cid']; ?>" method="POST" enctype="multipart/form-data">
-					<table border=0>
-						<tr>
-							<td  style="text-align: right">Codigo fuente&nbsp;&nbsp;</td>
-							<td><input name="userfile" type="file"></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td><input type="submit" value="Enviar Solucion"></td>
-						</tr>
-					</table>
-					<input type="hidden" name="ENVIADO" value="SI">
-					<input type="hidden" name="prob" value="<?php echo $_REQUEST['id']; ?>">
-					<input type="hidden" name="cid" value="<?php echo $_REQUEST['cid']; ?>">
-					</form>
-				</div>
-			<?php
-			}
 		}
 		else
 		{
@@ -121,17 +102,17 @@ if (SUCCESS($result))
 		<div class="post_blanco tab" id="tab-verproblema-codigos">
 			<h2>Mejores tiempos para este problema</h2>
 			<?php
-			if (!isset($_REQUEST['cid']))
-			{
-				$res = c_problema::mejoresTiempos($prob);
-				if (SUCCESS($res))
+				if (!isset($_REQUEST['cid']))
 				{
-					$runs = $res["tiempos"];
-					echo "<div style='padding:15px'>";
-					include ("parcial_listadeejecucionesconcodigo.php");
-					echo "</div>";
+					$res = c_problema::mejoresTiempos($prob);
+					if (SUCCESS($res))
+					{
+						$runs = $res["tiempos"];
+						echo "<div style='padding:15px'>";
+						include ("parcial_listadeejecucionesconcodigo.php");
+						echo "</div>";
+					}
 				}
-			}
 			?>
 		</div>
 		<div class="post_blanco tab" id="tab-verproblema-stats">

@@ -1,4 +1,4 @@
 cd ..
 cd work_zone
 cd $2
-sandbox python $1 USER_CODE $3
+python $1 USER_CODE $3

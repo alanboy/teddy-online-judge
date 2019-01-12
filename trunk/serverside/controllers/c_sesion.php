@@ -21,7 +21,7 @@ class c_sesion extends c_controller
 
 		if (SUCCESS($request))
 		{
-			return ($request["user"]["cuenta"]=="ADMIN");
+			return ($request["user"]["cuenta"]=="ADMIN") || $request["user"]["cuenta"]=="OWNER";
 		}
 
 		return false;

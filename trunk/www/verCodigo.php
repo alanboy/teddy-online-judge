@@ -2,7 +2,7 @@
 
 	require_once("../serverside/bootstrap.php");
 
-	define("PAGE_TITLE", "Editar perfil");
+	define("PAGE_TITLE", "Ver Codigo");
 
 	require_once("head.php");
 
@@ -15,9 +15,10 @@
 
 		if($result) {
 			$execID = $_GET["execID"];
-			include ("parcial_mostrarcodigo.php");	
+			include ("parcial_mostrarcodigo.php");
+		} else {
+			echo "No puedes ver este codigo";
 		}
-		
 	?>
 </div>
 

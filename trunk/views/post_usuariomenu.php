@@ -18,11 +18,9 @@ if (c_sesion::isLoggedIn()) {
 						<b><?php echo $_SESSION['userID']; ?></b> !<br>
 						</a>
 					</td>
-<!--
 					<td>
 						<a href="editprofile.php"><img src="img/71.png" > Editar tu perfil</a>
 					</td>
--->
 					<td id="mailbox_menu">
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<a href="inbox.php">

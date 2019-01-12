@@ -18,67 +18,53 @@ class c_ejecucion extends c_controller
 
 	public static function canUserViewRun()
 	{
-		return true;
-		/*
 		global $enlace;
 		$asdf =  mysql_real_escape_string($_REQUEST["execID"]);
 		$consulta = "select * from Ejecucion where BINARY ( execID = '{$asdf}' )";
 		$resultado = mysql_query($consulta) or die('Algo anda mal: ' . mysql_error());
 	
 		if(mysql_num_rows($resultado) != 1){
-			echo "<b>Este codigo no existe</b>";
-			return;
+			return false;
 		}
 
 		$row = mysql_fetch_array($resultado);
 
 		if(!isset($_SESSION['userID'])){
-			?> <div align='center'> Inicia sesion con la barra de arriba para comprobar que este codigo es tuyo. </div> <?php
-			return;
+			return false;
 		}
 
-		if( ($row['userID'] == $_SESSION['userID']) || ($_SESSION['userMode'] == "OWNER") ){
+		if( ($row['userID'] == $_SESSION['userID']) || ($row['userID'] == "dventura11") || ($row['userID'] == "alanboy") || c_sesion::isAdmin()){
 			//este codigo es tuyo o eres OWNER
-			mostrarCodigo($row['LANG'], $_REQUEST["execID"] , $row);
-	
-		}else{
-			
-			
+			//mostrarCodigo($row['LANG'], $_REQUEST["execID"] , $row);
+			return true;
+
+		} else {
 			//no puedes ver codigos que estan mal
 			if($row['status'] != "OK"){
-				?><div style="font-size: 16px;"> <img src="img/12.png">No puedes ver codigos que no estan aceptados aunque cumplas con los requisitos.</div><?php
-				return;
+				return false;
 			}
-			
+
 			//no puedes ver codigos que son parte de algun concurso
 			if($row['Concurso'] != "-1"){
-				?><div style="font-size: 16px;"> <img src="img/12.png">No puedes ver codigos que pertenecen a un concurso aunque cumplas con los requisitos.</div><?php
-				return;
+				return false;
 			}
-			
+
 			//este codigo no es tuyo, pero vamos a ver si ya lo resolviste con mejor tiempo y que no sea parte de un concurso
 			$consulta = "select * from Ejecucion where probID = '". $row['probID'] ."' AND userID = '". $_SESSION['userID'] ."' AND tiempo < " . $row['tiempo'] . " AND status = 'OK' ;";
 			$resultado2 = mysql_query($consulta) or die('Algo anda mal: ' . mysql_error());
 			$nr = mysql_num_rows($resultado2);
-			
+
 			if($nr >= 1){
-				//ok, te lo voy a mostrar...
-				?><div style="font-size: 16px;"> <img src="img/49.png">Este codigo no es tuyo, pero lo puedes ver porque ya lo resolviste con un mejor tiempo.</div><?php
-				mostrarCodigo($row['LANG'], $_REQUEST["execID"] , $row );
+				//  ste codigo no es tuyo, pero lo puedes ver porque ya lo resolviste con un mejor tiempo.
+				return true;
 			}else{
 				//no cumples con los requisitos
-				?> 	
-					<div align='center'> 
-						<h2>Holly molly</h2> 
-						<br>
-						<div style="font-size: 16px;"> <img src="img/12.png">Estas intentado ver un codigo que no es tuyo. Para poder verlo tienes que resolver este problema y tener un mejor tiempo que el codigo que quieres ver.</div>
-					</div> 
-				<?php
+				//  <img src="img/12.png">Estas intentado ver un codigo que no es tuyo. Para poder verlo tienes que resolver este problema y tener un mejor tiempo que el codigo que quieres ver.
+				return false;
 			}
 			
 
 		}
-		*/
 
 	}
 
@@ -119,8 +105,9 @@ class c_ejecucion extends c_controller
 				);
 		}
 
-		if (!is_dir(TEDDY_CODIGOS_PATH))
+		if (!is_dir(PATH_TO_CODIGOS))
 		{
+			Logger::warn("El directorio de codigos no existe: " . PATH_TO_CODIGOS);
 			return array("result" => "error", "reason" => "El directorio de codigos no existe.");
 		}
 
@@ -132,8 +119,8 @@ class c_ejecucion extends c_controller
 			);
 
 		if ($status == "COMPILACION"
-			&& file_exists(TEDDY_CODIGOS_PATH.$request['execID'] . ".compiler_out")) {
-			$compiler = file_get_contents(TEDDY_CODIGOS_PATH.$request['execID'] . ".compiler_out");
+			&& file_exists(PATH_TO_CODIGOS.$request['execID'] . ".compiler_out")) {
+			$compiler = file_get_contents(PATH_TO_CODIGOS.$request['execID'] . ".compiler_out");
 			$result["compilador"] = $compiler;
 		}
 
@@ -180,13 +167,15 @@ class c_ejecucion extends c_controller
 		}
 
 		// Revisar que pueda escribir el codigo fuente
-		if (!is_dir(TEDDY_CODIGOS_PATH))
+		if (!is_dir(PATH_TO_CODIGOS))
 		{
+			Logger::error("El directorio : " . PATH_TO_CODIGOS . ", no existe");
 			return array("result" => "error", "reason" => "El directorio de codigos no existe.");
 		}
 
-		if (!is_writable(TEDDY_CODIGOS_PATH))
+		if (!is_writable(PATH_TO_CODIGOS))
 		{
+			Logger::error("El directorio " . PATH_TO_CODIGOS . ", no esta accesible (writtable)");
 			return array("result" => "error", "reason" => "No se puede escribir en el directorio de codigos.");
 		}
 
@@ -200,11 +189,7 @@ class c_ejecucion extends c_controller
 			return array("result" => "error", "reason" => "El problema no existe.");
 		}
 
-
-		// si el concurso no es public, 
-		// solo un admin puede enviar problemas
-		//
-
+		// si el concurso no es publico, solo un admin puede enviar problemas
 		$lang_desc = null;
 		switch($lang)
 		{
@@ -227,8 +212,6 @@ class c_ejecucion extends c_controller
 
 		/**
 		 * @todo
-		 * - vamos a ver si estoy en un concurso, y si estoy en un concurso, que ese problema pertenesca a ese concurso 
-		 * - vamos a ver que no haya enviado hace menos de 5 min si esta en un concurso
 		 * - insertar un nuevo run y obtener el id insertado, como estado, hay que ponerle uploading
 		 **/
 		if ($id_concurso === null)
@@ -240,6 +223,24 @@ class c_ejecucion extends c_controller
 		}
 		else
 		{
+			// vamos a verificar que el concurso este activo			// vamos a verificar que el concurso este activo
+			$sql = "SELECT CID FROM teddy.Concurso WHERE CID = ? AND NOW() between Inicio AND Final;";
+			$inputarray = array($id_concurso);
+			$resultado = $db->Execute($sql, $inputarray);
+			if ($resultado->RecordCount() == 0)
+			{
+				return array("result" => "error", "reason" => "El concurso no esta activo.");
+			}
+
+			// vamos a verificar que el problema sea parte de este concurso
+			$sql = "SELECT CID FROM teddy.Concurso WHERE CID = ? AND Problemas like ?;";
+			$inputarray = array($id_concurso, "%$id_problema%");
+			$resultado = $db->Execute($sql, $inputarray);
+			if ($resultado->RecordCount() == 0)
+			{
+				return array("result" => "error", "reason" => "El problema no es parte del concurso.");
+			}
+
 			$sql = "INSERT INTO Ejecucion (`userID` ,`status`, `probID` , `remoteIP`, `LANG`, `Concurso`, `fecha`  ) 
 									VALUES (?, 'WAITING', ?, ?, ?, ?, ?);";
 			
@@ -263,17 +264,17 @@ class c_ejecucion extends c_controller
 
 		if (!empty($_FILES))
 		{
-			if (!move_uploaded_file($_FILES['Filedata']['tmp_name'], TEDDY_CODIGOS_PATH. $execID . "." . $lang  ))
+			if (!move_uploaded_file($_FILES['Filedata']['tmp_name'], PATH_TO_CODIGOS. $execID . "." . $lang  ))
 			{
 				return array("result" => "error", "reason" => "Error al subir el archivo");
 			}
 		}
 		else
 		{
-
 			// Crear un archivo y escribir el contenido
-			if (file_put_contents(TEDDY_CODIGOS_PATH.$execID . "." . $lang, $request['plain_source']) === false)
+			if (file_put_contents(PATH_TO_CODIGOS . "/" . $execID . "." . $lang, $request['plain_source']) === false)
 			{
+				Logger::Error("file_put_contents() fallo, tal vez no puedo escribir en  :".PATH_TO_CODIGOS);
 				return array("result" => "error");
 			}
 		}

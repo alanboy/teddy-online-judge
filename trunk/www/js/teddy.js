@@ -384,16 +384,20 @@ function show_new_contest()
 //contest_rank.php
 function updateTime()
 {
+	if ($("#time_left").length != 1) {
+		return;
+	}
+	
 	data = $("#time_left").html().split(":");
 	hora = data[0];
 	min = data[1];
 	seg = data[2];
 
-	if(--seg < 0){
+	if (--seg < 0) {
 		seg = 59;
-		if(--min < 0){
+		if (--min < 0) {
 			min = 59;
-			if(--hora < 0){
+			if (--hora < 0) {
 				hora = 59;
 			}
 			hora = hora < 10 ? "0" + hora : hora;
@@ -402,12 +406,10 @@ function updateTime()
 	}
 
 	seg = seg < 10 ? "0" + seg : seg;
-	if(hora == 0 && min == 0 && seg == 0)
-	{
+	if (hora == 0 && min == 0 && seg == 0) {
 		window.location.reload( false );
 	}
 
-	//hora = hora < 10 ? "0" + hora : hora;
 	$("#time_left").html(hora+":"+min+":"+seg);
 }
 
@@ -426,8 +428,19 @@ function RenderContest (cid) {
 		function(data){
 
 			if ((CurrentRuns != null)
-			   && (CurrentRuns.runs.length == data.runs.length)) {
-				return;
+			   && (CurrentRuns.length == data.runs.length)) {
+
+				dontRefresh = true;
+				for (i = 0; i < CurrentRuns.length; i++) {
+					if (CurrentRuns[i][3] == 'JUDGING' || CurrentRuns[i][3] == 'WAITING') {			   				
+		   				dontRefresh = false;
+		   				break;
+		   			}
+		   		}
+
+				if (dontRefresh) {
+					return;
+				}
 			}
 
 			CurrentRuns = data.runs;
@@ -437,7 +450,6 @@ function RenderContest (cid) {
 					cid : cid
 				},
 				function(data){
-					console.log("rank",data)
 					CurrentRank = data.rank;
 					showRank();
 				});
@@ -517,6 +529,10 @@ function showRank() {
 
 			var problemas = CurrentProblems; 
 
+			if (problemas == null) {
+				continue;
+			}
+
 			for (z = 0 ; z < problemas.length ; z++) {
 				var rankValueHtml = "";
 				for (p in CurrentRank[a].problemas) {
@@ -530,7 +546,6 @@ function showRank() {
 								bar = "0"+bar;
 							}
 							tiempo += bar;
-							//tiempo += parseInt((parseInt(CurrentRank[a].problemas[p].ok_time % 60)*60)/100);
 							rankValueHtml = "<b>" +  tiempo + "</b> / "+CurrentRank[a].problemas[p].ok_time+"<br>";
 							rankValueHtml += "("+CurrentRank[a].problemas[p].bad+")";
 						}else{

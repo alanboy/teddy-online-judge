@@ -179,20 +179,20 @@ class c_usuario extends c_controller
 
 	private static function UsuarioValido($request)
 	{
-		$usernameValidator = validator::alnum()->noWhitespace()->length(4,15);
+		$usernameValidator = validator::alnum()->noWhitespace()->length(4,32);
 		$escuelaValidator = validator::alnum("()")->length(3,50);
 
 		try {
 			$usernameValidator->check($request["nick"]);
 
-			if (array_key_exists("escuela", $request)) {
-				$escuelaValidator->check($request["escuela"]);
-			}
+			//if (array_key_exists("escuela", $request)) {
+			//	$escuelaValidator->check($request["escuela"]);
+			//}
 
 		} catch(InvalidArgumentException $e) {
 			return false;
 		}
-		
+
 		return true;
 	}
 

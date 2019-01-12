@@ -35,7 +35,9 @@ class envios
 			echo "<select id=\"prob_id\">";	
 			for ($i=0; $i< sizeof( $probs ); $i++)
 			{
-				echo "<option value=". $probs[$i] .">". $probs[$i] ."</option>"; 
+				$selected = "";
+				if (isset($_GET["send_to"]) && $probs[$i] == $_GET["send_to"]) $selected = " selected ";
+				echo "<option $selected value=". $probs[$i] .">". $probs[$i] ."</option>"; 
 			}
 			echo "</select>";
 		}
@@ -176,7 +178,7 @@ class envios
 						Teddy.c_ejecucion.nuevo({
 									lang 		: $('#lang').val(),
 									id_problema	: $('#prob_id').val(),
-									plain_source: $("#plain_text_area").val(),
+									plain_source: $("#plain_text_area").val()
 									<?php 
 										if($es_concurso !== null) {
 											echo ", 'id_concurso': " . $es_concurso; 
@@ -308,7 +310,7 @@ class envios
 	
 }
 
-envios::imprimir_forma_de_envio( );
+envios::imprimir_forma_de_envio($_REQUEST['cid']);
 /*
 	
 	

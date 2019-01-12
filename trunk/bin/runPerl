@@ -1,4 +1,4 @@
 cd ..
 cd work_zone
 cd $1
-sandbox perl $1.pl USER_CODE $2
+perl $1.pl USER_CODE $2

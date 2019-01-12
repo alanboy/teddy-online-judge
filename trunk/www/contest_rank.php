@@ -2,7 +2,7 @@
 
 	require_once("../serverside/bootstrap.php");
 
-	define("PAGE_TITLE", "Problemas");
+	define("PAGE_TITLE", "Rank");
 
 	require_once("head.php");
 ?>
@@ -88,7 +88,6 @@
 					{
 						?> <div align="center">Debes iniciar sesion en la parte de arriba para poder enviar problemas a <b>Teddy</b>.</div> <?php
 					}else{
-						include ("form.new-submission.php");
 					}
 					break;
 				}
@@ -119,7 +118,7 @@
 
 			for ($i=0; $i< sizeof( $PROBLEMAS ); $i++)
 			{
-				echo "<th width='100px'><a target='_blank' href='verProblema.php?id=" . $PROBLEMAS[$i]. "&cid=". $_REQUEST['cid']."'>".$PROBLEMAS[$i]."</a></th> ";
+				echo "<th width='100px'><a target='_blank' href='verProblema.php?id=" . $PROBLEMAS[$i]. "&cid=". $_REQUEST['cid']."'>Problema ".$PROBLEMAS[$i]."</a></th> ";
 			}
 ?>
 					<th width='12%'>Penalty</th>

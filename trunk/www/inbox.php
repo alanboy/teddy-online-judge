@@ -1,7 +1,7 @@
 <?php
 	require_once("../serverside/bootstrap.php");
 
-	define("PAGE_TITLE", "Problemas");
+	define("PAGE_TITLE", "Inbox");
 
 	require_once("head.php");
 

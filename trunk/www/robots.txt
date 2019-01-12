@@ -4,3 +4,6 @@ Disallow:/flash/
 Disallow:/admin/
 Disallow:/css/
 Disallow:/js/
+
+User-agent:AhrefsBot
+Disallow:/

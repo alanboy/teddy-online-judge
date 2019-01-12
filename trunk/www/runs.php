@@ -2,7 +2,8 @@
 
 	require_once("../serverside/bootstrap.php");
 
-	define("PAGE_TITLE", "Runs");
+	$title = isset($_GET["user"]) ? $_GET["user"] : "Perfil";
+	define("PAGE_TITLE", $title);
 
 	require_once("head.php");
 
@@ -10,7 +11,6 @@
 <div class="post_blanco">
 
 	<?php
-
 	if (isset($_GET["user"]))
 	{
 		include ("parcial_perfil.php");

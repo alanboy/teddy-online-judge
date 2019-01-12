@@ -14,7 +14,7 @@
 		<h2>Problemas</h2>
 
 <?php
-		$consulta = "select * from Problema ";
+		$consulta = "select * from Problema order by probid ";
 	$resultado = mysql_query($consulta) or die('Algo anda mal: ' . mysql_error());
 ?>
 

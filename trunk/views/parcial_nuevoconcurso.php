@@ -1,6 +1,6 @@
 
 
-<form action="" class="form-big" method="post" onsubmit="return validate()">
+<form id="new_contest" action="" class="form-big" method="post" onsubmit="return validate()">
 		<p>	Forma para crear un concurso </p>
 
 		<label for="cname">Nombre del concurso</label>

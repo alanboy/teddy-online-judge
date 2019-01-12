@@ -41,41 +41,64 @@
 
 <div id="tab-concursos-activos" class="post_blanco tab">
 	<h2>Concursos Actuales</h2>
-<?php
-	$resultado = c_concurso::concursosActivos();
-	if (SUCCESS($resultado))
-	{
-		$concursos = $resultado["concursos"];
-		include "parcial_listadeconcursos.php";	
-	}
-?>
+	<?php
+		$resultado = c_concurso::concursosActivos();
+		if (SUCCESS($resultado))
+		{
+			$concursos = $resultado["concursos"];
+			include "parcial_listadeconcursos.php";	
+		}
+	?>
 </div>
 
 <div id="tab-concursos-pasados" class="post_blanco tab">
 	<h2>Concursos Pasados</h2>
-<?php
-	$resultado = c_concurso::concursosPasados();
-	if (SUCCESS($resultado))
-	{
-		$concursos = $resultado["concursos"];
-		include "parcial_listadeconcursos.php";	
-	}
-?>
+	<?php
+		$resultado = c_concurso::concursosPasados();
+		if (SUCCESS($resultado))
+		{
+			$concursos = $resultado["concursos"];
+			include "parcial_listadeconcursos.php";	
+		}
+	?>
 </div>
 
 <div id="tab-concursos-futuros" class="post_blanco tab">
 
 	<h2>Concursos Futuros</h2>
-<?php
-	$resultado = c_concurso::concursosFuturos();
-	if (SUCCESS($resultado))
-	{
-		$concursos = $resultado["concursos"];
-		include "parcial_listadeconcursos.php";	
-	}
-?>
+	<?php
+		$resultado = c_concurso::concursosFuturos();
+		if (SUCCESS($resultado))
+		{
+			$concursos = $resultado["concursos"];
+			include "parcial_listadeconcursos.php";	
+		}
+	?>
 </div>
-
+<br/>
 
 <?php include_once("post_footer.php"); ?>
+<script type="text/javascript">
+	var show = window.location.hash;
+	show = (show) ? show : 'futuros';
+	show = show.replace('#','');
+	ShowTab('tab-concursos-'+show);
+	<?php
+		if (isset($_REQUEST["cname"])) {
+			$result = c_concurso::nuevo();
+	?>
+			$("#notif_area").html("<?php echo $result["msg"]; ?>").show();
+	<?php
+			if (!$result["result"]) {
+	?>
+				$("#cname").val("<?php echo $_REQUEST["cname"]?>");
+				$("#cdesc").val("<?php echo $_REQUEST["cdesc"]?>");
+				$("#inicio").val("<?php echo $_REQUEST["inicio"]?>");
+				$("#fin").val("<?php echo $_REQUEST["fin"]?>");
+				$("#pset").val("<?php echo $_REQUEST["pset"]?>");
+	<?php
+			}
+		}
+	?>
 
+</script>
