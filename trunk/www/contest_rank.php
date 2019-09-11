@@ -88,6 +88,7 @@
 					{
 						?> <div align="center">Debes iniciar sesion en la parte de arriba para poder enviar problemas a <b>Teddy</b>.</div> <?php
 					}else{
+						include ("parcial_nuevoenvio.php");
 					}
 					break;
 				}
